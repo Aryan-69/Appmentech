@@ -181,6 +181,13 @@
 }
 .table-responsive tr:last-child td { border-bottom: none; }
 
+.section-alt .table-responsive table {
+  color: var(--color-body);
+}
+.section-alt .table-responsive th {
+  color: var(--color-accent-light-text);
+}
+
 @media (max-width: 640px) {
   .table-responsive thead { display: none; }
   .table-responsive table, .table-responsive tbody, .table-responsive tr, .table-responsive td {
@@ -224,7 +231,7 @@
   height: 14px;
   transition: transform 0.15s ease;
 }
-.accordion-toggle.open svg { transform: rotate(90deg); }
+.accordion-toggle.open > svg { transform: rotate(90deg); }
 .accordion-body {
   max-height: 0;
   overflow: hidden;
@@ -265,6 +272,13 @@
   font-weight: 700;
   font-size: 13px;
   margin-bottom: var(--space-2);
+}
+
+.section-alt .stepper-step {
+  color: var(--color-body);
+}
+.section-alt .stepper-step h3 {
+  color: var(--color-heading);
 }
 
 @media (max-width: 640px) {
