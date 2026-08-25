@@ -307,3 +307,29 @@
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; }
 }
+
+/* Form (contact.html) */
+.form-field {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+.form-field span { display: block; margin-bottom: 4px; }
+.form-field input, .form-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--color-body);
+  background: var(--color-bg);
+  font-weight: 400;
+}
+.form-field input:focus, .form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.form-field.invalid input, .form-field.invalid textarea {
+  border-color: #DC2626;
+}
