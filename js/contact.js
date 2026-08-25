@@ -43,6 +43,9 @@
       var email = document.getElementById('field-email');
       if (!email.value.trim() || !isValidEmail(email.value.trim())) { markInvalid(email); valid = false; }
 
+      var phone = document.getElementById('field-phone');
+      if (phone.value.trim() && !/^[0-9+\s()-]+$/.test(phone.value.trim())) { markInvalid(phone); valid = false; }
+
       var description = document.getElementById('field-description');
       if (!description.value.trim()) { markInvalid(description); valid = false; }
 
@@ -54,7 +57,7 @@
       messageEl.style.display = 'none';
 
       if (!validate()) {
-        showMessage('Please fill in Name, a valid Email, and Project Description.', true);
+        showMessage('Please fill in Name, a valid Email, Project Description, and a valid Phone (if provided).', true);
         return;
       }
 
