@@ -1,0 +1,79 @@
+/* css/base.css — design tokens, reset, base typography */
+
+:root {
+  --color-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-accent: #6366F1;
+  --color-accent-hover: #4F46E5;
+  --color-accent-light: #EEF2FF;
+  --color-accent-light-text: #4338CA;
+  --color-heading: #0F172A;
+  --color-body: #475569;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-contrast-bg: #0F172A;
+  --color-contrast-text: #F8FAFC;
+  --color-contrast-muted: #94A3B8;
+
+  --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+
+  --radius: 8px;
+  --radius-lg: 16px;
+  --max-width: 1200px;
+
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-heading);
+  margin: 0 0 var(--space-3) 0;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+h1 { font-size: clamp(28px, 4vw, 44px); }
+h2 { font-size: clamp(22px, 3vw, 32px); }
+h3 { font-size: 18px; font-weight: 700; }
+
+p { margin: 0 0 var(--space-3) 0; }
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover { color: var(--color-accent-hover); }
+
+img, svg { max-width: 100%; display: block; }
+
+ul, ol { margin: 0; padding-left: var(--space-4); }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
