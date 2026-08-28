@@ -29,10 +29,10 @@
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-light-text);
   margin-bottom: var(--space-3);
 }
-.section-alt .eyebrow { color: #A5B4FC; }
+.section-alt .eyebrow { color: var(--color-accent); }
 
 .stack {
   display: flex;

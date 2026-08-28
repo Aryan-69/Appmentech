@@ -89,13 +89,13 @@
 }
 .btn-primary {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-heading);
 }
-.btn-primary:hover { background: var(--color-accent-hover); color: #fff; }
+.btn-primary:hover { background: var(--color-accent-hover); color: var(--color-heading); }
 .btn-secondary {
   background: transparent;
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-light-text);
 }
 .btn-secondary:hover { background: var(--color-accent-light); }
 .btn-outline-light {
@@ -156,8 +156,8 @@
   border-radius: 999px;
 }
 .section-alt .chip {
-  background: rgba(99, 102, 241, 0.25);
-  color: #E0E7FF;
+  background: rgba(245, 167, 28, 0.25);
+  color: var(--color-accent-light);
 }
 
 /* Table */
@@ -217,7 +217,7 @@
 .accordion-toggle {
   background: var(--color-accent);
   border: none;
-  color: #fff;
+  color: var(--color-heading);
   font-weight: 700;
   font-size: 11px;
   cursor: pointer;
@@ -419,7 +419,7 @@
   margin: 0 auto 6px;
   border-radius: 6px;
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-heading);
   font-size: 11px;
   font-weight: 700;
   line-height: 32px;
