@@ -33,8 +33,15 @@
   color: var(--color-body);
   font-weight: 600;
   font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
-.nav-links a:hover { color: var(--color-accent); }
+.nav-links a:hover,
+.nav-links a:focus {
+  background: var(--color-accent);
+  color: var(--color-heading);
+}
 .nav-toggle {
   display: none;
   background: none;
@@ -370,12 +377,13 @@
 /* Stat strip (redesign) */
 .stat-strip {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--space-3);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   padding: var(--space-4);
+  overflow-x: auto;
 }
 .stat-tile {
   flex: 1;
@@ -436,3 +444,147 @@
   border-top: 4px solid var(--color-card-accent);
   border-radius: var(--radius-card);
 }
+
+/* Nav dropdowns (nav restructure) */
+.nav-dropdown { position: relative; }
+.nav-dropdown-trigger.accordion-toggle {
+  background: none;
+  color: var(--color-heading);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.nav-dropdown-trigger.accordion-toggle:hover,
+.nav-dropdown-trigger.accordion-toggle:focus {
+  background: var(--color-accent);
+}
+.nav-dropdown-trigger svg { width: 12px; height: 12px; }
+
+.nav-dropdown-panel {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+.nav-dropdown-panel a {
+  display: block;
+  padding: 6px 4px;
+  font-size: 13px;
+  color: var(--color-body);
+  font-weight: 400;
+}
+.nav-dropdown-panel a:hover { color: var(--color-accent-light-text); }
+
+.nav-dropdown-panel.mega h4 {
+  font-size: 11px;
+  color: var(--color-accent-light-text);
+  text-transform: uppercase;
+  margin: 0 0 6px;
+  letter-spacing: 1px;
+}
+.nav-dropdown-panel.mega ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-dropdown-panel.mega li { margin-bottom: 2px; }
+
+@media (min-width: 1025px) {
+  .nav-dropdown-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    box-shadow: var(--shadow-card-hover);
+    padding: var(--space-3);
+    z-index: 60;
+  }
+  .nav-dropdown:hover .nav-dropdown-panel,
+  .nav-dropdown:focus-within .nav-dropdown-panel {
+    display: block;
+  }
+  .nav-dropdown-panel.mega {
+    display: none;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-4);
+    min-width: 760px;
+    padding: var(--space-4);
+  }
+  .nav-dropdown:hover .nav-dropdown-panel.mega,
+  .nav-dropdown:focus-within .nav-dropdown-panel.mega {
+    display: grid;
+  }
+}
+
+@media (max-width: 1024px) {
+  .nav-dropdown-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+  }
+  .nav-dropdown-panel {
+    display: block;
+    border: none;
+    border-radius: 0;
+    padding: 0 var(--space-4);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+  }
+  .nav-dropdown-panel.open { max-height: 700px; padding-bottom: var(--space-2); }
+  .nav-dropdown-panel.mega { display: block; padding-top: var(--space-2); }
+  .nav-dropdown-panel.mega h4 { margin-top: var(--space-2); }
+}
+
+/* Industries section restyle (nav restructure) */
+.industries-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-4);
+  background: #F6F8FA;
+  padding: var(--space-5);
+  border-radius: var(--radius-card);
+}
+@media (max-width: 1024px) {
+  .industries-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 640px) {
+  .industries-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.industry-tile {
+  text-align: center;
+  padding: var(--space-3) var(--space-2);
+}
+.industry-tile-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--space-2);
+  border-radius: 50%;
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.industry-tile-icon svg { width: 26px; height: 26px; }
+.industry-tile-label {
+  font-size: 14px;
+  margin-bottom: var(--space-2);
+}
+.industry-tile .accordion-toggle {
+  font-size: 10px;
+  padding: 6px 12px;
+}
+
+/* Stat tile hover (nav restructure) */
+.stat-tile {
+  border-radius: var(--radius);
+  transition: background 0.15s ease;
+  padding: var(--space-2);
+}
+.stat-tile:hover { background: var(--color-accent-light); }
+.stat-tile:hover .stat-number { color: var(--color-heading); }
+.stat-tile:hover .stat-label { color: var(--color-accent-light-text); font-weight: 700; }
