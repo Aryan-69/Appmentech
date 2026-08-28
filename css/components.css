@@ -185,7 +185,7 @@
   color: var(--color-body);
 }
 .section-alt .table-responsive th {
-  color: var(--color-accent-light-text);
+  color: var(--color-accent);
 }
 
 @media (max-width: 640px) {
