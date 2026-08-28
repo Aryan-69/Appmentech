@@ -1,19 +1,22 @@
 /* css/base.css — design tokens, reset, base typography */
 
 :root {
-  --color-bg: #F8FAFC;
+  --color-bg: #FFFFFF;
   --color-surface: #FFFFFF;
-  --color-accent: #6366F1;
-  --color-accent-hover: #4F46E5;
-  --color-accent-light: #EEF2FF;
-  --color-accent-light-text: #4338CA;
-  --color-heading: #0F172A;
+  --color-accent: #F5A71C;
+  --color-accent-hover: #D98E12;
+  --color-accent-light: #FDF1DC;
+  --color-accent-light-text: #B36F0A;
+  --color-heading: #12235B;
   --color-body: #475569;
   --color-muted: #64748B;
-  --color-border: #E2E8F0;
+  --color-border: #EEEEEE;
   --color-contrast-bg: #0F172A;
   --color-contrast-text: #F8FAFC;
   --color-contrast-muted: #94A3B8;
+  --color-secondary: #33506E;
+  --color-card-accent: #22C55E;
+  --color-utility-bg: #12235B;
 
   --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
@@ -26,6 +29,7 @@
   --space-7: 64px;
 
   --radius: 8px;
+  --radius-card: 6px;
   --radius-lg: 16px;
   --max-width: 1200px;
 
