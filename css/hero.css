@@ -2,9 +2,9 @@
 
 /* --- Seamless dark top: contact bar + nav sit on the hero's slate-navy --- */
 .index-hero .utility-bar {
-  background: var(--color-contrast-bg);
+  background: #05070D;
   color: var(--color-contrast-muted);
-  border-bottom: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .index-hero .nav {
   background: var(--color-contrast-bg);
