@@ -1,8 +1,6 @@
-// js/contact.js — client-side validation + Formspree fetch submit for contact.html
+// js/contact.js — client-side validation + mailto submission for contact.html
 (function () {
-  // Replace PLACEHOLDER_FORM_ID with the real Formspree form ID once created
-  // at https://formspree.io — e.g. "https://formspree.io/f/abcdwxyz".
-  var FORMSPREE_ENDPOINT = 'https://formspree.io/f/PLACEHOLDER_FORM_ID';
+  var CONTACT_EMAIL = 'administrator@appmentech.in';
 
   document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('contact-form');
@@ -52,6 +50,28 @@
       return valid;
     }
 
+    function val(id) {
+      var el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    function buildBody() {
+      var lines = [
+        'Name: ' + val('field-name'),
+        'Company: ' + val('field-company'),
+        'Email: ' + val('field-email'),
+        'Phone: ' + val('field-phone'),
+        'Industry: ' + val('field-industry'),
+        'Solution Required: ' + val('field-solution'),
+        'Estimated Budget: ' + val('field-budget'),
+        'Project Timeline: ' + val('field-timeline'),
+        '',
+        'Project Description:',
+        val('field-description')
+      ];
+      return lines.join('\n');
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       messageEl.style.display = 'none';
@@ -61,28 +81,15 @@
         return;
       }
 
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending...';
+      var subject = 'Project Requirement from ' + val('field-name');
+      var mailto = 'mailto:' + CONTACT_EMAIL +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(buildBody());
 
-      fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      }).then(function (response) {
-        if (response.ok) {
-          form.reset();
-          form.style.display = 'none';
-          showMessage('Thank you — your project requirement has been sent. We will get back to you shortly.', false);
-        } else {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send Project Requirement';
-          showMessage('Something went wrong sending your request. Please email info@appmentechtech.com directly.', true);
-        }
-      }).catch(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Project Requirement';
-        showMessage('Something went wrong sending your request. Please email info@appmentechtech.com directly.', true);
-      });
+      window.location.href = mailto;
+
+      showMessage('Opening your email app to send to ' + CONTACT_EMAIL +
+        '. If nothing opens, please email us there directly.', false);
     });
   });
 })();
