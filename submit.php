@@ -62,17 +62,41 @@ $bodyLines = [
 ];
 $body = implode("\r\n", $bodyLines);
 
-list($ok, $detail) = smtp_send($cfg, $subject, $body, $email, oneLine($name));
+// 1) Notify the team. Reply-To is the visitor so a reply reaches them.
+list($ok, $detail) = smtp_send($cfg, $cfg['to'], $subject, $body, $email, oneLine($name));
 
-if ($ok) {
-    echo json_encode(['ok' => true]);
-} else {
-    error_log('contact submit SMTP error: ' . $detail);
+if (!$ok) {
+    error_log('contact submit SMTP error (notify): ' . $detail);
     fail('Email could not be sent. Please try again later.', 502);
 }
 
+// 2) Auto-reply to the customer. Best-effort — never fail the request if this part errors.
+$replySubject = 'We received your message — Appmentech Technologies';
+$replyBody = auto_reply_body($name);
+list($ackOk, $ackDetail) = smtp_send($cfg, $email, $replySubject, $replyBody, $cfg['to'], 'Appmentech Technologies');
+if (!$ackOk) {
+    error_log('contact submit SMTP error (auto-reply): ' . $ackDetail);
+}
+
+echo json_encode(['ok' => true]);
+
+function auto_reply_body($name) {
+    $first = trim($name) !== '' ? ' ' . $name : '';
+    return
+        "Hi" . $first . ",\r\n\r\n" .
+        "Thank you for reaching out to Appmentech Technologies. We have received your " .
+        "project requirement and a member of our team will get back to you within 1 business day.\r\n\r\n" .
+        "If your request is urgent, you can reply directly to this email or call us at +91 12345 67890.\r\n\r\n" .
+        "Warm regards,\r\n" .
+        "Appmentech Technologies\r\n" .
+        "Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering\r\n" .
+        "https://appmentech.in\r\n\r\n" .
+        "---\r\n" .
+        "This is an automated confirmation. Please do not share sensitive information by email.";
+}
+
 // ---- minimal SMTP-over-SSL client (no external dependencies) ----
-function smtp_send($cfg, $subject, $body, $replyTo, $replyName) {
+function smtp_send($cfg, $to, $subject, $body, $replyTo, $replyName) {
     $errno = 0; $errstr = '';
     $fp = @stream_socket_client(
         'ssl://' . $cfg['host'] . ':' . $cfg['port'],
@@ -105,7 +129,7 @@ function smtp_send($cfg, $subject, $body, $replyTo, $replyName) {
     $put(base64_encode($cfg['username'])); $r = $read(); if ($code($r) !== '334') return [false, $r];
     $put(base64_encode($cfg['password'])); $r = $read(); if ($code($r) !== '235') return [false, 'authentication failed'];
     $put('MAIL FROM:<' . $cfg['from'] . '>'); $r = $read(); if ($code($r) !== '250') return [false, $r];
-    $put('RCPT TO:<' . $cfg['to'] . '>');     $r = $read(); if (!in_array($code($r), ['250', '251'])) return [false, $r];
+    $put('RCPT TO:<' . $to . '>');            $r = $read(); if (!in_array($code($r), ['250', '251'])) return [false, $r];
     $put('DATA');               $r = $read(); if ($code($r) !== '354') return [false, $r];
 
     $fromHeader = mb_encode_mimeheader($cfg['from_name'], 'UTF-8') . ' <' . $cfg['from'] . '>';
@@ -114,7 +138,7 @@ function smtp_send($cfg, $subject, $body, $replyTo, $replyName) {
     $headers = [
         'Date: ' . date('r'),
         'From: ' . $fromHeader,
-        'To: <' . $cfg['to'] . '>',
+        'To: <' . $to . '>',
         'Reply-To: ' . $replyHeader,
         'Subject: ' . mb_encode_mimeheader($subject, 'UTF-8'),
         'MIME-Version: 1.0',
