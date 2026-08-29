@@ -50,39 +50,56 @@
 .flip-front { cursor: pointer; }
 
 /* Back header + list + return control */
+/* Back header: title left, return control top-right */
+.flip-back-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
 .flip-back-title {
-  display: block;
   color: var(--color-heading);
   font-weight: 800;
-  font-size: 15px;
-  margin-bottom: var(--space-2);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: left;
 }
+.flip-back-btn {
+  flex: none;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 2px 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s ease;
+}
+.flip-back-btn svg { transition: transform 0.3s ease; }
+.flip-back-btn:hover { color: var(--color-accent); }
+.flip-back-btn:hover svg { transform: rotate(-90deg); }
+
 .flip-back ul {
   margin: 0 0 var(--space-2);
   padding-left: var(--space-4);
   font-size: 13px;
   color: var(--color-muted);
   text-align: left;
+  width: 100%;
 }
-.industry-tile .flip-back ul { padding-left: var(--space-3); }
+.industry-tile .flip-back ul { padding-left: var(--space-4); }
 .flip-back li { margin-bottom: 4px; }
-.flip-back-btn {
-  margin-top: auto;
-  align-self: flex-start;
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  padding: var(--space-2) 0 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.2s ease;
-}
-.flip-back-btn:hover { color: var(--color-accent-hover); }
-.industry-tile .flip-back-btn { align-self: center; }
+
+/* During the one-time hint flip, ignore clicks so it can't be interrupted mid-demo */
+.card.flip.hinting { pointer-events: none; }
 
 /* thin scrollbar for long back lists */
 .flip-face::-webkit-scrollbar { width: 6px; }
