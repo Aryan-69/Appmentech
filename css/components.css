@@ -40,7 +40,7 @@
 .nav-links a:hover,
 .nav-links a:focus {
   background: var(--color-accent);
-  color: var(--color-heading);
+  color: #fff;
 }
 .nav-toggle {
   display: none;
@@ -96,15 +96,15 @@
 }
 .btn-primary {
   background: var(--color-accent);
-  color: var(--color-heading);
+  color: #fff;
 }
-.btn-primary:hover { background: var(--color-accent-hover); color: var(--color-heading); }
+.btn-primary:hover { background: var(--color-accent-hover); color: #fff; }
 .btn-secondary {
   background: transparent;
   border-color: var(--color-accent);
-  color: var(--color-accent-light-text);
+  color: var(--color-accent);
 }
-.btn-secondary:hover { background: var(--color-accent-light); }
+.btn-secondary:hover { background: var(--color-accent-light); color: var(--color-accent); }
 .btn-outline-light {
   background: transparent;
   border-color: rgba(248, 250, 252, 0.4);
@@ -163,8 +163,8 @@
   border-radius: 999px;
 }
 .section-alt .chip {
-  background: rgba(245, 167, 28, 0.25);
-  color: var(--color-accent-light);
+  background: rgba(37, 99, 235, 0.25);
+  color: var(--color-contrast-text);
 }
 
 /* Table */
@@ -224,7 +224,7 @@
 .accordion-toggle {
   background: var(--color-accent);
   border: none;
-  color: var(--color-heading);
+  color: #fff;
   font-weight: 700;
   font-size: 11px;
   cursor: pointer;
@@ -361,7 +361,8 @@
 /* Utility bar (redesign) */
 .utility-bar {
   background: var(--color-utility-bg);
-  color: #fff;
+  color: var(--color-heading);
+  border-bottom: 1px solid var(--color-border);
 }
 .utility-bar-inner {
   display: flex;
@@ -458,6 +459,7 @@
 .nav-dropdown-trigger.accordion-toggle:hover,
 .nav-dropdown-trigger.accordion-toggle:focus {
   background: var(--color-accent);
+  color: #fff;
 }
 .nav-dropdown-trigger svg { width: 12px; height: 12px; }
 
@@ -624,7 +626,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(130% 130% at 100% 0%, rgba(245, 167, 28, 0.12), transparent 55%);
+  background: radial-gradient(130% 130% at 100% 0%, rgba(37, 99, 235, 0.12), transparent 55%);
   opacity: 0;
   transition: opacity 0.45s var(--ease-smooth);
   pointer-events: none;
@@ -632,7 +634,7 @@
 .card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-tile-hover);
-  border-color: rgba(245, 167, 28, 0.38);
+  border-color: rgba(37, 99, 235, 0.38);
 }
 .card:hover::before { opacity: 1; }
 /* Cards wrapping a form (e.g. contact page) keep the surface but must not
@@ -679,7 +681,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(120% 120% at 50% 0%, rgba(245, 167, 28, 0.10), transparent 60%);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(37, 99, 235, 0.10), transparent 60%);
   opacity: 0;
   transition: opacity 0.45s var(--ease-smooth);
   pointer-events: none;
@@ -688,7 +690,7 @@
 .industry-tile:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-tile-hover);
-  border-color: rgba(245, 167, 28, 0.38);
+  border-color: rgba(37, 99, 235, 0.38);
   z-index: 2;
 }
 .industry-tile:hover::before { opacity: 1; }

@@ -3,20 +3,20 @@
 :root {
   --color-bg: #FFFFFF;
   --color-surface: #FFFFFF;
-  --color-accent: #F5A71C;
-  --color-accent-hover: #D98E12;
-  --color-accent-light: #FDF1DC;
-  --color-accent-light-text: #8A5406;
-  --color-heading: #12235B;
+  --color-accent: #2563EB;               /* Electric Blue */
+  --color-accent-hover: #1D4ED8;         /* Blue 700 */
+  --color-accent-light: rgba(37, 99, 235, 0.1);  /* 10% Electric Blue — feature icons, chips */
+  --color-accent-light-text: #1E40AF;    /* Blue 800 — text on light-blue */
+  --color-heading: #0F172A;              /* Slate Navy */
   --color-body: #475569;
   --color-muted: #64748B;
-  --color-border: #EEEEEE;
+  --color-border: #E5E7EB;
   --color-contrast-bg: #0F172A;
   --color-contrast-text: #F8FAFC;
   --color-contrast-muted: #94A3B8;
-  --color-secondary: #33506E;
-  --color-card-accent: #22C55E;
-  --color-utility-bg: #12235B;
+  --color-secondary: #0F172A;
+  --color-card-accent: #2563EB;          /* card top-accent -> Electric Blue */
+  --color-utility-bg: #F9FAFB;           /* light-gray contact bar */
 
   --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
