@@ -1,7 +1,7 @@
 // js/contact.js — client-side validation + server-side (SMTP) submit for contact.html
 (function () {
   var ENDPOINT = 'submit.php';
-  var CONTACT_EMAIL = 'administrator@appmentech.in';
+  var CONTACT_EMAIL = 'contact@appmentech.in';
 
   document.addEventListener('DOMContentLoaded', function () {
     var form = document.getElementById('contact-form');

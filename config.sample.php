@@ -4,10 +4,10 @@
 return [
     'host'      => 'smtp.hostinger.com',
     'port'      => 465,
-    'username'  => 'administrator@appmentech.in',
+    'username'  => 'contact@appmentech.in',
     'password'  => 'YOUR_MAILBOX_PASSWORD_HERE',
-    'from'      => 'administrator@appmentech.in', // must be a mailbox on this domain
+    'from'      => 'contact@appmentech.in', // must be a mailbox on this domain
     'from_name' => 'Appmentech Website',
-    'to'        => 'administrator@appmentech.in', // where submissions are delivered
+    'to'        => 'contact@appmentech.in', // where submissions are delivered
     'helo'      => 'appmentech.in',
 ];
