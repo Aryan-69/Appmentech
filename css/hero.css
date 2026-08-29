@@ -1,0 +1,182 @@
+/* css/hero.css — dark cinematic hero band (index only). Scoped under body.index-hero. */
+
+/* --- Seamless dark top: contact bar + nav sit on the hero's slate-navy --- */
+.index-hero .utility-bar {
+  background: var(--color-contrast-bg);
+  color: var(--color-contrast-muted);
+  border-bottom: none;
+}
+.index-hero .nav {
+  background: var(--color-contrast-bg);
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease,
+              box-shadow 0.3s ease, padding 0.3s ease;
+}
+.index-hero .nav .nav-inner { transition: padding 0.3s ease; }
+.index-hero .nav .nav-logo,
+.index-hero .nav .nav-links > li > a,
+.index-hero .nav .nav-dropdown-trigger.accordion-toggle {
+  color: #fff;
+}
+.index-hero .nav .nav-toggle span { background: #fff; }
+
+/* Collapsed / compact state once the user scrolls past the hero top */
+.index-hero .nav.nav-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+.index-hero .nav.nav-scrolled .nav-inner { padding: 8px 0; }
+.index-hero .nav.nav-scrolled .nav-logo,
+.index-hero .nav.nav-scrolled .nav-links > li > a,
+.index-hero .nav.nav-scrolled .nav-dropdown-trigger.accordion-toggle {
+  color: var(--color-heading);
+}
+.index-hero .nav.nav-scrolled .nav-links > li > a { color: var(--color-body); }
+.index-hero .nav.nav-scrolled .nav-toggle span { background: var(--color-heading); }
+
+/* --- Hero band --- */
+.hero-dark {
+  position: relative;
+  background: var(--color-contrast-bg);
+  color: #fff;
+  overflow: hidden;
+  padding: clamp(56px, 9vw, 104px) 0 clamp(64px, 8vw, 96px);
+  isolation: isolate;
+}
+.hero-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; }
+/* faint grid */
+.hero-grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 80%);
+          mask-image: radial-gradient(120% 90% at 50% 0%, #000 40%, transparent 80%);
+}
+/* glowing orbs */
+.hero-orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.55; }
+.hero-orb-1 {
+  width: 460px; height: 460px; left: -120px; bottom: -140px;
+  background: radial-gradient(circle, #2563EB 0%, transparent 70%);
+}
+.hero-orb-2 {
+  width: 520px; height: 520px; right: -140px; top: 40px;
+  background: radial-gradient(circle, #4F46E5 0%, transparent 70%);
+  opacity: 0.4;
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.45);
+  background: rgba(37, 99, 235, 0.12);
+  color: #93B4FC;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+.hero-badge-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #3B82F6;
+  box-shadow: 0 0 10px 1px rgba(59, 130, 246, 0.9);
+}
+
+.hero-title {
+  color: #fff;
+  font-size: clamp(34px, 5.5vw, 60px);
+  line-height: 1.08;
+  font-weight: 800;
+  margin: 0 0 var(--space-4);
+  letter-spacing: -0.5px;
+}
+.hero-accent {
+  background: linear-gradient(90deg, #3B82F6, #6366F1);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #3B82F6; /* fallback */
+}
+.hero-sub {
+  max-width: 660px;
+  margin: 0 auto var(--space-5);
+  color: #94A3B8;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.6;
+}
+
+.hero-cta { margin-bottom: clamp(40px, 6vw, 64px); }
+.btn-hero {
+  background: linear-gradient(135deg, #2563EB 0%, #4F46E5 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4);
+}
+.btn-hero:hover { color: #fff; box-shadow: 0 14px 40px rgba(37, 99, 235, 0.55); }
+.btn-hero svg { width: 16px; height: 16px; transition: transform 0.25s var(--ease-smooth); }
+.btn-hero:hover svg { transform: translateX(5px); }
+.hero-cta .btn-outline-light { border-color: rgba(255, 255, 255, 0.25); }
+.hero-cta .btn-outline-light:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* --- Dark glass stat strip --- */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+}
+.hero-stat {
+  padding: var(--space-4) var(--space-3);
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hero-stat:first-child { border-left: none; }
+.hero-stat-num {
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+}
+.hero-stat-label {
+  font-size: 12px;
+  color: #94A3B8;
+  margin-top: 6px;
+}
+
+@media (max-width: 640px) {
+  .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-stat:nth-child(-n+2) { border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+  .hero-stat:nth-child(odd) { border-left: none; }
+}
+
+/* --- Cinematic entrance (staggered). Reduced-motion safe. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dark .reveal-hero {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: heroIn 0.85s var(--ease-smooth) forwards;
+  }
+  .hero-dark .hero-badge.reveal-hero { animation-delay: 0.08s; }
+  .hero-dark .hero-title.reveal-hero { animation-delay: 0.22s; }
+  .hero-dark .hero-sub.reveal-hero   { animation-delay: 0.40s; }
+  .hero-dark .hero-cta.reveal-hero   { animation-delay: 0.58s; }
+  .hero-dark .hero-stats.reveal-hero { animation-delay: 0.76s; }
+  .hero-orb { animation: orbFloat 9s ease-in-out infinite alternate; }
+  .hero-orb-2 { animation-duration: 11s; animation-direction: alternate-reverse; }
+}
+@keyframes heroIn { to { opacity: 1; transform: none; } }
+@keyframes orbFloat { to { transform: translate3d(0, -26px, 0); } }

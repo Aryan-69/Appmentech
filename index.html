@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/base.css?v=4">
   <link rel="stylesheet" href="css/layout.css?v=3">
   <link rel="stylesheet" href="css/components.css?v=6">
+  <link rel="stylesheet" href="css/hero.css?v=1">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -31,7 +32,7 @@
   }
   </script>
 </head>
-<body>
+<body class="index-hero">
 
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -128,28 +129,28 @@
 
   <main id="main-content">
     <!-- SECTIONS START -->
-    <section class="section text-center" id="home">
-      <div class="container">
-        <span class="eyebrow">One Platform. Endless Solutions.</span>
-        <h1>Your All-in-One Digital &amp;<br>Software Solutions Partner</h1>
-        <p style="max-width:640px;margin:0 auto var(--space-4);font-size:17px;">
+    <section class="hero-dark" id="home">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="hero-grid"></span>
+        <span class="hero-orb hero-orb-1"></span>
+        <span class="hero-orb hero-orb-2"></span>
+      </div>
+      <div class="container hero-inner text-center">
+        <span class="hero-badge reveal-hero"><span class="hero-badge-dot"></span> One Platform. Endless Solutions.</span>
+        <h1 class="hero-title reveal-hero">Your All-in-One Digital &amp;<br>Software <span class="hero-accent">Solutions</span> Partner</h1>
+        <p class="hero-sub reveal-hero">
           From innovative websites and mobile applications to complex enterprise systems —
           we build solutions that drive your business forward.
         </p>
-        <div class="stack" style="flex-direction:row;justify-content:center;flex-wrap:wrap;">
-          <a href="contact.html" class="btn btn-primary">Let's Build Your Solution</a>
-          <a href="contact.html" class="btn btn-secondary">Get a Free Consultation</a>
+        <div class="hero-cta stack reveal-hero" style="flex-direction:row;justify-content:center;flex-wrap:wrap;">
+          <a href="contact.html" class="btn btn-primary btn-hero">Let's Build Your Solution <svg data-icon="arrow-right"></svg></a>
+          <a href="contact.html" class="btn btn-outline-light">Get a Free Consultation</a>
         </div>
-      </div>
-    </section>
-
-    <section class="section" style="padding-top:0;padding-bottom:0;">
-      <div class="container">
-        <div class="stat-strip">
-          <div class="stat-tile"><div class="stat-number">8</div><div class="stat-label">Solution Categories</div></div>
-          <div class="stat-tile"><div class="stat-number">12+</div><div class="stat-label">Industries Served</div></div>
-          <div class="stat-tile"><div class="stat-number">15+</div><div class="stat-label">Technologies</div></div>
-          <div class="stat-tile"><div class="stat-number">7</div><div class="stat-label">Step Delivery Process</div></div>
+        <div class="hero-stats reveal-hero">
+          <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Solution Categories</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">12+</div><div class="hero-stat-label">Industries Served</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">15+</div><div class="hero-stat-label">Technologies</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Step Delivery Process</div></div>
         </div>
       </div>
     </section>
@@ -606,6 +607,7 @@
   <script src="js/icons.js?v=3" defer></script>
   <script src="js/nav.js?v=3" defer></script>
   <script src="js/reveal.js?v=3" defer></script>
+  <script src="js/hero.js?v=1" defer></script>
   <script src="js/accordion.js?v=3" defer></script>
 </body>
 </html>
