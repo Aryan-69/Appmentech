@@ -33,6 +33,20 @@
         if (ch !== body) front.appendChild(ch);
       });
 
+      // Solutions cards: pin the explore link to the bottom with a flip hint
+      // beside it, matching the design's front-face footer row.
+      if (tile.classList.contains('card-accent') && toggle) {
+        var foot = document.createElement('div');
+        foot.className = 'flip-foot';
+        toggle.parentNode.insertBefore(foot, toggle);
+        foot.appendChild(toggle);
+        var hint = document.createElement('span');
+        hint.className = 'flip-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.innerHTML = 'FLIP <span>⟳</span>';
+        foot.appendChild(hint);
+      }
+
       // Back header: title (left) + return control (top-right).
       var head = document.createElement('div');
       head.className = 'flip-back-head';

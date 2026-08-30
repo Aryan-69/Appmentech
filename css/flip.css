@@ -4,15 +4,21 @@
    accordion fallback. */
 
 /* Uniform tile heights so flipping (absolute faces) has a stable box. */
-.card.flip { height: 360px; }
-.industry-tile { height: 300px; }
+.card.flip { height: 352px; }
+.industry-tile { min-height: 300px; }
+.industry-tile.flip { height: 300px; }
 
 .card.flip,
 .industry-tile.flip {
-  perspective: 1200px;
+  perspective: 1400px;
   padding: 0;            /* faces carry the padding */
-  overflow: hidden;
+  overflow: visible;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
+.card.flip:hover,
+.industry-tile.flip:hover { transform: none; box-shadow: none; }
 
 /* Non-flip industry tiles (e.g. "And Many More") centre in the uniform box. */
 .industry-tile:not(.flip) {
@@ -26,7 +32,7 @@
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.95s cubic-bezier(0.22, 1, 0.28, 1);
 }
 .flip.flipped .flip-inner { transform: rotateY(180deg); }
 
@@ -37,19 +43,71 @@
           backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  padding: var(--space-4);
   overflow: auto;
   background: var(--color-surface);
-  border-radius: inherit;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 30px 26px 26px;
+  transition: border-color 0.5s, background 0.5s, box-shadow 0.45s;
 }
 .industry-tile .flip-face { align-items: center; text-align: center; }
+.industry-tile .flip-front:hover {
+  border-color: #F3D3A5;
+  box-shadow: var(--shadow-tile-hover);
+}
+
+/* --- Dark band (Solutions) faces --- */
+.section-dark .flip-face,
+.section-deep .flip-face,
+.section-alt .flip-face {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  padding: 32px 30px 28px;
+}
+.section-dark .flip-front:hover,
+.section-deep .flip-front:hover,
+.section-alt .flip-front:hover {
+  border-color: rgba(242, 161, 60, 0.6);
+  background: linear-gradient(180deg, rgba(242, 161, 60, 0.16), rgba(255, 255, 255, 0.02));
+}
+.section-dark .flip-back,
+.section-deep .flip-back,
+.section-alt .flip-back {
+  border-color: rgba(242, 161, 60, 0.5);
+  background: linear-gradient(180deg, rgba(242, 161, 60, 0.18), rgba(6, 9, 18, 0.9));
+  padding: 24px 24px 22px;
+}
+.section-dark .flip-back ul,
+.section-deep .flip-back ul,
+.section-alt .flip-back ul { color: #C3CBDD; }
 
 /* Back starts pre-rotated so its content reads correctly after the flip. */
 .flip-back { transform: rotateY(180deg); }
 
 .flip-front { cursor: pointer; }
 
-/* Back header + list + return control */
+/* Front footer: explore link + flip affordance */
+.flip-front .accordion-toggle { margin-top: auto; }
+.flip-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--color-dim);
+  flex: none;
+}
+.flip-foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+}
+.flip-foot .accordion-toggle { margin-top: 0; }
+
 /* Back header: title left, return control top-right */
 .flip-back-head {
   display: flex;
@@ -61,21 +119,30 @@
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-border);
 }
+.section-dark .flip-back-head,
+.section-deep .flip-back-head,
+.section-alt .flip-back-head { border-bottom-color: rgba(255, 255, 255, 0.12); }
+
 .flip-back-title {
+  font-family: var(--font-display);
   color: var(--color-heading);
-  font-weight: 800;
+  font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-align: left;
 }
+.section-dark .flip-back-title,
+.section-deep .flip-back-title,
+.section-alt .flip-back-title { color: #F7CF9C; }
+
 .flip-back-btn {
   flex: none;
   background: none;
   border: none;
   color: var(--color-muted);
-  font-weight: 700;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 13px;
   cursor: pointer;
   padding: 2px 4px;
   display: inline-flex;
@@ -90,12 +157,12 @@
 .flip-back ul {
   margin: 0 0 var(--space-2);
   padding-left: var(--space-4);
-  font-size: 13px;
-  color: var(--color-muted);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-body);
   text-align: left;
   width: 100%;
 }
-.industry-tile .flip-back ul { padding-left: var(--space-4); }
 .flip-back li { margin-bottom: 4px; }
 
 /* During the one-time hint flip, ignore clicks so it can't be interrupted mid-demo */
@@ -103,7 +170,7 @@
 
 /* thin scrollbar for long back lists */
 .flip-face::-webkit-scrollbar { width: 6px; }
-.flip-face::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+.flip-face::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }

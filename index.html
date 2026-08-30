@@ -14,12 +14,15 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Appmentech Technologies | All-in-One Digital & Software Solutions">
   <meta name="twitter:description" content="Build websites, mobile applications, SaaS platforms, AI solutions, cloud systems, enterprise software and business automation with one trusted digital technology partner.">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230F172A'/%3E%3Ctext x='50' y='68' font-family='system-ui,sans-serif' font-size='56' font-weight='800' fill='%232563EB' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/base.css?v=4">
-  <link rel="stylesheet" href="css/layout.css?v=3">
-  <link rel="stylesheet" href="css/components.css?v=6">
-  <link rel="stylesheet" href="css/hero.css?v=3">
-  <link rel="stylesheet" href="css/flip.css?v=2">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230B0E17'/%3E%3Ctext x='50' y='68' font-family='system-ui,sans-serif' font-size='56' font-weight='700' fill='%23F2A13C' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css?v=8">
+  <link rel="stylesheet" href="css/layout.css?v=5">
+  <link rel="stylesheet" href="css/components.css?v=10">
+  <link rel="stylesheet" href="css/hero.css?v=4">
+  <link rel="stylesheet" href="css/flip.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,7 +51,7 @@
     <div class="container nav-inner">
       <a href="index.html" class="nav-logo">Appmentech<span>.</span></a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+        <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
       </button>
       <nav aria-label="Main navigation">
       <ul class="nav-links" id="nav-links">
@@ -132,34 +135,48 @@
     <!-- SECTIONS START -->
     <section class="hero-dark" id="home">
       <div class="hero-bg" aria-hidden="true">
+        <span class="hero-aurora"></span>
         <span class="hero-grid"></span>
-        <span class="hero-orb hero-orb-1"></span>
-        <span class="hero-orb hero-orb-2"></span>
+        <canvas class="hero-solar"></canvas>
+        <span class="hero-veil"></span>
       </div>
       <div class="container hero-inner text-center">
-        <span class="hero-badge reveal-hero"><span class="hero-badge-dot"></span> One Platform. Endless Solutions.</span>
-        <h1 class="hero-title reveal-hero">Your All-in-One Digital &amp;<br>Software <span class="hero-accent">Solutions</span> Partner</h1>
-        <p class="hero-sub reveal-hero">
+        <span class="hero-badge"><span class="hero-badge-dot"></span> One Platform. Endless Solutions.</span>
+        <h1 class="hero-title">
+          <span class="hero-line"><span>Your All-in-One Digital &amp;</span></span>
+          <span class="hero-line"><span>Software <span class="hero-accent">Solutions</span> Partner</span></span>
+        </h1>
+        <p class="hero-sub">
           From innovative websites and mobile applications to complex enterprise systems —
           we build solutions that drive your business forward.
         </p>
-        <div class="hero-cta stack reveal-hero" style="flex-direction:row;justify-content:center;flex-wrap:wrap;">
+        <div class="hero-cta">
           <a href="contact.html" class="btn btn-primary btn-hero">Let's Build Your Solution <svg data-icon="arrow-right"></svg></a>
           <a href="contact.html" class="btn btn-outline-light">Get a Free Consultation</a>
         </div>
-        <div class="hero-stats reveal-hero">
-          <div class="hero-stat"><div class="hero-stat-num">8</div><div class="hero-stat-label">Solution Categories</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">12+</div><div class="hero-stat-label">Industries Served</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">15+</div><div class="hero-stat-label">Technologies</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">7</div><div class="hero-stat-label">Step Delivery Process</div></div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-num" data-count="8">8</div><div class="hero-stat-label">Solution Categories</div></div>
+          <div class="hero-stat"><div class="hero-stat-num" data-count="12" data-suffix="+">12+</div><div class="hero-stat-label">Industries Served</div></div>
+          <div class="hero-stat"><div class="hero-stat-num" data-count="15" data-suffix="+">15+</div><div class="hero-stat-label">Technologies</div></div>
+          <div class="hero-stat"><div class="hero-stat-num" data-count="7">7</div><div class="hero-stat-label">Step Delivery Process</div></div>
+        </div>
+        <div class="hero-scroll" aria-hidden="true">
+          <span class="hero-scroll-rail"></span>
+          <span>SCROLL</span>
         </div>
       </div>
     </section>
 
-    <section class="section" style="padding-top:0;">
+    <section class="section section-light">
       <div class="container">
-        <h2 class="text-center">Why Businesses Choose Appmentech</h2>
-        <div class="grid-4">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Why Appmentech</span>
+            <h2>Why Businesses Choose Appmentech</h2>
+          </div>
+          <a href="about.html" class="section-head-link">See our approach <span>→</span></a>
+        </div>
+        <div class="grid-4" style="margin-top:52px;">
           <div class="card">
             <div class="card-icon" data-icon="customized"></div>
             <h3>Customized Solutions</h3>
@@ -183,15 +200,21 @@
         </div>
       </div>
     </section>
-    <section class="section" id="solutions">
+    <section class="section section-dark" id="solutions">
+      <span class="section-glow section-glow-top" aria-hidden="true"></span>
       <div class="container">
-        <span class="eyebrow">Our Digital Solutions</span>
-        <h2>Everything You Need, One Partner</h2>
+        <div class="section-head">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> Our Digital Solutions</span>
+            <h2>Everything You Need, <span class="hero-accent">One Partner</span></h2>
+          </div>
+          <p class="section-head-note">Eight solution categories, one accountable team — from first build to long-term operations.</p>
+        </div>
       </div>
-      <div class="container grid-3">
+      <div class="container grid-3" style="margin-top:56px;">
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="web"></div>
+          <div class="card-head"><div class="card-icon" data-icon="web"></div><span class="card-num">01</span></div>
           <h3>Web Development</h3>
           <p>We create modern, responsive and scalable web solutions.</p>
           <button class="accordion-toggle" data-target="solutions-web" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -208,7 +231,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="mobile"></div>
+          <div class="card-head"><div class="card-icon" data-icon="mobile"></div><span class="card-num">02</span></div>
           <h3>Mobile Application Development</h3>
           <p>Build mobile experiences for customers, employees, partners, and communities.</p>
           <button class="accordion-toggle" data-target="solutions-mobile" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -225,7 +248,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="ai"></div>
+          <div class="card-head"><div class="card-icon" data-icon="ai"></div><span class="card-num">03</span></div>
           <h3>AI &amp; Intelligent Solutions</h3>
           <p>We help organizations integrate AI into existing products and build new AI-powered applications.</p>
           <button class="accordion-toggle" data-target="solutions-ai" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -244,7 +267,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="cloud"></div>
+          <div class="card-head"><div class="card-icon" data-icon="cloud"></div><span class="card-num">04</span></div>
           <h3>Cloud &amp; Enterprise Solutions</h3>
           <p>We design and implement cloud-ready applications and infrastructure.</p>
           <button class="accordion-toggle" data-target="solutions-cloud" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -262,7 +285,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="automation"></div>
+          <div class="card-head"><div class="card-icon" data-icon="automation"></div><span class="card-num">05</span></div>
           <h3>Business Automation</h3>
           <p>We identify manual processes and convert them into automated digital workflows.</p>
           <button class="accordion-toggle" data-target="solutions-automation" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -279,7 +302,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="testing"></div>
+          <div class="card-head"><div class="card-icon" data-icon="testing"></div><span class="card-num">06</span></div>
           <h3>Software Testing &amp; Quality Engineering</h3>
           <p>We provide end-to-end quality engineering for web, mobile, API, cloud, and enterprise applications.</p>
           <button class="accordion-toggle" data-target="solutions-testing" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -297,7 +320,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="devops"></div>
+          <div class="card-head"><div class="card-icon" data-icon="devops"></div><span class="card-num">07</span></div>
           <h3>DevOps &amp; CI/CD</h3>
           <p>We help engineering teams automate software delivery and improve release reliability.</p>
           <button class="accordion-toggle" data-target="solutions-devops" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -314,7 +337,7 @@
         </div>
 
         <div class="card card-accent">
-          <div class="card-icon" data-icon="integration"></div>
+          <div class="card-head"><div class="card-icon" data-icon="integration"></div><span class="card-num">08</span></div>
           <h3>API &amp; System Integration</h3>
           <p>We integrate applications, databases, cloud services, third-party platforms, and enterprise systems.</p>
           <button class="accordion-toggle" data-target="solutions-integration" data-label-more="Explore More &raquo;" data-label-less="Show Less">
@@ -332,28 +355,25 @@
 
       </div>
     </section>
-    <section class="section section-alt" id="ai-automation">
+    <section class="section section-deep" id="ai-automation">
+      <span class="section-glow section-glow-centre" aria-hidden="true"></span>
       <div class="container text-center">
-        <span class="eyebrow">Transform Your Business with AI</span>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Transform Your Business with AI</span>
         <h2>From Query to Action, Automatically</h2>
-        <div class="stack" style="flex-direction:row;flex-wrap:wrap;justify-content:center;gap:var(--space-2);font-size:14px;font-weight:700;margin-top:var(--space-4);">
+        <div class="chain">
           <span class="chip">Customer Query</span>
-          <span>→</span>
           <span class="chip">AI Agent</span>
-          <span>→</span>
           <span class="chip">Knowledge Base / Vector DB</span>
-          <span>→</span>
           <span class="chip">Business APIs</span>
-          <span>→</span>
           <span class="chip">Action</span>
-          <span>→</span>
           <span class="chip">Response</span>
         </div>
       </div>
     </section>
-    <section class="section" id="industries">
-      <div class="container">
-        <h2 class="text-center">We Serve All Industries</h2>
+    <section class="section section-light" id="industries">
+      <div class="container text-center">
+        <span class="eyebrow">Industry Coverage</span>
+        <h2>We Serve All Industries</h2>
       </div>
       <div class="container industries-grid">
 
@@ -488,63 +508,81 @@
 
       </div>
     </section>
-    <section class="section section-alt">
+    <section class="section section-deep">
+      <span class="section-glow section-glow-left" aria-hidden="true"></span>
       <div class="container">
-        <span class="eyebrow">Product Development Lifecycle</span>
-        <h2>From Idea to Production</h2>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Product Development Lifecycle</span>
+        <h2>From Idea to <span class="hero-accent">Production</span></h2>
+        <div class="stepper-track">
+        <span class="stepper-line" aria-hidden="true"></span>
         <div class="stepper">
-          <div class="stepper-step"><span class="step-number">1</span><h3>Discover</h3><p style="font-size:13px;">Understand your business, users, challenges, goals, and technology requirements.</p></div>
-          <div class="stepper-step"><span class="step-number">2</span><h3>Design</h3><p style="font-size:13px;">Create the product architecture, user experience, technical design, and roadmap.</p></div>
-          <div class="stepper-step"><span class="step-number">3</span><h3>Develop</h3><p style="font-size:13px;">Build web, mobile, backend, APIs, databases, cloud services, and integrations.</p></div>
-          <div class="stepper-step"><span class="step-number">4</span><h3>Test</h3><p style="font-size:13px;">Validate functionality, performance, security requirements, compatibility, and reliability.</p></div>
-          <div class="stepper-step"><span class="step-number">5</span><h3>Deploy</h3><p style="font-size:13px;">Release the solution using automated CI/CD and cloud infrastructure.</p></div>
-          <div class="stepper-step"><span class="step-number">6</span><h3>Monitor</h3><p style="font-size:13px;">Monitor applications, infrastructure, logs, metrics, performance, and user experience.</p></div>
-          <div class="stepper-step"><span class="step-number">7</span><h3>Improve</h3><p style="font-size:13px;">Continuously enhance the product based on business needs, analytics, and customer feedback.</p></div>
+          <div class="stepper-step"><span class="step-number">1</span><h3>Discover</h3><p>Understand your business, users, challenges, goals, and technology requirements.</p></div>
+          <div class="stepper-step"><span class="step-number">2</span><h3>Design</h3><p>Create the product architecture, user experience, technical design, and roadmap.</p></div>
+          <div class="stepper-step"><span class="step-number">3</span><h3>Develop</h3><p>Build web, mobile, backend, APIs, databases, cloud services, and integrations.</p></div>
+          <div class="stepper-step"><span class="step-number">4</span><h3>Test</h3><p>Validate functionality, performance, security requirements, compatibility, and reliability.</p></div>
+          <div class="stepper-step"><span class="step-number">5</span><h3>Deploy</h3><p>Release the solution using automated CI/CD and cloud infrastructure.</p></div>
+          <div class="stepper-step"><span class="step-number">6</span><h3>Monitor</h3><p>Monitor applications, infrastructure, logs, metrics, performance, and user experience.</p></div>
+          <div class="stepper-step"><span class="step-number">7</span><h3>Improve</h3><p>Continuously enhance the product based on business needs, analytics, and customer feedback.</p></div>
+        </div>
         </div>
       </div>
     </section>
-    <section class="section" id="work">
+    <section class="section section-deep" id="work">
+      <span class="section-glow section-glow-right" aria-hidden="true"></span>
       <div class="container">
-        <span class="eyebrow">Our Work</span>
+        <span class="eyebrow"><span class="eyebrow-dot"></span> Case Studies</span>
         <h2>Solutions We've Delivered</h2>
-      </div>
-      <div class="container grid-3">
-        <div class="card card-accent">
-          <span class="chip">E-Commerce &amp; Retail</span>
-          <h3>Cookrie</h3>
-          <p>Custom e-commerce platform — product catalog, shopping cart, user accounts, order management, and returns.</p>
-          <a href="https://cookrie.in" target="_blank" rel="noopener noreferrer" class="accordion-toggle">
-            <span class="accordion-toggle-text">Visit cookrie.in &raquo;</span> <svg data-icon="arrow-right"></svg>
-          </a>
+        <div class="work-card">
+          <div>
+            <span class="chip">E-Commerce &amp; Retail</span>
+            <h3>Cookrie</h3>
+            <p>Custom e-commerce platform — product catalog, shopping cart, user accounts, order management, and returns.</p>
+            <a href="https://cookrie.in" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              Visit cookrie.in &raquo; <svg data-icon="arrow-right"></svg>
+            </a>
+          </div>
+          <div class="mock" aria-hidden="true">
+            <div class="mock-bar">
+              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+              <span class="mock-url"></span>
+            </div>
+            <div class="mock-body">
+              <span class="mock-tile"></span><span class="mock-tile"></span><span class="mock-tile"></span>
+              <span class="mock-line"></span><span class="mock-line"></span><span class="mock-line"></span>
+            </div>
+            <span class="mock-scan"></span>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-light" id="approach">
       <div class="container">
         <span class="eyebrow">Our Approach</span>
         <h2>Understand. Build. Automate. Scale.</h2>
-        <div class="grid-3">
-          <div class="card"><h3>Business First</h3><p>We start with the business problem instead of starting with technology.</p></div>
-          <div class="card"><h3>User First</h3><p>Every product is designed around customer and user experience.</p></div>
-          <div class="card"><h3>Quality First</h3><p>Testing and quality engineering are integrated throughout the development lifecycle.</p></div>
-          <div class="card"><h3>Security First</h3><p>Security, privacy, identity, encryption, and access control are considered from the beginning.</p></div>
-          <div class="card"><h3>Automation First</h3><p>We automate repetitive development, testing, deployment, and operational processes wherever practical.</p></div>
-          <div class="card"><h3>AI Ready</h3><p>We design modern platforms so AI can be integrated as business requirements evolve.</p></div>
+        <div class="grid-3" style="margin-top:48px;">
+          <div class="card card-rule"><h3>Business First</h3><p>We start with the business problem instead of starting with technology.</p></div>
+          <div class="card card-rule"><h3>User First</h3><p>Every product is designed around customer and user experience.</p></div>
+          <div class="card card-rule"><h3>Quality First</h3><p>Testing and quality engineering are integrated throughout the development lifecycle.</p></div>
+          <div class="card card-rule"><h3>Security First</h3><p>Security, privacy, identity, encryption, and access control are considered from the beginning.</p></div>
+          <div class="card card-rule"><h3>Automation First</h3><p>We automate repetitive development, testing, deployment, and operational processes wherever practical.</p></div>
+          <div class="card card-rule"><h3>AI Ready</h3><p>We design modern platforms so AI can be integrated as business requirements evolve.</p></div>
         </div>
       </div>
     </section>
-    <section class="section section-alt text-center">
-      <div class="container">
-        <h2>Let's Build Something Amazing Together</h2>
-        <h3 style="font-weight:700;font-size:16px;margin-bottom:var(--space-3);">Your Success is Our Mission.</h3>
-        <p style="max-width:600px;margin:0 auto var(--space-4);">
+    <section class="section section-dark text-center" id="start">
+      <span class="section-glow section-glow-cta" aria-hidden="true"></span>
+      <span class="cta-rings" aria-hidden="true"><span></span><span></span></span>
+      <div class="container" style="max-width:820px;">
+        <h2>Let's Build Something <span class="hero-accent">Amazing</span> Together</h2>
+        <p class="cta-lead">Your Success is Our Mission.</p>
+        <p style="max-width:620px;margin:22px auto 0;font-size:17px;line-height:1.62;">
           Whether you need a website, mobile application, SaaS platform, AI solution, enterprise system,
           cloud infrastructure, automation, or complete product development — we can help.
           Tell us what you want to build.
         </p>
-        <div class="stack" style="flex-direction:row;justify-content:center;flex-wrap:wrap;">
-          <a href="contact.html" class="btn btn-primary">Start Your Project</a>
+        <div class="hero-cta" style="margin-top:36px;">
+          <a href="contact.html" class="btn btn-primary">Start Your Project <span>→</span></a>
           <a href="contact.html" class="btn btn-outline-light">Request Free Consultation</a>
         </div>
       </div>
@@ -556,27 +594,27 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h3>Appmentech Technologies</h3>
-          <p>Your All-in-One Digital &amp; Software Solutions Partner.</p>
-          <p style="font-size:13px;">Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering</p>
-          <p style="font-size:12px;color:var(--color-contrast-muted);margin-top:var(--space-2);">Secure &amp; Reliable | Scalable &amp; Future-Ready | Custom Built for Your Needs | Dedicated Support Every Step | On-Time Delivery Always</p>
-          <div class="footer-social" style="display:flex;gap:var(--space-3);margin-top:var(--space-3);">
-            <a href="#" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank" style="color:var(--color-contrast-muted);transition:color .2s;">
+          <div class="footer-brand">Appmentech Technologies<span>.</span></div>
+          <p class="footer-lead">Your All-in-One Digital &amp; Software Solutions Partner.</p>
+          <p style="margin-top:20px;">Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering</p>
+          <p style="margin-top:12px;">Secure &amp; Reliable | Scalable &amp; Future-Ready | Custom Built for Your Needs | Dedicated Support Every Step | On-Time Delivery Always</p>
+          <div class="footer-social">
+            <a href="#" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             </a>
-            <a href="#" aria-label="X (Twitter)" rel="noopener noreferrer" target="_blank" style="color:var(--color-contrast-muted);transition:color .2s;">
+            <a href="#" aria-label="X (Twitter)" rel="noopener noreferrer" target="_blank">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="#" aria-label="Facebook" rel="noopener noreferrer" target="_blank" style="color:var(--color-contrast-muted);transition:color .2s;">
+            <a href="#" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
-            <a href="#" aria-label="Instagram" rel="noopener noreferrer" target="_blank" style="color:var(--color-contrast-muted);transition:color .2s;">
+            <a href="#" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678a6.162 6.162 0 100 12.324 6.162 6.162 0 100-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 11-2.882 0 1.441 1.441 0 012.882 0z"/></svg>
             </a>
           </div>
         </div>
         <div>
-          <h3 style="font-size:14px;">Company</h3>
+          <h3>Company</h3>
           <ul class="footer-links">
             <li><a href="about.html">About</a></li>
             <li><a href="careers.html">Careers</a></li>
@@ -585,7 +623,7 @@
           </ul>
         </div>
         <div>
-          <h3 style="font-size:14px;">Contact</h3>
+          <h3>Contact</h3>
           <ul class="footer-links">
             <li>contact@appmentech.in</li>
             <li>+91 12345 67890</li>
@@ -595,21 +633,21 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 Appmentech Technologies. All Rights Reserved.</span>
-        <span>
-          <a href="privacy.html">Privacy Policy</a> ·
-          <a href="terms.html">Terms of Service</a> ·
-          <a href="cookies.html">Cookie Policy</a> ·
+        <nav aria-label="Legal">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="cookies.html">Cookie Policy</a>
           <a href="contact.html">Contact</a>
-        </span>
+        </nav>
       </div>
     </div>
   </footer>
 
-  <script src="js/icons.js?v=3" defer></script>
-  <script src="js/nav.js?v=3" defer></script>
-  <script src="js/reveal.js?v=3" defer></script>
-  <script src="js/hero.js?v=1" defer></script>
-  <script src="js/flip.js?v=4" defer></script>
-  <script src="js/accordion.js?v=3" defer></script>
+  <script src="js/icons.js?v=5" defer></script>
+  <script src="js/nav.js?v=5" defer></script>
+  <script src="js/reveal.js?v=5" defer></script>
+  <script src="js/hero.js?v=5" defer></script>
+  <script src="js/flip.js?v=5" defer></script>
+  <script src="js/accordion.js?v=5" defer></script>
 </body>
 </html>

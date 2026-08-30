@@ -49,7 +49,7 @@
       observer.unobserve(tile);
 
       var delay = stagger ? Math.min(
-        (parseInt(tile.getAttribute('data-reveal-index'), 10) || 0) * 100, 600
+        (parseInt(tile.getAttribute('data-reveal-index'), 10) || 0) * 110, 770
       ) : 0;
       tile.style.transitionDelay = delay + 'ms';
 
