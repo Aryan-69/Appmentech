@@ -138,7 +138,7 @@ function archive_requirement(PDO $pdo, array $existing) {
     $pdo->prepare($sql)->execute($params);
 }
 
-/** Record the outcome of the OneDrive upload once it is known. */
+/** Record the outcome of the Google Drive upload once it is known. */
 function update_attachment_status(PDO $pdo, $id, $status, $path = null) {
     $pdo->prepare(
         'UPDATE UserRequirements

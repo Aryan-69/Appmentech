@@ -1,6 +1,6 @@
 <?php
 // submit.php — receives the contact form POST: validates it, stores the
-// requirement, uploads any attachment to OneDrive, and notifies the team
+// requirement, uploads any attachment to Google Drive, and notifies the team
 // over Hostinger SMTP.
 // Credentials live in config.php (gitignored). Copy config.sample.php to config.php first.
 
@@ -23,7 +23,7 @@ if (!is_file($configPath)) {
 $cfg = require $configPath;
 
 require_once __DIR__ . '/lib/requirements.php';
-require_once __DIR__ . '/lib/onedrive.php';
+require_once __DIR__ . '/lib/googledrive.php';
 
 const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
 
@@ -121,7 +121,7 @@ $requirementId = guid_v4();
 $attachmentStatus = $attachment ? 'Pending' : null;
 $pdo = null;
 
-// The attachment id is the requirement id, so the OneDrive folder and the
+// The attachment id is the requirement id, so the Drive folder and the
 // json record line up: /UserRequirements/{UserRequirementId}/{filename}
 $details = [
     'userRequirementId' => $requirementId,
@@ -206,25 +206,25 @@ if ($pdo) {
     }
 }
 
-// ---- attachment -> OneDrive ------------------------------------------------
+// ---- attachment -> Google Drive --------------------------------------------
 $attachmentWarning = null;
 
 if ($attachment) {
-    if (onedrive_configured($cfg)) {
-        list($uploaded, $detail) = onedrive_upload(
+    if (google_drive_configured($cfg)) {
+        list($uploaded, $detail) = google_drive_upload(
             $cfg, $requirementId, $attachment['tmp'], $attachment['name'], $attachment['mime']
         );
         $attachmentStatus = $uploaded ? 'Uploaded' : 'Failed';
         if ($uploaded) {
             $details['attachment']['path'] = $detail;
         } else {
-            error_log('contact submit: OneDrive upload failed: ' . $detail);
+            error_log('contact submit: Google Drive upload failed: ' . $detail);
             $attachmentWarning = 'Your attachment failed to send — please resend it, or email it directly to ' . $cfg['to'] . '.';
         }
     } else {
         // No cloud storage wired up yet: the file rides along on the email.
         $attachmentStatus = 'Pending';
-        $attachmentWarning = 'OneDrive is not configured yet, so your attachment was emailed to '
+        $attachmentWarning = 'Google Drive is not configured yet, so your attachment was emailed to '
             . $cfg['to'] . ' instead of being filed.';
     }
     $details['attachment']['status'] = $attachmentStatus;

@@ -23,18 +23,30 @@ return [
         'password' => 'YOUR_DB_PASSWORD_HERE',
     ],
 
-    // --- OneDrive (attachment storage via Microsoft Graph) -------------------
-    // Azure app registration with the APPLICATION permission Files.ReadWrite.All
-    // (admin consent granted). Files land in
-    //   /UserRequirements/{UserRequirementId}/{filename}
-    // While these stay blank the attachment is emailed instead of uploaded.
-    'onedrive' => [
-        'tenant_id'     => 'YOUR_TENANT_ID',
-        'client_id'     => 'YOUR_CLIENT_ID',
-        'client_secret' => 'YOUR_CLIENT_SECRET',
-        // Target drive. Either 'users/contact@appmentech.in/drive'
-        // or 'drives/{driveId}' for a SharePoint document library.
-        'drive'         => 'YOUR_DRIVE',
+    // --- Google Drive (attachment storage) ----------------------------------
+    // Files land in  UserRequirements/{UserRequirementId}/{filename}  inside
+    // the folder named by folder_id. Fill ONE of the two credential sets.
+    // While they stay blank the attachment is emailed instead of uploaded.
+    'googledrive' => [
+        // Drive folder ID: open the folder in Drive and copy the last path
+        // segment of the URL (.../folders/THIS_PART).
+        'folder_id' => '',
+
+        // Option A - service account (Google Cloud -> IAM -> Service accounts
+        // -> Keys -> JSON). Share the folder with the service account email as
+        // Editor. A service account has no storage quota of its own, so this
+        // works with a Shared Drive, or with a Workspace user set in
+        // 'impersonate' via domain-wide delegation.
+        'service_account_email' => '',
+        'private_key'           => '',
+        'impersonate'           => '',
+
+        // Option B - OAuth, for a personal Google account. Create a Web
+        // application OAuth client, then run google-auth.php once to get the
+        // refresh token.
+        'client_id'     => '',
+        'client_secret' => '',
+        'refresh_token' => '',
     ],
 
     // --- Optional malware scan ----------------------------------------------

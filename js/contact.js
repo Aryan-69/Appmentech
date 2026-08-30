@@ -1,5 +1,5 @@
 // js/contact.js — contact form: searchable dropdowns, validation, attachment
-// checks and the SMTP/OneDrive submit for contact.html.
+// checks and the SMTP/Google Drive submit for contact.html.
 (function () {
   var ENDPOINT = 'submit.php';
   var CONTACT_EMAIL = 'contact@appmentech.in';
