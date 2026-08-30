@@ -7,8 +7,22 @@
 
 header('Content-Type: text/plain; charset=utf-8');
 
+// Deliberate speed bump: this page names the database the site talks to, so it
+// should not answer a casual or automated request.
+if (!isset($_GET['i-will-delete-this']) || $_GET['i-will-delete-this'] !== 'yes') {
+    echo "Add ?i-will-delete-this=yes to the URL to run this check,\n";
+    echo "then delete db-check.php from the server.\n";
+    exit;
+}
+
 function line($label, $value) {
     echo str_pad($label, 26) . $value . "\n";
+}
+
+// NEVER put credentials in this file. It only reports what config.php holds;
+// editing the values here changes nothing except what the report claims.
+function shown($value) {
+    return ($value === null || $value === '') ? '(empty)' : $value;
 }
 
 echo "Appmentech — database check\n";
@@ -31,10 +45,11 @@ if (empty($cfg['db'])) {
     exit;
 }
 $db = $cfg['db'];
-line('db.host', $db['host'] !== '' ? $db['host'] : '(empty)');
+line('db.host', shown($db['host']));
 line('db.port', isset($db['port']) ? $db['port'] : 3306);
-line('db.name', $db['name'] !== '' ? $db['name'] : '(empty)');
-line('db.user', $db['user'] !== '' ? $db['user'] : '(empty)');
+line('db.name', shown($db['name']));
+line('db.user', shown($db['user']));
+// The password is never printed, only whether one is set.
 line('db.password', $db['password'] !== '' ? '(set, ' . strlen($db['password']) . ' chars)' : '(EMPTY)');
 
 if ($db['host'] === '' || $db['name'] === '') {
