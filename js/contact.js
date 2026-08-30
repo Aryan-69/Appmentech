@@ -353,7 +353,12 @@
         return response.json().then(function (payload) {
           return { ok: response.ok, data: payload };
         }).catch(function () {
-          return { ok: response.ok, data: {} };
+          // Not JSON: the endpoint is missing or the server returned an error
+          // page. Surface the status so the cause is not guesswork.
+          return {
+            ok: false,
+            data: { error: 'The form endpoint returned HTTP ' + response.status + '.' }
+          };
         });
       }).then(function (res) {
         if (res.ok && res.data && res.data.ok) {
