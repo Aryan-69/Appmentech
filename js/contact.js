@@ -5,6 +5,7 @@
   var CONTACT_EMAIL = 'contact@appmentech.in';
   var MAX_BYTES = 10 * 1024 * 1024;
   var ALLOWED_EXT = ['pdf', 'png', 'jpg', 'jpeg', 'docx', 'xlsx', 'pptx', 'txt'];
+  var FILE_RULES = 'PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX, TXT &nbsp;&middot;&nbsp; Maximum file size: 10 MB';
 
   // Industries — the site's "What Services We Provide" menu.
   var INDUSTRIES = [
@@ -45,15 +46,8 @@
     ['PK', 'Pakistan', '+92'], ['LK', 'Sri Lanka', '+94'], ['NP', 'Nepal', '+977']
   ];
 
-  function flag(iso) {
-    return String.fromCodePoint(
-      0x1F1E6 + iso.charCodeAt(0) - 65,
-      0x1F1E6 + iso.charCodeAt(1) - 65
-    );
-  }
-
   function countryLabel(c) {
-    return flag(c[0]) + ' ' + c[1] + ' (' + c[2] + ')';
+    return c[1] + ' (' + c[2] + ')';
   }
 
   /**
@@ -67,6 +61,11 @@
     var active = -1;
 
     function labelOf(o) { return typeof o === 'string' ? o : o.label; }
+    // What the input shows once an option is chosen. The dial-code combobox
+    // shows just the ISO code while still searching on the full label.
+    function displayOf(o) {
+      return (o && o.display) ? o.display : labelOf(o);
+    }
 
     function render(filter) {
       var q = (filter || '').toLowerCase();
@@ -82,11 +81,18 @@
         active = -1;
         return matches;
       }
-      matches.forEach(function (o, i) {
+      matches.forEach(function (o) {
         var li = document.createElement('li');
         li.setAttribute('role', 'option');
         li.setAttribute('aria-selected', 'false');
-        li.textContent = labelOf(o);
+        if (o && o.badge) {
+          var badge = document.createElement('span');
+          badge.className = 'combo-badge';
+          badge.textContent = o.badge;
+          li.appendChild(badge);
+        }
+        li.appendChild(document.createTextNode(labelOf(o)));
+        li.option = o;
         li.addEventListener('mousedown', function (e) {
           e.preventDefault(); // keep focus so blur does not close first
           pick(o);
@@ -122,15 +128,28 @@
       active = i;
     }
 
+    var chosen = null;
+
     function pick(o) {
-      input.value = labelOf(o);
+      chosen = o;
+      input.value = displayOf(o);
       close();
       if (onPick) onPick(o);
     }
 
-    input.addEventListener('focus', function () { open(''); });
+    input.addEventListener('focus', function () {
+      // Typing replaces the compact display, so start from an open list.
+      if (chosen && displayOf(chosen) !== labelOf(chosen)) input.value = '';
+      open('');
+    });
     input.addEventListener('input', function () { open(input.value); });
-    input.addEventListener('blur', function () { setTimeout(close, 120); });
+    input.addEventListener('blur', function () {
+      setTimeout(function () {
+        close();
+        // Nothing new picked: put the previous display back.
+        if (chosen && input.value !== displayOf(chosen)) input.value = displayOf(chosen);
+      }, 120);
+    });
     input.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
         e.preventDefault();
@@ -141,9 +160,7 @@
       if (e.key === 'Enter' && !list.hidden && active > -1) {
         e.preventDefault();
         var items = list.querySelectorAll('li[role="option"]');
-        var label = items[active].textContent;
-        var match = options.filter(function (o) { return labelOf(o) === label; })[0];
-        if (match) pick(match);
+        if (items[active] && items[active].option) pick(items[active].option);
         return;
       }
       if (e.key === 'Escape') close();
@@ -183,7 +200,7 @@
     combobox(
       document.querySelector('[data-combo="dial"]'),
       COUNTRIES.map(function (c) {
-        return { label: countryLabel(c), iso: c[0], dial: c[2] };
+        return { label: countryLabel(c), display: c[0], badge: c[0], iso: c[0], dial: c[2] };
       }),
       function (o) {
         dialCountry.value = o.iso;
@@ -201,7 +218,6 @@
 
     // --- best time to contact: shown local, submitted as UTC ---------------
     var bestTime = document.getElementById('field-best-time');
-    var bestNote = document.getElementById('best-time-note');
     var bestTz = document.getElementById('field-best-time-tz');
     var bestUtc = document.getElementById('field-best-time-utc');
 
@@ -226,11 +242,8 @@
     }
 
     function syncBestTime() {
-      var utc = toUtcWindow(bestTime.value);
-      bestUtc.value = utc;
-      bestNote.textContent = bestTime.value
-        ? 'Your local time (' + tz + '). Sent to us as ' + utc + '.'
-        : 'Times are shown in your local timezone (' + tz + ') and stored in UTC.';
+      // Shown to the visitor in their own timezone, submitted as UTC.
+      bestUtc.value = toUtcWindow(bestTime.value);
     }
     bestTime.addEventListener('change', syncBestTime);
     syncBestTime();
@@ -243,7 +256,7 @@
       var f = fileInput.files && fileInput.files[0];
       fileNote.classList.remove('error');
       if (!f) {
-        fileNote.textContent = 'One file, up to 10 MB.';
+        fileNote.innerHTML = FILE_RULES;
         return true;
       }
       if (ALLOWED_EXT.indexOf(extensionOf(f.name)) === -1) {

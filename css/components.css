@@ -1086,6 +1086,15 @@ body:not(.index-hero) .section .chip {
   color: var(--color-muted);
 }
 .field-note.error { color: #DC2626; font-weight: 600; }
+.field-hint {
+  margin: 6px 0 0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+}
+.field-hint.error { color: #DC2626; font-weight: 600; }
 
 /* Searchable dropdown that still accepts free text. */
 .combo { position: relative; }
@@ -1095,8 +1104,10 @@ body:not(.index-hero) .section .chip {
   top: calc(100% + 4px);
   left: 0;
   right: 0;
-  max-height: 232px;
+  /* A short window that scrolls, rather than a list running down the page. */
+  max-height: 168px;
   overflow-y: auto;
+  overscroll-behavior: contain;
   margin: 0;
   padding: 4px;
   list-style: none;
@@ -1106,12 +1117,28 @@ body:not(.index-hero) .section .chip {
   box-shadow: 0 18px 40px -24px rgba(11, 14, 23, 0.45);
 }
 .combo-list li {
-  padding: 9px 11px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--color-body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-heading);
   cursor: pointer;
+}
+/* ISO code shown beside a country: the flag emoji does not render on Windows. */
+.combo-badge {
+  flex: none;
+  min-width: 26px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background: rgba(242, 161, 60, 0.16);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: #9A5B12;
 }
 .combo-list li[aria-selected="true"],
 .combo-list li:hover {
@@ -1122,14 +1149,24 @@ body:not(.index-hero) .section .chip {
 .combo-list .combo-empty:hover { background: none; }
 
 /* Phone: dial-code combobox + national number. */
-.phone-row { display: flex; gap: 10px; align-items: flex-start; }
-.phone-row .combo-dial { flex: 0 0 40%; max-width: 210px; }
-.phone-row > input[type="tel"] { flex: 1; min-width: 0; }
+.phone-row { display: flex; flex-wrap: nowrap; gap: 8px; align-items: stretch; }
+.phone-row .combo-dial { flex: 0 0 84px; }
+.phone-row > input[type="tel"] { flex: 1 1 auto; min-width: 0; }
+/* Compact trigger: ISO code plus a chevron, as in the reference design. */
+.combo-dial .combo-input {
+  padding-right: 26px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23525C74' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+.combo-dial .combo-list { min-width: 260px; }
 
 /* Budget: currency + amount on one row. */
-.budget-row { display: flex; gap: 10px; }
-.budget-row select { flex: 0 0 118px; }
-.budget-row input { flex: 1; min-width: 0; }
+.budget-row { display: flex; flex-wrap: nowrap; gap: 8px; align-items: stretch; }
+.budget-row select { flex: 0 0 104px; }
+.budget-row input { flex: 1 1 auto; min-width: 0; }
 .form-check {
   display: flex;
   align-items: center;
@@ -1147,69 +1184,14 @@ body:not(.index-hero) .section .chip {
   cursor: not-allowed;
 }
 
-/* Help affordance: hover or focus the dot to read the file rules. */
-/* .form-field span/label default to display:block, so the inline pieces of
-   the label row and the checkbox row need to win that on specificity. */
-.form-field .field-label-row { display: flex; align-items: center; gap: 7px; }
-.form-field .help { position: relative; display: inline-flex; margin: 0; }
-.form-field .help-tip { display: block; margin: 0; }
+/* The checkbox row is inline; .form-field label/span default to block. */
 .form-field label.form-check { display: flex; margin-bottom: 0; }
 .form-field .form-check span { display: inline; margin-bottom: 0; }
-.help-dot {
-  width: 16px;
-  height: 16px;
-  padding: 0;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  background: none;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--color-muted);
-  cursor: help;
-}
-.help-dot:hover,
-.help-dot:focus-visible {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  outline: none;
-}
-.help-tip {
-  position: absolute;
-  z-index: 40;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 260px;
-  padding: 9px 12px;
-  border-radius: 10px;
-  background: var(--color-dark);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.45;
-  text-align: left;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.18s ease, visibility 0.18s ease;
-}
-.help-tip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border: 5px solid transparent;
-  border-top-color: var(--color-dark);
-}
-.help:hover .help-tip,
-.help-dot:focus-visible + .help-tip {
-  opacity: 1;
-  visibility: visible;
-}
+
+/* Placeholders read as watermarks inside the field. */
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: #98A2B3; font-weight: 400; }
 
 @media (max-width: 520px) {
-  .phone-row { flex-direction: column; }
-  .phone-row .combo-dial { flex: none; width: 100%; max-width: none; }
+  .combo-dial .combo-list { min-width: 0; left: 0; right: auto; width: 240px; }
 }

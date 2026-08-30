@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css?v=8">
   <link rel="stylesheet" href="css/layout.css?v=5">
-  <link rel="stylesheet" href="css/components.css?v=13">
+  <link rel="stylesheet" href="css/components.css?v=14">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -126,15 +126,15 @@
               <div class="stack">
                 <label class="form-field">
                   <span>Name *</span>
-                  <input type="text" name="name" id="field-name" autocomplete="name" required>
+                  <input type="text" name="name" id="field-name" autocomplete="name" placeholder="Your full name" required>
                 </label>
                 <label class="form-field">
                   <span>Company</span>
-                  <input type="text" name="company" id="field-company" autocomplete="organization">
+                  <input type="text" name="company" id="field-company" autocomplete="organization" placeholder="Company name">
                 </label>
                 <label class="form-field">
                   <span>Email *</span>
-                  <input type="email" name="email" id="field-email" autocomplete="email" required>
+                  <input type="email" name="email" id="field-email" autocomplete="email" placeholder="you@company.com" required>
                 </label>
 
                 <div class="form-field">
@@ -144,11 +144,11 @@
                       <input type="text" class="combo-input" id="field-dial-search"
                              aria-labelledby="label-phone" aria-label="Country dial code"
                              autocomplete="off" role="combobox" aria-expanded="false"
-                             aria-autocomplete="list" value="🇮🇳 India (+91)">
+                             aria-autocomplete="list" value="IN" placeholder="IN">
                       <ul class="combo-list" role="listbox" hidden></ul>
                     </div>
                     <input type="tel" name="phone_number" id="field-phone" inputmode="tel"
-                           autocomplete="tel-national" placeholder="Phone number" required>
+                           autocomplete="tel-national" placeholder="00000 00000" required>
                   </div>
                   <input type="hidden" name="phone_country" id="field-phone-country" value="IN">
                   <input type="hidden" name="phone_country_code" id="field-phone-code" value="+91">
@@ -209,28 +209,20 @@
                     <option value="15:00-18:00">3 PM &ndash; 6 PM</option>
                     <option value="18:00-20:00">6 PM &ndash; 8 PM</option>
                   </select>
-                  <p class="field-note" id="best-time-note"></p>
                   <input type="hidden" name="best_time_timezone" id="field-best-time-tz">
                   <input type="hidden" name="best_time_utc" id="field-best-time-utc">
                 </div>
 
                 <label class="form-field">
                   <span>Project Description *</span>
-                  <textarea name="description" id="field-description" rows="4" required></textarea>
+                  <textarea name="description" id="field-description" rows="4" placeholder="Tell us what you want to build, and any context that helps." required></textarea>
                 </label>
 
                 <div class="form-field">
-                  <span class="field-label-row">
-                    Attachment
-                    <span class="help">
-                      <button type="button" class="help-dot" aria-describedby="attachment-help"
-                              aria-label="Allowed file types and maximum size">?</button>
-                      <span class="help-tip" id="attachment-help" role="tooltip">PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX, TXT<br>Maximum file size: 10 MB</span>
-                    </span>
-                  </span>
+                  <span>Attachment</span>
                   <input type="file" name="attachment" id="field-attachment"
                          accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.pptx,.txt,application/pdf,image/png,image/jpeg,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain">
-                  <p class="field-note" id="attachment-note">One file, up to 10 MB.</p>
+                  <p class="field-hint" id="attachment-note">PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX, TXT &nbsp;&middot;&nbsp; Maximum file size: 10 MB</p>
                 </div>
 
                 <button type="submit" class="btn btn-primary" id="form-submit">Send Project Requirement</button>
@@ -294,6 +286,6 @@
   <script src="js/icons.js?v=5" defer></script>
   <script src="js/nav.js?v=5" defer></script>
   <script src="js/reveal.js?v=5" defer></script>
-  <script src="js/contact.js?v=6" defer></script>
+  <script src="js/contact.js?v=7" defer></script>
 </body>
 </html>
