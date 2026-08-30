@@ -1,8 +1,7 @@
 // js/flip.js — turn clickable info tiles into 3D flip cards.
 // Front keeps the icon/title/summary + trigger; the accordion body becomes the
 // back face (pre-rotated in CSS). Click front to flip; a "↻ back" control at the
-// TOP of the back returns. When the Solutions section first scrolls into view,
-// its tiles do a one-time there-and-back flip to hint the interaction.
+// TOP of the back returns. Flipping is user-driven only — nothing flips on its own.
 (function () {
   var BACK_ICON =
     '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" ' +
@@ -66,6 +65,15 @@
       while (body.firstChild) back.appendChild(body.firstChild);
       body.parentNode && body.parentNode.removeChild(body);
 
+      // Design's back face closes on a call to action pinned to the bottom.
+      var cta = document.createElement('a');
+      cta.className = 'flip-back-cta';
+      cta.href = 'contact.html';
+      cta.innerHTML = (tile.classList.contains('card-accent')
+        ? 'Start a project'
+        : 'Tell us what you need') + ' <span>&rarr;</span>';
+      back.appendChild(cta);
+
       inner.appendChild(front);
       inner.appendChild(back);
       tile.appendChild(inner);
@@ -90,37 +98,5 @@
       });
     });
 
-    // --- One-time "hint" flip when the Solutions section enters view ---
-    var prefersReduced = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var solutions = document.getElementById('solutions');
-    if (prefersReduced || !solutions || !('IntersectionObserver' in window)) return;
-
-    var hintCards = solutions.querySelectorAll('.card-accent.flip');
-    if (!hintCards.length) return;
-
-    var hinted = false;
-    function runHint() {
-      if (hinted) return;
-      hinted = true;
-      Array.prototype.forEach.call(hintCards, function (card, i) {
-        setTimeout(function () {
-          card.classList.add('hinting');
-          card.classList.add('flipped');
-          setTimeout(function () {
-            card.classList.remove('flipped');
-            setTimeout(function () { card.classList.remove('hinting'); }, 700);
-          }, 850);
-        }, i * 140);
-      });
-    }
-    // Trigger when the first Solutions card is well into view (section is taller
-    // than the viewport, so we watch a card, not the whole section).
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) { obs.disconnect(); runHint(); }
-      });
-    }, { threshold: 0.3 });
-    obs.observe(hintCards[0]);
   });
 })();

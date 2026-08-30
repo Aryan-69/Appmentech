@@ -157,16 +157,48 @@
 .flip-back ul {
   margin: 0 0 var(--space-2);
   padding-left: var(--space-4);
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.45;
   color: var(--color-body);
   text-align: left;
   width: 100%;
 }
-.flip-back li { margin-bottom: 4px; }
+.flip-back li { margin-bottom: 2px; }
 
-/* During the one-time hint flip, ignore clicks so it can't be interrupted mid-demo */
-.card.flip.hinting { pointer-events: none; }
+/* Back-face call to action. Sticks to the bottom of the face so it stays
+   reachable on the tiles whose detail list is long enough to scroll. */
+.flip-back-cta {
+  position: sticky;
+  bottom: calc(-1 * var(--flip-pad-b));
+  margin-top: auto;
+  width: 100%;
+  padding: 16px 0 var(--flip-pad-b);
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  gap: 8px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-accent-ink);
+  background: linear-gradient(to top, var(--flip-fade) 78%, transparent);
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+.flip-back-cta:hover { gap: 14px; color: var(--color-heading); }
+.industry-tile .flip-back-cta { justify-content: center; }
+
+/* Fade colour + face bottom padding, so the sticky CTA covers the face edge. */
+.flip-back { --flip-fade: #FFFFFF; --flip-pad-b: 26px; }
+.section-dark .flip-back,
+.section-deep .flip-back,
+.section-alt .flip-back { --flip-fade: #070A12; --flip-pad-b: 22px; }
+
+.section-dark .flip-back-cta,
+.section-deep .flip-back-cta,
+.section-alt .flip-back-cta { color: #fff; }
+.section-dark .flip-back-cta:hover,
+.section-deep .flip-back-cta:hover,
+.section-alt .flip-back-cta:hover { color: #fff; }
 
 /* thin scrollbar for long back lists */
 .flip-face::-webkit-scrollbar { width: 6px; }
