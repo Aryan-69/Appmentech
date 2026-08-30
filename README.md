@@ -1,4 +1,39 @@
-# Appmentech site runbook
+# Appmentech Technologies — appmentech.in
+
+Marketing site and contact pipeline for Appmentech Technologies.
+
+- **Live:** https://appmentech.in
+- **Full runbook:** this file. Also available as
+  [a Word document](docs/Appmentech-Site-Runbook.docx).
+
+## Repository layout
+
+| Path | What it holds |
+|---|---|
+| `*.html` | Every page. Static, no build step. |
+| `css/` | `base.css` (tokens, keyframes), `layout.css`, `components.css`, `hero.css`, `flip.css` |
+| `js/` | `hero.js`, `nav.js`, `flip.js`, `reveal.js`, `accordion.js`, `icons.js`, `contact.js` |
+| `assets/` | Brand mark, lockups, favicons |
+| `submit.php` | The contact-form endpoint |
+| `lib/` | `requirements.php` (storage), `googledrive.php` (attachments) — web access denied |
+| `db/schema.sql` | `UserRequirements` + audit table — web access denied |
+| `config.sample.php` | Template for `config.php`, which is gitignored and lives only on the server |
+| `db-check.php`, `drive-check.php`, `google-auth.php` | One-shot diagnostics. Upload, run, delete. |
+
+## Working locally
+
+Any static server will do; PHP endpoints need PHP.
+
+```bash
+python -m http.server 4321     # pages only
+php -S 127.0.0.1:8000          # pages + submit.php (needs config.php)
+```
+
+There is no package manager, bundler or framework. Edit a file, reload the page.
+
+---
+
+## Runbook
 
 How appmentech.in works, and what to check when part of it stops.
 
