@@ -53,11 +53,23 @@ if (!is_file($libPath)) {
 require_once $libPath;
 
 // The first release required folder_id; a stale copy is the usual reason a
-// filled-in config still reads as unconfigured.
+// filled-in config still reads as unconfigured. Identify the exact file being
+// loaded, so an upload that landed in the wrong directory is obvious.
 $source = file_get_contents($libPath);
-line('lib/googledrive.php', strpos($source, "google_drive_setting(\$cfg, 'folder_id')\n") !== false
-    || strpos($source, 'No folder_id') !== false ? 'current (folder_id optional)' : 'OLD COPY — folder_id required, re-upload it');
+line('library path', realpath($libPath));
+line('library size', strlen($source) . ' bytes');
+line('library modified', date('Y-m-d H:i:s', filemtime($libPath)));
+line('library md5', md5($source));
+line('lib/googledrive.php', strpos($source, 'No folder_id') !== false
+    ? 'current (folder_id optional)' : 'OLD COPY — folder_id required, re-upload it');
 line('scope in use', defined('GOOGLE_DRIVE_SCOPE') ? GOOGLE_DRIVE_SCOPE : 'unknown');
+
+// Other copies of the file lying around confuse an upload; name them.
+foreach ([__DIR__ . '/googledrive.php', __DIR__ . '/lib/lib/googledrive.php'] as $stray) {
+    if (is_file($stray)) {
+        line('stray copy found', realpath($stray) . ' — delete it');
+    }
+}
 
 echo "\n-- config.php googledrive block --\n";
 if (empty($cfg['googledrive'])) {
