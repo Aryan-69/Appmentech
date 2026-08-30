@@ -364,12 +364,13 @@
         if (res.ok && res.data && res.data.ok) {
           form.reset();
           form.style.display = 'none';
-          var note = res.data.attachment_warning
-            ? ' ' + res.data.attachment_warning
-            : '';
+          var notes = [];
+          if (res.data.storage_warning) notes.push(res.data.storage_warning);
+          if (res.data.attachment_warning) notes.push(res.data.attachment_warning);
           showMessage(
-            'Thank you — your project requirement has been sent. We will get back to you shortly.' + note,
-            !!res.data.attachment_warning
+            'Thank you — your project requirement has been sent. We will get back to you shortly.'
+              + (notes.length ? ' ' + notes.join(' ') : ''),
+            notes.length > 0
           );
           return;
         }

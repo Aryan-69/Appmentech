@@ -22,10 +22,19 @@ function normalize_email($v) {
     return mb_strtolower(trim((string) $v), 'UTF-8');
 }
 
-/** Digits only, so "+91 98765 43210" and "09876543210" compare equal. */
+/**
+ * Digits only, reduced to the trailing ten, so that "+91 98765 43210",
+ * "09876543210" and "98765 43210" all compare equal. Without the trim to ten
+ * the same person switching between the international and national form of
+ * their number would be treated as a new contact.
+ */
 function normalize_phone($v) {
     $digits = preg_replace('/\D+/', '', (string) $v);
-    return $digits === '' ? '' : ltrim($digits, '0');
+    if ($digits === '') {
+        return '';
+    }
+    $digits = ltrim($digits, '0');
+    return strlen($digits) > 10 ? substr($digits, -10) : $digits;
 }
 
 function contact_key($name, $email, $phone) {
@@ -110,7 +119,7 @@ function save_requirement(PDO $pdo, array $row) {
         $pdo->prepare($sql)->execute($params);
         $pdo->commit();
         return ['id' => $id, 'mode' => 'inserted'];
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }

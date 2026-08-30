@@ -156,10 +156,18 @@ $details = [
     'submittedAtUtc'    => gmdate('c'),
 ];
 
+// Whether storage was even asked for, so a silent skip can be told apart
+// from a genuine failure in the response and in the notification email.
+$dbConfigured = !empty($cfg['db']) && !empty($cfg['db']['host']) && !empty($cfg['db']['name']);
+$storageStatus = $dbConfigured ? 'Pending' : 'Not configured';
+$storageDetail = null;
+
 try {
     $pdo = db_connect($cfg);
-} catch (Exception $e) {
+} catch (Throwable $e) {
     error_log('contact submit: database connection failed: ' . $e->getMessage());
+    $storageStatus = 'Failed';
+    $storageDetail = 'connection: ' . $e->getMessage();
     $pdo = null;
 }
 
@@ -188,9 +196,12 @@ if ($pdo) {
         ];
         $saved = save_requirement($pdo, $row);
         $requirementId = $saved['id'];
-    } catch (Exception $e) {
+        $storageStatus = $saved['mode'] === 'updated' ? 'Updated' : 'Inserted';
+    } catch (Throwable $e) {
         // Storage problems must not lose the enquiry — the email still goes out.
         error_log('contact submit: could not save requirement: ' . $e->getMessage());
+        $storageStatus = 'Failed';
+        $storageDetail = $e->getMessage();
         $pdo = null;
     }
 }
@@ -213,6 +224,8 @@ if ($attachment) {
     } else {
         // No cloud storage wired up yet: the file rides along on the email.
         $attachmentStatus = 'Pending';
+        $attachmentWarning = 'OneDrive is not configured yet, so your attachment was emailed to '
+            . $cfg['to'] . ' instead of being filed.';
     }
     $details['attachment']['status'] = $attachmentStatus;
 
@@ -243,6 +256,7 @@ if ($attachment) {
     $bodyLines[] = 'Attachment: ' . $attachment['name'] . ' (' . $attachmentStatus . ')';
     $bodyLines[] = 'Attachment path: ' . $details['attachment']['path'];
 }
+$bodyLines[] = 'Storage: ' . $storageStatus . ($storageDetail !== null ? ' — ' . $storageDetail : '');
 $bodyLines[] = '';
 $bodyLines[] = 'Project Description:';
 $bodyLines[] = $description;
@@ -273,9 +287,12 @@ if (!$ackOk) {
     error_log('contact submit SMTP error (auto-reply): ' . $ackDetail);
 }
 
-$response = ['ok' => true, 'requirement_id' => $requirementId];
+$response = ['ok' => true, 'requirement_id' => $requirementId, 'storage' => $storageStatus];
 if ($attachmentWarning !== null) {
     $response['attachment_warning'] = $attachmentWarning;
+}
+if ($storageStatus === 'Failed') {
+    $response['storage_warning'] = 'Your enquiry reached us by email, but it could not be saved to the database.';
 }
 echo json_encode($response);
 
