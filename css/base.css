@@ -161,6 +161,10 @@ button, input, select, textarea {
 @keyframes omScan  { 0% { transform: translateY(-10%); opacity: 0; } 25% { opacity: 0.9; } 100% { transform: translateY(320%); opacity: 0; } }
 @keyframes omTrace { 0% { transform: translateX(-100%); } 55%, 100% { transform: translateX(100%); } }
 @keyframes omScroll { 0% { transform: translateY(-60%); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(160%); opacity: 0; } }
+@keyframes omGrow  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes omPop   { 0% { opacity: 0; transform: scale(0.4); } 60% { transform: scale(1.15); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes omItem  { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes omFloat { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -18px, 0); } }
 @keyframes omChain {
   0%, 22%, 100% {
     border-color: rgba(242, 161, 60, 0.35);
