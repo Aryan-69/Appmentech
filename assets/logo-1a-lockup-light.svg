@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="248" height="48" viewBox="0 0 248 48" role="img" aria-label="Appmentech">
+  <g transform="translate(4 4) scale(0.3333)">
+    <circle cx="60" cy="60" r="38" fill="#d4801f"></circle>
+    <g fill="none" stroke="#d4801f" stroke-width="9" stroke-linecap="round">
+      <path d="M60 12 A48 48 0 0 1 102 36"></path>
+      <path d="M60 108 A48 48 0 0 1 18 84"></path>
+    </g>
+    <g fill="none" stroke="#ffffff" stroke-linecap="butt">
+      <path d="M60 38 L44 82" stroke-width="9"></path>
+      <path d="M60 38 L76 82" stroke-width="9"></path>
+      <path d="M50 68 L70 68" stroke-width="8"></path>
+    </g>
+  </g>
+  <text x="58" y="32" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="23" letter-spacing="-0.575" fill="#0b0e17">Appmentech<tspan fill="#d4801f">.</tspan></text>
+</svg>

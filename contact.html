@@ -10,8 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css?v=8">
   <link rel="stylesheet" href="css/layout.css?v=5">
-  <link rel="stylesheet" href="css/components.css?v=10">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F172A'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='20' fill='%232563EB'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/components.css?v=13">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="canonical" href="https://appmentech.in/contact.html">
 </head>
 <body>
@@ -27,7 +30,7 @@
 
   <header class="nav">
     <div class="container nav-inner">
-      <a href="index.html" class="nav-logo">Appmentech<span>.</span></a>
+      <a href="index.html" class="nav-logo" aria-label="Appmentech - home"><svg class="logo-mark" viewBox="0 0 120 120" width="36" height="36" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="38" fill="var(--logo-amber)"/><g class="logo-orbits" fill="none" stroke="var(--logo-amber)" stroke-width="9" stroke-linecap="round"><path d="M60 12 A48 48 0 0 1 102 36"/><path d="M60 108 A48 48 0 0 1 18 84"/></g><g fill="none" stroke="var(--logo-knockout)" stroke-linecap="butt"><path d="M60 38 L44 82" stroke-width="9"/><path d="M60 38 L76 82" stroke-width="9"/><path d="M50 68 L70 68" stroke-width="8"/></g></svg><span class="logo-word">Appmentech<span class="logo-dot">.</span></span></a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
       </button>
@@ -119,44 +122,117 @@
         <div class="grid-2" style="align-items:start;">
           <div class="card">
             <h3>Project Details</h3>
-            <form id="contact-form" novalidate>
+            <form id="contact-form" novalidate enctype="multipart/form-data">
               <div class="stack">
                 <label class="form-field">
                   <span>Name *</span>
-                  <input type="text" name="name" id="field-name" required>
+                  <input type="text" name="name" id="field-name" autocomplete="name" required>
                 </label>
                 <label class="form-field">
                   <span>Company</span>
-                  <input type="text" name="company" id="field-company">
+                  <input type="text" name="company" id="field-company" autocomplete="organization">
                 </label>
                 <label class="form-field">
                   <span>Email *</span>
-                  <input type="email" name="email" id="field-email" required>
+                  <input type="email" name="email" id="field-email" autocomplete="email" required>
                 </label>
-                <label class="form-field">
-                  <span>Phone</span>
-                  <input type="tel" name="phone" id="field-phone">
-                </label>
-                <label class="form-field">
-                  <span>Industry</span>
-                  <input type="text" name="industry" id="field-industry">
-                </label>
-                <label class="form-field">
-                  <span>Solution Required</span>
-                  <input type="text" name="solution" id="field-solution">
-                </label>
-                <label class="form-field">
+
+                <div class="form-field">
+                  <span id="label-phone">Phone *</span>
+                  <div class="phone-row">
+                    <div class="combo combo-dial" data-combo="dial">
+                      <input type="text" class="combo-input" id="field-dial-search"
+                             aria-labelledby="label-phone" aria-label="Country dial code"
+                             autocomplete="off" role="combobox" aria-expanded="false"
+                             aria-autocomplete="list" value="🇮🇳 India (+91)">
+                      <ul class="combo-list" role="listbox" hidden></ul>
+                    </div>
+                    <input type="tel" name="phone_number" id="field-phone" inputmode="tel"
+                           autocomplete="tel-national" placeholder="Phone number" required>
+                  </div>
+                  <input type="hidden" name="phone_country" id="field-phone-country" value="IN">
+                  <input type="hidden" name="phone_country_code" id="field-phone-code" value="+91">
+                </div>
+
+                <div class="form-field combo" data-combo="industry">
+                  <label for="field-industry">Industry</label>
+                  <input type="text" class="combo-input" name="industry" id="field-industry"
+                         autocomplete="off" role="combobox" aria-expanded="false"
+                         aria-autocomplete="list" placeholder="Select or type your industry">
+                  <ul class="combo-list" role="listbox" hidden></ul>
+                </div>
+
+                <div class="form-field combo" data-combo="solution">
+                  <label for="field-solution">Solution Required</label>
+                  <input type="text" class="combo-input" name="solution" id="field-solution"
+                         autocomplete="off" role="combobox" aria-expanded="false"
+                         aria-autocomplete="list" placeholder="Select or type the solution you need">
+                  <ul class="combo-list" role="listbox" hidden></ul>
+                </div>
+
+                <div class="form-field">
                   <span>Estimated Budget</span>
-                  <input type="text" name="budget" id="field-budget">
-                </label>
-                <label class="form-field">
-                  <span>Project Timeline</span>
-                  <input type="text" name="timeline" id="field-timeline">
-                </label>
+                  <div class="budget-row">
+                    <select name="currency" id="field-currency" aria-label="Currency">
+                      <option value="INR" selected>INR ₹</option>
+                      <option value="USD">USD $</option>
+                      <option value="EUR">EUR €</option>
+                      <option value="GBP">GBP £</option>
+                      <option value="AED">AED د.إ</option>
+                      <option value="SGD">SGD $</option>
+                      <option value="AUD">AUD $</option>
+                      <option value="CAD">CAD $</option>
+                    </select>
+                    <input type="text" name="budget_amount" id="field-budget" inputmode="numeric"
+                           placeholder="Enter approximate amount" aria-label="Estimated budget amount">
+                  </div>
+                  <label class="form-check">
+                    <input type="checkbox" name="budget_guidance" id="field-budget-guidance" value="yes">
+                    <span>I&rsquo;m not sure &mdash; I&rsquo;d like guidance</span>
+                  </label>
+                </div>
+
+                <div class="form-field combo" data-combo="timeline">
+                  <label for="field-timeline">Project Timeline</label>
+                  <input type="text" class="combo-input" name="timeline" id="field-timeline"
+                         autocomplete="off" role="combobox" aria-expanded="false"
+                         aria-autocomplete="list" placeholder="Select a timeline">
+                  <ul class="combo-list" role="listbox" hidden></ul>
+                </div>
+
+                <div class="form-field">
+                  <label for="field-best-time">Best Time to Contact</label>
+                  <select name="best_time_local" id="field-best-time">
+                    <option value="">No preference</option>
+                    <option value="09:00-12:00">9 AM &ndash; 12 PM</option>
+                    <option value="12:00-15:00">12 PM &ndash; 3 PM</option>
+                    <option value="15:00-18:00">3 PM &ndash; 6 PM</option>
+                    <option value="18:00-20:00">6 PM &ndash; 8 PM</option>
+                  </select>
+                  <p class="field-note" id="best-time-note"></p>
+                  <input type="hidden" name="best_time_timezone" id="field-best-time-tz">
+                  <input type="hidden" name="best_time_utc" id="field-best-time-utc">
+                </div>
+
                 <label class="form-field">
                   <span>Project Description *</span>
                   <textarea name="description" id="field-description" rows="4" required></textarea>
                 </label>
+
+                <div class="form-field">
+                  <span class="field-label-row">
+                    Attachment
+                    <span class="help">
+                      <button type="button" class="help-dot" aria-describedby="attachment-help"
+                              aria-label="Allowed file types and maximum size">?</button>
+                      <span class="help-tip" id="attachment-help" role="tooltip">PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX, TXT<br>Maximum file size: 10 MB</span>
+                    </span>
+                  </span>
+                  <input type="file" name="attachment" id="field-attachment"
+                         accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.pptx,.txt,application/pdf,image/png,image/jpeg,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain">
+                  <p class="field-note" id="attachment-note">One file, up to 10 MB.</p>
+                </div>
+
                 <button type="submit" class="btn btn-primary" id="form-submit">Send Project Requirement</button>
               </div>
             </form>
@@ -168,7 +244,7 @@
             <p><strong>Appmentech Technologies</strong></p>
             <p>Email: <a href="mailto:contact@appmentech.in">contact@appmentech.in</a></p>
             <p>Phone: <a href="tel:+911234567890">+91 12345 67890</a></p>
-            <p>Website: appmentech.in</p>
+            <p>Website: <a href="https://appmentech.in/">appmentech.in</a></p>
             <p>Location: India</p>
           </div>
         </div>
@@ -180,7 +256,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-brand">Appmentech Technologies<span>.</span></div>
+          <div class="footer-brand"><svg class="logo-mark" viewBox="0 0 120 120" width="38" height="38" aria-hidden="true" focusable="false"><circle cx="60" cy="60" r="38" fill="var(--logo-amber)"/><g class="logo-orbits" fill="none" stroke="var(--logo-amber)" stroke-width="9" stroke-linecap="round"><path d="M60 12 A48 48 0 0 1 102 36"/><path d="M60 108 A48 48 0 0 1 18 84"/></g><g fill="none" stroke="var(--logo-knockout)" stroke-linecap="butt"><path d="M60 38 L44 82" stroke-width="9"/><path d="M60 38 L76 82" stroke-width="9"/><path d="M50 68 L70 68" stroke-width="8"/></g></svg><span class="logo-word">Appmentech Technologies<span class="logo-dot">.</span></span></div>
           <p class="footer-lead">Your All-in-One Digital &amp; Software Solutions Partner.</p>
           <p style="margin-top:20px;">Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering</p>
           <p style="margin-top:12px;">Secure &amp; Reliable | Scalable &amp; Future-Ready | Custom Built for Your Needs | Dedicated Support Every Step | On-Time Delivery Always</p>
@@ -218,6 +294,6 @@
   <script src="js/icons.js?v=5" defer></script>
   <script src="js/nav.js?v=5" defer></script>
   <script src="js/reveal.js?v=5" defer></script>
-  <script src="js/contact.js?v=5" defer></script>
+  <script src="js/contact.js?v=6" defer></script>
 </body>
 </html>

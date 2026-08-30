@@ -1,5 +1,7 @@
 <?php
-// submit.php — receives the contact form POST and sends it over Hostinger SMTP.
+// submit.php — receives the contact form POST: validates it, stores the
+// requirement, uploads any attachment to OneDrive, and notifies the team
+// over Hostinger SMTP.
 // Credentials live in config.php (gitignored). Copy config.sample.php to config.php first.
 
 header('Content-Type: application/json; charset=utf-8');
@@ -20,6 +22,11 @@ if (!is_file($configPath)) {
 }
 $cfg = require $configPath;
 
+require_once __DIR__ . '/lib/requirements.php';
+require_once __DIR__ . '/lib/onedrive.php';
+
+const MAX_ATTACHMENT_BYTES = 10 * 1024 * 1024;
+
 // ---- collect + sanitize input ----
 function field($key) {
     return isset($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -29,23 +36,196 @@ function oneLine($v) {
     return str_replace(["\r", "\n"], ' ', $v);
 }
 
-$name        = field('name');
-$company     = field('company');
-$email       = field('email');
-$phone       = field('phone');
-$industry    = field('industry');
-$solution    = field('solution');
-$budget      = field('budget');
-$timeline    = field('timeline');
-$description = field('description');
+$name         = field('name');
+$company      = field('company');
+$email        = field('email');
+$phone        = field('phone');
+$phoneCountry = field('phone_country');
+$phoneCode    = field('phone_country_code');
+$phoneNumber  = field('phone_number');
+$industry     = field('industry');
+$solution     = field('solution');
+$currency     = field('currency');
+$budgetAmount = field('budget_amount');
+$budgetGuide  = field('budget_guidance') !== '';
+$timeline     = field('timeline');
+$bestLocal    = field('best_time_local');
+$bestTz       = field('best_time_timezone');
+$bestUtc      = field('best_time_utc');
+$description  = field('description');
+
+if ($phone === '' && ($phoneCode !== '' || $phoneNumber !== '')) {
+    $phone = trim($phoneCode . ' ' . $phoneNumber);
+}
+$budget = $budgetGuide
+    ? 'Not sure — would like guidance'
+    : ($budgetAmount !== '' ? trim($currency . ' ' . $budgetAmount) : '');
 
 if ($name === '' || $email === '' || $description === '') {
     fail('Name, Email, and Project Description are required.');
 }
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    fail('Please provide a valid email address.');
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !valid_email_domain($email)) {
+    fail('Please provide a valid email address, including a real domain ending such as .com or .in.');
+}
+$phoneDigits = preg_replace('/\D+/', '', $phone);
+if (strlen($phoneDigits) < 6 || strlen($phoneDigits) > 15) {
+    fail('Please provide a valid phone number (6-15 digits).');
 }
 
+// ---- attachment: extension, MIME, size, then an optional malware scan ----
+$attachment = null;   // ['tmp','name','mime','size','id']
+$uploadError = null;
+
+if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] !== UPLOAD_ERR_NO_FILE) {
+    $file = $_FILES['attachment'];
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        fail($file['error'] === UPLOAD_ERR_INI_SIZE || $file['error'] === UPLOAD_ERR_FORM_SIZE
+            ? 'Maximum file size is 10 MB.'
+            : 'Attachment upload failed. Please try again.');
+    }
+    if (!is_uploaded_file($file['tmp_name'])) {
+        fail('Attachment upload failed. Please try again.');
+    }
+    if ($file['size'] > MAX_ATTACHMENT_BYTES) {
+        fail('Maximum file size is 10 MB.');
+    }
+
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $allowed = allowed_attachment_types();
+    if (!isset($allowed[$extension])) {
+        fail('File type not allowed. Use PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX or TXT.');
+    }
+
+    $detected = detect_mime($file['tmp_name']);
+    if ($detected !== null && !in_array($detected, $allowed[$extension], true)) {
+        fail('The file contents do not match its extension. Please upload a valid ' . strtoupper($extension) . ' file.');
+    }
+
+    list($clean, $scanDetail) = scan_for_malware($cfg, $file['tmp_name']);
+    if (!$clean) {
+        error_log('contact submit: attachment rejected by scanner: ' . $scanDetail);
+        fail('The attachment did not pass our security scan. Please send it to ' . $cfg['to'] . ' instead.');
+    }
+
+    $attachment = [
+        'tmp'  => $file['tmp_name'],
+        'name' => safe_file_name($file['name']),
+        'mime' => $detected !== null ? $detected : $allowed[$extension][0],
+        'size' => (int) $file['size'],
+    ];
+}
+
+// ---- persist: one active row per contact, previous version audited --------
+$requirementId = guid_v4();
+$attachmentStatus = $attachment ? 'Pending' : null;
+$pdo = null;
+
+// The attachment id is the requirement id, so the OneDrive folder and the
+// json record line up: /UserRequirements/{UserRequirementId}/{filename}
+$details = [
+    'userRequirementId' => $requirementId,
+    'name'              => $name,
+    'company'           => $company,
+    'email'             => $email,
+    'phone'             => $phone,
+    'phoneCountry'      => $phoneCountry,
+    'phoneCountryCode'  => $phoneCode,
+    'phoneNumber'       => $phoneNumber,
+    'industry'          => $industry,
+    'solutionRequired'  => $solution,
+    'estimatedBudget'   => $budget,
+    'budgetCurrency'    => $budgetGuide ? null : $currency,
+    'budgetAmount'      => $budgetGuide ? null : $budgetAmount,
+    'budgetGuidance'    => $budgetGuide,
+    'projectTimeline'   => $timeline,
+    'bestTimeToContact' => [
+        'local'    => $bestLocal,
+        'timezone' => $bestTz,
+        'utc'      => $bestUtc,
+    ],
+    'projectDescription' => $description,
+    'attachment'        => $attachment ? [
+        'attachmentId' => $requirementId,
+        'fileName'     => $attachment['name'],
+        'mimeType'     => $attachment['mime'],
+        'sizeBytes'    => $attachment['size'],
+        'path'         => '/UserRequirements/' . $requirementId . '/' . $attachment['name'],
+        'status'       => 'Pending',
+    ] : null,
+    'submittedAtUtc'    => gmdate('c'),
+];
+
+try {
+    $pdo = db_connect($cfg);
+} catch (Exception $e) {
+    error_log('contact submit: database connection failed: ' . $e->getMessage());
+    $pdo = null;
+}
+
+if ($pdo) {
+    try {
+        $row = [
+            'UserRequirementId'  => $requirementId,
+            'Name'               => $name,
+            'Company'            => $company !== '' ? $company : null,
+            'Email'              => $email,
+            'Phone'              => $phone !== '' ? $phone : null,
+            'PhoneCountryCode'   => $phoneCode !== '' ? $phoneCode : null,
+            'PhoneNumber'        => $phoneNumber !== '' ? $phoneNumber : null,
+            'PhoneNormalized'    => normalize_phone($phone),
+            'Industry'           => $industry !== '' ? $industry : null,
+            'SolutionRequired'   => $solution !== '' ? $solution : null,
+            'EstimatedBudget'    => $budget !== '' ? $budget : null,
+            'ProjectTimeline'    => $timeline !== '' ? $timeline : null,
+            'ProjectDescription' => $description,
+            'RequirementDetails' => json_encode($details, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            'ContactKey'         => contact_key($name, $email, $phone),
+            'AttachmentId'       => $attachment ? $requirementId : null,
+            'AttachmentFileName' => $attachment ? $attachment['name'] : null,
+            'AttachmentPath'     => $attachment ? $details['attachment']['path'] : null,
+            'AttachmentStatus'   => $attachmentStatus,
+        ];
+        $saved = save_requirement($pdo, $row);
+        $requirementId = $saved['id'];
+    } catch (Exception $e) {
+        // Storage problems must not lose the enquiry — the email still goes out.
+        error_log('contact submit: could not save requirement: ' . $e->getMessage());
+        $pdo = null;
+    }
+}
+
+// ---- attachment -> OneDrive ------------------------------------------------
+$attachmentWarning = null;
+
+if ($attachment) {
+    if (onedrive_configured($cfg)) {
+        list($uploaded, $detail) = onedrive_upload(
+            $cfg, $requirementId, $attachment['tmp'], $attachment['name'], $attachment['mime']
+        );
+        $attachmentStatus = $uploaded ? 'Uploaded' : 'Failed';
+        if ($uploaded) {
+            $details['attachment']['path'] = $detail;
+        } else {
+            error_log('contact submit: OneDrive upload failed: ' . $detail);
+            $attachmentWarning = 'Your attachment failed to send — please resend it, or email it directly to ' . $cfg['to'] . '.';
+        }
+    } else {
+        // No cloud storage wired up yet: the file rides along on the email.
+        $attachmentStatus = 'Pending';
+    }
+    $details['attachment']['status'] = $attachmentStatus;
+
+    if ($pdo) {
+        try {
+            update_attachment_status($pdo, $requirementId, $attachmentStatus, $details['attachment']['path']);
+        } catch (Exception $e) {
+            error_log('contact submit: could not update attachment status: ' . $e->getMessage());
+        }
+    }
+}
+
+// ---- notify ----------------------------------------------------------------
 $subject = 'Project Requirement from ' . oneLine($name);
 $bodyLines = [
     'Name: ' . $name,
@@ -56,14 +236,28 @@ $bodyLines = [
     'Solution Required: ' . $solution,
     'Estimated Budget: ' . $budget,
     'Project Timeline: ' . $timeline,
-    '',
-    'Project Description:',
-    $description,
+    'Best Time to Contact: ' . ($bestLocal !== '' ? $bestLocal . ' (' . $bestTz . ') = ' . $bestUtc : 'No preference'),
+    'Requirement ID: ' . $requirementId,
 ];
+if ($attachment) {
+    $bodyLines[] = 'Attachment: ' . $attachment['name'] . ' (' . $attachmentStatus . ')';
+    $bodyLines[] = 'Attachment path: ' . $details['attachment']['path'];
+}
+$bodyLines[] = '';
+$bodyLines[] = 'Project Description:';
+$bodyLines[] = $description;
 $body = implode("\r\n", $bodyLines);
 
 // 1) Notify the team. Reply-To is the visitor so a reply reaches them.
-list($ok, $detail) = smtp_send($cfg, $cfg['to'], $subject, $body, $email, oneLine($name));
+$mailAttachments = $attachment ? [[
+    'path' => $attachment['tmp'],
+    'name' => $attachment['name'],
+    'mime' => $attachment['mime'],
+]] : [];
+
+list($ok, $detail) = smtp_send(
+    $cfg, $cfg['to'], $subject, $body, $email, oneLine($name), null, $mailAttachments
+);
 
 if (!$ok) {
     error_log('contact submit SMTP error (notify): ' . $detail);
@@ -79,7 +273,89 @@ if (!$ackOk) {
     error_log('contact submit SMTP error (auto-reply): ' . $ackDetail);
 }
 
-echo json_encode(['ok' => true]);
+$response = ['ok' => true, 'requirement_id' => $requirementId];
+if ($attachmentWarning !== null) {
+    $response['attachment_warning'] = $attachmentWarning;
+}
+echo json_encode($response);
+
+// ---- validation helpers ----------------------------------------------------
+
+/** Extension => the MIME types finfo may legitimately report for it. */
+function allowed_attachment_types() {
+    return [
+        'pdf'  => ['application/pdf'],
+        'png'  => ['image/png'],
+        'jpg'  => ['image/jpeg'],
+        'jpeg' => ['image/jpeg'],
+        'docx' => [
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/zip',
+        ],
+        'xlsx' => [
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/zip',
+        ],
+        'pptx' => [
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'application/zip',
+        ],
+        'txt'  => ['text/plain', 'text/csv', 'application/csv'],
+    ];
+}
+
+function detect_mime($path) {
+    if (!function_exists('finfo_open')) {
+        return null; // cannot check on this host; extension check still applies
+    }
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    if (!$finfo) {
+        return null;
+    }
+    $mime = finfo_file($finfo, $path);
+    finfo_close($finfo);
+    return $mime === false ? null : $mime;
+}
+
+/** Keep the visitor's filename recognisable but safe as a path segment. */
+function safe_file_name($name) {
+    $base = preg_replace('/[^a-zA-Z0-9._-]/', '_', basename($name));
+    $base = ltrim($base, '.');
+    if ($base === '') {
+        $base = 'attachment';
+    }
+    return strlen($base) > 180 ? substr($base, -180) : $base;
+}
+
+/** Require a domain with a plausible alphabetic TLD (.com, .in, .tech ...). */
+function valid_email_domain($email) {
+    $domain = substr(strrchr($email, '@'), 1);
+    if ($domain === false || $domain === '') {
+        return false;
+    }
+    return (bool) preg_match('/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*\.[a-z]{2,}$/i', $domain);
+}
+
+/**
+ * Scan the upload when a scanner is configured (config.php: 'clamscan' =>
+ * '/usr/bin/clamdscan'). With no scanner available the file is accepted on the
+ * strength of the extension and MIME checks above.
+ *
+ * @return array{0:bool,1:string}
+ */
+function scan_for_malware(array $cfg, $path) {
+    $binary = isset($cfg['clamscan']) ? trim((string) $cfg['clamscan']) : '';
+    if ($binary === '' || !function_exists('exec') || !is_executable($binary)) {
+        return [true, 'no scanner configured'];
+    }
+    $output = [];
+    $status = 1;
+    exec(escapeshellcmd($binary) . ' --no-summary ' . escapeshellarg($path) . ' 2>&1', $output, $status);
+    if ($status === 0) {
+        return [true, 'clean'];
+    }
+    return [false, 'exit ' . $status . ': ' . implode(' ', $output)];
+}
 
 function auto_reply_body($name) {
     $first = trim($name) !== '' ? ' ' . $name : '';
@@ -155,7 +431,7 @@ function auto_reply_html($name) {
 }
 
 // ---- minimal SMTP-over-SSL client (no external dependencies) ----
-function smtp_send($cfg, $to, $subject, $body, $replyTo, $replyName, $html = null) {
+function smtp_send($cfg, $to, $subject, $body, $replyTo, $replyName, $html = null, $attachments = []) {
     $errno = 0; $errstr = '';
     $fp = @stream_socket_client(
         'ssl://' . $cfg['host'] . ':' . $cfg['port'],
@@ -205,22 +481,55 @@ function smtp_send($cfg, $to, $subject, $body, $replyTo, $replyName, $html = nul
 
     if ($html !== null) {
         // multipart/alternative: plain-text fallback + branded HTML
-        $boundary = 'bnd_' . bin2hex(random_bytes(12));
-        $headers[] = 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+        $altBoundary = 'alt_' . bin2hex(random_bytes(12));
+        $contentType = 'multipart/alternative; boundary="' . $altBoundary . '"';
         $bodyText =
-            '--' . $boundary . "\r\n" .
+            '--' . $altBoundary . "\r\n" .
             "Content-Type: text/plain; charset=UTF-8\r\n" .
             "Content-Transfer-Encoding: 8bit\r\n\r\n" .
             $body . "\r\n\r\n" .
-            '--' . $boundary . "\r\n" .
+            '--' . $altBoundary . "\r\n" .
             "Content-Type: text/html; charset=UTF-8\r\n" .
             "Content-Transfer-Encoding: 8bit\r\n\r\n" .
             $html . "\r\n\r\n" .
-            '--' . $boundary . "--\r\n";
+            '--' . $altBoundary . "--\r\n";
     } else {
-        $headers[] = 'Content-Type: text/plain; charset=UTF-8';
-        $headers[] = 'Content-Transfer-Encoding: 8bit';
+        $contentType = 'text/plain; charset=UTF-8';
         $bodyText = $body;
+    }
+
+    if (!empty($attachments)) {
+        // Wrap whatever the body turned out to be in a multipart/mixed part,
+        // then append each file base64-encoded in 76-character lines.
+        $mixBoundary = 'mix_' . bin2hex(random_bytes(12));
+        $parts =
+            '--' . $mixBoundary . "\r\n" .
+            'Content-Type: ' . $contentType . "\r\n" .
+            ($html === null ? "Content-Transfer-Encoding: 8bit\r\n" : '') .
+            "\r\n" . $bodyText . "\r\n";
+
+        foreach ($attachments as $file) {
+            $data = @file_get_contents($file['path']);
+            if ($data === false) {
+                error_log('contact submit: could not attach ' . $file['name']);
+                continue;
+            }
+            $parts .=
+                '--' . $mixBoundary . "\r\n" .
+                'Content-Type: ' . $file['mime'] . '; name="' . $file['name'] . '"' . "\r\n" .
+                "Content-Transfer-Encoding: base64\r\n" .
+                'Content-Disposition: attachment; filename="' . $file['name'] . '"' . "\r\n\r\n" .
+                chunk_split(base64_encode($data), 76, "\r\n") . "\r\n";
+        }
+        $parts .= '--' . $mixBoundary . "--\r\n";
+
+        $headers[] = 'Content-Type: multipart/mixed; boundary="' . $mixBoundary . '"';
+        $bodyText = $parts;
+    } else {
+        $headers[] = 'Content-Type: ' . $contentType;
+        if ($html === null) {
+            $headers[] = 'Content-Transfer-Encoding: 8bit';
+        }
     }
 
     // normalize whole DATA payload to CRLF and dot-stuff lines starting with '.'

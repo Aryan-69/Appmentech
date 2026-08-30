@@ -50,15 +50,34 @@ body:not(.index-hero) .nav { background: var(--color-dark); }
   padding-bottom: 18px;
 }
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;                       /* 0.35 x mark size, per the logo handoff */
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 21px;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: #fff;
   flex: none;
 }
 .nav-logo:hover { color: #fff; }
-.nav-logo span { color: var(--color-accent); }
+
+/* --- Brand mark (logo 1a "Solid Orbit") ---------------------------------- */
+/* The A is a counter-form cut out of the disc, so it is stroked in the
+   surrounding surface colour rather than white. */
+.nav-logo,
+.footer-brand {
+  --logo-amber: var(--color-accent);
+  --logo-knockout: var(--color-dark);
+}
+.logo-mark { flex: none; display: block; }
+.logo-word { color: inherit; }
+.logo-dot { color: var(--logo-amber); }
+/* The arcs orbit; the disc and the A never move. */
+.logo-orbits {
+  transform-origin: 60px 60px;
+  animation: omSpin 22s linear infinite;
+}
 
 .nav-links {
   display: flex;
@@ -691,14 +710,16 @@ body:not(.index-hero) .section .chip {
   margin-bottom: 0;
 }
 .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   color: #fff;
   margin-bottom: 16px;
 }
-.footer-brand span { color: var(--color-accent); }
 .footer p { color: var(--color-muted); font-size: 14px; line-height: 1.7; }
 .footer-lead { color: #C3CBDD !important; font-size: 16px !important; }
 .footer-links {
@@ -1031,4 +1052,164 @@ body:not(.index-hero) .section .chip {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-orbits { animation: none; }
+}
+
+/* --- Contact form: comboboxes, phone, budget, attachment ----------------- */
+.form-field label { display: block; margin-bottom: 4px; }
+.form-field select,
+.form-field input[type="file"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-heading);
+  background: var(--color-bg);
+}
+.form-field select:focus,
+.form-field input[type="file"]:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.form-field.invalid input,
+.form-field.invalid select,
+.form-field.invalid textarea { border-color: #DC2626; }
+.field-note {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+.field-note.error { color: #DC2626; font-weight: 600; }
+
+/* Searchable dropdown that still accepts free text. */
+.combo { position: relative; }
+.combo-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 232px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: 0 18px 40px -24px rgba(11, 14, 23, 0.45);
+}
+.combo-list li {
+  padding: 9px 11px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-body);
+  cursor: pointer;
+}
+.combo-list li[aria-selected="true"],
+.combo-list li:hover {
+  background: rgba(242, 161, 60, 0.14);
+  color: var(--color-heading);
+}
+.combo-list .combo-empty { color: var(--color-muted); cursor: default; }
+.combo-list .combo-empty:hover { background: none; }
+
+/* Phone: dial-code combobox + national number. */
+.phone-row { display: flex; gap: 10px; align-items: flex-start; }
+.phone-row .combo-dial { flex: 0 0 40%; max-width: 210px; }
+.phone-row > input[type="tel"] { flex: 1; min-width: 0; }
+
+/* Budget: currency + amount on one row. */
+.budget-row { display: flex; gap: 10px; }
+.budget-row select { flex: 0 0 118px; }
+.budget-row input { flex: 1; min-width: 0; }
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-body);
+  cursor: pointer;
+}
+.form-check input { width: 15px; height: 15px; accent-color: var(--color-accent); }
+.budget-row input:disabled {
+  background: rgba(11, 14, 23, 0.04);
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+
+/* Help affordance: hover or focus the dot to read the file rules. */
+/* .form-field span/label default to display:block, so the inline pieces of
+   the label row and the checkbox row need to win that on specificity. */
+.form-field .field-label-row { display: flex; align-items: center; gap: 7px; }
+.form-field .help { position: relative; display: inline-flex; margin: 0; }
+.form-field .help-tip { display: block; margin: 0; }
+.form-field label.form-check { display: flex; margin-bottom: 0; }
+.form-field .form-check span { display: inline; margin-bottom: 0; }
+.help-dot {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: none;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-muted);
+  cursor: help;
+}
+.help-dot:hover,
+.help-dot:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  outline: none;
+}
+.help-tip {
+  position: absolute;
+  z-index: 40;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 260px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--color-dark);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+.help-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border: 5px solid transparent;
+  border-top-color: var(--color-dark);
+}
+.help:hover .help-tip,
+.help-dot:focus-visible + .help-tip {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 520px) {
+  .phone-row { flex-direction: column; }
+  .phone-row .combo-dial { flex: none; width: 100%; max-width: none; }
 }
