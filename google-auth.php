@@ -15,10 +15,26 @@
 
 header('Content-Type: text/plain; charset=utf-8');
 
-if (!isset($_GET['i-will-delete-this']) || $_GET['i-will-delete-this'] !== 'yes') {
+// Google's callback arrives as ?code=...&state=..., without our flag — a web
+// client's redirect URI cannot carry a query string, so the flag guards only
+// the starting step. The callback is tied to the browser that began the flow
+// by a state value echoed back through a cookie.
+$isCallback = isset($_GET['code']);
+
+if (!$isCallback && (!isset($_GET['i-will-delete-this']) || $_GET['i-will-delete-this'] !== 'yes')) {
     echo "Add ?i-will-delete-this=yes to the URL to run this helper,\n";
     echo "then delete google-auth.php from the server.\n";
     exit;
+}
+
+if ($isCallback) {
+    $expected = isset($_COOKIE['gauth_state']) ? $_COOKIE['gauth_state'] : '';
+    $given = isset($_GET['state']) ? $_GET['state'] : '';
+    if ($expected === '' || !hash_equals($expected, $given)) {
+        echo "This callback did not come from a flow started in this browser.\n";
+        echo "Start again at ?i-will-delete-this=yes\n";
+        exit;
+    }
 }
 
 $configPath = __DIR__ . '/config.php';
@@ -36,7 +52,16 @@ if ($clientId === '' || $secret === '' || strpos($clientId, '.apps.googleusercon
 $redirect = 'https://' . $_SERVER['HTTP_HOST'] . strtok($_SERVER['REQUEST_URI'], '?');
 
 // Step one: no code yet, so send the visitor to Google's consent screen.
-if (!isset($_GET['code'])) {
+if (!$isCallback) {
+    $state = bin2hex(random_bytes(16));
+    setcookie('gauth_state', $state, [
+        'expires'  => time() + 900,
+        'path'     => '/',
+        'secure'   => true,
+        'httponly' => true,
+        'samesite' => 'Lax', // must survive the redirect back from Google
+    ]);
+
     $url = 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query([
         'client_id'     => $clientId,
         'redirect_uri'  => $redirect,
@@ -45,6 +70,7 @@ if (!isset($_GET['code'])) {
         // offline + consent is what makes Google return a refresh token.
         'access_type'   => 'offline',
         'prompt'        => 'consent',
+        'state'         => $state,
     ]);
     echo "Open this URL, approve access, and you will come back here:\n\n";
     echo $url . "\n\n";
