@@ -392,54 +392,95 @@ function auto_reply_body($name) {
 function auto_reply_html($name) {
     $safeName = htmlspecialchars(trim($name), ENT_QUOTES, 'UTF-8');
     $greetName = $safeName !== '' ? ' ' . $safeName : '';
+
+    // Table layout with inline styles: the only thing every mail client agrees
+    // on. Colours are the site tokens — dark #0b0e17, amber #f2a13c, body
+    // #c3cbdd — and the mark is loaded from the site so a blocked-image client
+    // still shows the wordmark beside it.
     return
 '<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head>
-<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#475569;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:24px 0;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="x-apple-disable-message-reformatting">
+<title>We received your message</title>
+</head>
+<body style="margin:0;padding:0;background:#f6f7fa;font-family:\'Segoe UI\',-apple-system,Roboto,Helvetica,Arial,sans-serif;color:#3f4757;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your project requirement reached us. A member of the team replies within 1 business day.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f6f7fa;padding:28px 12px;">
     <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(15,23,42,0.08);">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -28px rgba(11,14,23,0.45);">
+
         <tr>
-          <td style="background:#12235B;padding:28px 32px;">
-            <span style="font-size:22px;font-weight:800;color:#ffffff;">Appmentech<span style="color:#F5A71C;">.</span></span>
+          <td style="background:#0b0e17;padding:26px 32px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="vertical-align:middle;padding-right:12px;">
+                  <img src="https://appmentech.in/assets/favicon-512.png" width="38" height="38" alt="Appmentech"
+                       style="display:block;width:38px;height:38px;border:0;">
+                </td>
+                <td style="vertical-align:middle;">
+                  <span style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#ffffff;">Appmentech<span style="color:#f2a13c;">.</span></span>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
+        <tr><td style="height:3px;background:#f2a13c;font-size:0;line-height:0;">&nbsp;</td></tr>
+
         <tr>
-          <td style="height:4px;background:#F5A71C;font-size:0;line-height:0;">&nbsp;</td>
+          <td style="padding:36px 32px 8px;">
+            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8791f;">Requirement received</p>
+            <h1 style="margin:0 0 18px;font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-0.6px;color:#0b0e17;">Thanks for reaching out' . $greetName . '</h1>
+            <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#4a5365;">
+              Your project requirement is with our team. Someone will read it properly and come back to you
+              <strong style="color:#0b0e17;">within 1 business day</strong> with next steps or a couple of questions.
+            </p>
+            <p style="margin:0 0 26px;font-size:15px;line-height:1.65;color:#4a5365;">
+              If it is urgent, reply straight to this email or call
+              <a href="tel:+911234567890" style="color:#0b0e17;font-weight:600;text-decoration:none;">+91 12345 67890</a>.
+            </p>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="border-radius:999px;background:#f2a13c;">
+                  <a href="https://appmentech.in" style="display:inline-block;padding:14px 30px;font-size:14.5px;font-weight:700;color:#17110a;text-decoration:none;border-radius:999px;">Visit our website &rarr;</a>
+                </td>
+              </tr>
+            </table>
+          </td>
         </tr>
+
         <tr>
-          <td style="padding:32px;">
-            <h1 style="margin:0 0 16px;font-size:22px;color:#12235B;font-weight:800;">Thanks for reaching out' . $greetName . '!</h1>
-            <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
-              We\'ve received your project requirement and a member of our team will get back to you
-              <strong>within 1 business day</strong>.
-            </p>
-            <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
-              If your request is urgent, just reply to this email or call us at
-              <strong style="color:#12235B;">+91 12345 67890</strong>.
-            </p>
-            <table role="presentation" cellpadding="0" cellspacing="0">
-              <tr><td style="border-radius:8px;background:#F5A71C;">
-                <a href="https://appmentech.in" style="display:inline-block;padding:12px 24px;font-size:14px;font-weight:700;color:#12235B;text-decoration:none;">Visit our website</a>
+          <td style="padding:30px 32px 34px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #e8eaf0;">
+              <tr><td style="padding-top:22px;">
+                <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b95ac;">What we do</p>
+                <p style="margin:0;font-size:13.5px;line-height:1.9;color:#4a5365;">
+                  Web Development &nbsp;&middot;&nbsp; Mobile Applications &nbsp;&middot;&nbsp; AI &amp; Intelligent Solutions<br>
+                  Cloud &amp; Enterprise &nbsp;&middot;&nbsp; Business Automation &nbsp;&middot;&nbsp; Quality Engineering<br>
+                  DevOps &amp; CI/CD &nbsp;&middot;&nbsp; API &amp; System Integration
+                </p>
               </td></tr>
             </table>
           </td>
         </tr>
+
         <tr>
-          <td style="padding:24px 32px;background:#0F172A;">
-            <p style="margin:0 0 6px;font-size:14px;font-weight:700;color:#F8FAFC;">Appmentech Technologies</p>
-            <p style="margin:0 0 10px;font-size:12px;color:#94A3B8;">Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering</p>
-            <p style="margin:0;font-size:12px;color:#94A3B8;">
-              <a href="mailto:contact@appmentech.in" style="color:#F5A71C;text-decoration:none;">contact@appmentech.in</a>
+          <td style="padding:26px 32px;background:#080b13;">
+            <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#ffffff;">Appmentech Technologies<span style="color:#f2a13c;">.</span></p>
+            <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#8b95ac;">Your all-in-one digital and software solutions partner.</p>
+            <p style="margin:0;font-size:12.5px;color:#8b95ac;">
+              <a href="mailto:contact@appmentech.in" style="color:#f4c690;text-decoration:none;">contact@appmentech.in</a>
               &nbsp;&middot;&nbsp;
-              <a href="https://appmentech.in" style="color:#F5A71C;text-decoration:none;">appmentech.in</a>
+              <a href="https://appmentech.in" style="color:#f4c690;text-decoration:none;">appmentech.in</a>
             </p>
           </td>
         </tr>
+
       </table>
-      <p style="margin:16px 0 0;font-size:11px;color:#94A3B8;max-width:600px;">
-        This is an automated confirmation. Please don\'t share sensitive information by email.
+      <p style="margin:16px auto 0;max-width:600px;font-size:11px;line-height:1.6;color:#8b95ac;">
+        This is an automated confirmation. Please do not share passwords or payment details by email.
       </p>
     </td></tr>
   </table>
