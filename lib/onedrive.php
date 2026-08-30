@@ -10,17 +10,54 @@
 // Every function returns [ok, detailOrPath] so the caller can degrade to the
 // "please resend the attachment" message rather than failing the submission.
 
+/**
+ * True only when all four settings look like real credentials. Placeholder
+ * values — blanks, YOUR_*, all-zero GUIDs, the sample's prose — must read as
+ * "not configured", otherwise every attachment would attempt a doomed upload
+ * and the visitor would be told to resend a file that was never in trouble.
+ */
 function onedrive_configured(array $cfg) {
     if (empty($cfg['onedrive'])) {
         return false;
     }
+
+    $value = function ($key) use ($cfg) {
+        return isset($cfg['onedrive'][$key]) ? trim((string) $cfg['onedrive'][$key]) : '';
+    };
+
     foreach (['tenant_id', 'client_id', 'client_secret', 'drive'] as $key) {
-        $v = isset($cfg['onedrive'][$key]) ? trim((string) $cfg['onedrive'][$key]) : '';
-        if ($v === '' || strpos($v, 'YOUR_') === 0) {
+        $v = $value($key);
+        if ($v === '' || stripos($v, 'YOUR_') === 0) {
             return false;
         }
     }
-    return true;
+
+    // tenant and client are GUIDs (the tenant may instead be a domain), and an
+    // all-zero GUID is the placeholder shape, not an identifier.
+    $guid = '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i';
+    $zero = '00000000-0000-0000-0000-000000000000';
+
+    $client = $value('client_id');
+    if (!preg_match($guid, $client) || strcasecmp($client, $zero) === 0) {
+        return false;
+    }
+
+    $tenant = $value('tenant_id');
+    $tenantLooksReal = (preg_match($guid, $tenant) && strcasecmp($tenant, $zero) !== 0)
+        || strpos($tenant, '.') !== false; // e.g. contoso.onmicrosoft.com
+    if (!$tenantLooksReal) {
+        return false;
+    }
+
+    // Entra client secrets are long and have no spaces; sample prose has both.
+    $secret = $value('client_secret');
+    if (strlen($secret) < 20 || preg_match('/\s/', $secret)) {
+        return false;
+    }
+
+    // Graph addresses a drive as users/{upn}/drive or drives/{driveId}.
+    $drive = trim($value('drive'), '/');
+    return strpos($drive, 'users/') === 0 || strpos($drive, 'drives/') === 0;
 }
 
 function onedrive_token(array $one) {
