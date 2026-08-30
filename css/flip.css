@@ -43,7 +43,7 @@
           backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
@@ -78,9 +78,6 @@
   background: linear-gradient(180deg, rgba(242, 161, 60, 0.18), rgba(6, 9, 18, 0.9));
   padding: 24px 24px 22px;
 }
-.section-dark .flip-back ul,
-.section-deep .flip-back ul,
-.section-alt .flip-back ul { color: #C3CBDD; }
 
 /* Back starts pre-rotated so its content reads correctly after the flip. */
 .flip-back { transform: rotateY(180deg); }
@@ -154,25 +151,73 @@
 .flip-back-btn:hover { color: var(--color-accent); }
 .flip-back-btn:hover svg { transform: rotate(-90deg); }
 
-.flip-back ul {
-  margin: 0 0 var(--space-2);
-  padding-left: var(--space-4);
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--color-body);
-  text-align: left;
-  width: 100%;
-}
-.flip-back li { margin-bottom: 2px; }
+/* --- Design back face: app mock + capability tags + call to action --------- */
 
-/* Back-face call to action. Sticks to the bottom of the face so it stays
-   reachable on the tiles whose detail list is long enough to scroll. */
+/* Product mock, sized for the back of a 352px card. */
+.mock-app {
+  margin: 16px 0 0;
+  border-radius: 12px;
+  flex: none;
+}
+.mock-app-body {
+  display: grid;
+  grid-template-columns: 34% 1fr;
+  gap: 10px;
+  padding: 14px 12px 16px;
+}
+.mock-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.mock-col + .mock-col { gap: 8px; }
+.mock-block { height: 24px; border-radius: 6px; background: rgba(242, 161, 60, 0.5); }
+.mock-app .mock-line { height: 8px; border-radius: 5px; background: rgba(255, 255, 255, 0.13); }
+.mock-hero {
+  height: 38px;
+  border-radius: 8px;
+  background: linear-gradient(120deg, rgba(242, 161, 60, 0.45), rgba(226, 116, 90, 0.22));
+}
+.mock-row { display: flex; gap: 8px; }
+.mock-row span {
+  flex: 1;
+  height: 20px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.mock-app .mock-scan {
+  height: 34%;
+  background: linear-gradient(180deg, rgba(242, 161, 60, 0), rgba(242, 161, 60, 0.18), rgba(242, 161, 60, 0));
+  animation-duration: 2.6s;
+}
+
+/* Capability tags */
+.flip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 16px;
+}
+.industry-tile .flip-tags { justify-content: center; }
+.flip-tag {
+  padding: 5px 11px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-body);
+}
+.section-dark .flip-tag,
+.section-deep .flip-tag,
+.section-alt .flip-tag {
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #C3CBDD;
+}
+
+/* Back-face call to action, pinned to the bottom of the face. */
 .flip-back-cta {
-  position: sticky;
-  bottom: calc(-1 * var(--flip-pad-b));
   margin-top: auto;
-  width: 100%;
-  padding: 16px 0 var(--flip-pad-b);
+  padding-top: 16px;
   display: inline-flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -181,28 +226,16 @@
   font-size: 14.5px;
   font-weight: 600;
   color: var(--color-accent-ink);
-  background: linear-gradient(to top, var(--flip-fade) 78%, transparent);
   transition: gap 0.3s ease, color 0.3s ease;
 }
 .flip-back-cta:hover { gap: 14px; color: var(--color-heading); }
-.industry-tile .flip-back-cta { justify-content: center; }
-
-/* Fade colour + face bottom padding, so the sticky CTA covers the face edge. */
-.flip-back { --flip-fade: #FFFFFF; --flip-pad-b: 26px; }
-.section-dark .flip-back,
-.section-deep .flip-back,
-.section-alt .flip-back { --flip-fade: #070A12; --flip-pad-b: 22px; }
-
+.industry-tile .flip-back-cta { justify-content: center; width: 100%; }
 .section-dark .flip-back-cta,
 .section-deep .flip-back-cta,
 .section-alt .flip-back-cta { color: #fff; }
 .section-dark .flip-back-cta:hover,
 .section-deep .flip-back-cta:hover,
 .section-alt .flip-back-cta:hover { color: #fff; }
-
-/* thin scrollbar for long back lists */
-.flip-face::-webkit-scrollbar { width: 6px; }
-.flip-face::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 3px; }
 
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }

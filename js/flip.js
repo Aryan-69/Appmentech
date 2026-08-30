@@ -3,6 +3,26 @@
 // back face (pre-rotated in CSS). Click front to flip; a "↻ back" control at the
 // TOP of the back returns. Flipping is user-driven only — nothing flips on its own.
 (function () {
+  // Decorative product mock from the design's back face.
+  var MOCK =
+    '<div class="mock mock-app" aria-hidden="true">' +
+      '<div class="mock-bar">' +
+        '<span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>' +
+        '<span class="mock-url"></span>' +
+      '</div>' +
+      '<div class="mock-app-body">' +
+        '<div class="mock-col">' +
+          '<span class="mock-block"></span>' +
+          '<span class="mock-line"></span><span class="mock-line"></span>' +
+        '</div>' +
+        '<div class="mock-col">' +
+          '<span class="mock-hero"></span>' +
+          '<div class="mock-row"><span></span><span></span></div>' +
+        '</div>' +
+      '</div>' +
+      '<span class="mock-scan"></span>' +
+    '</div>';
+
   var BACK_ICON =
     '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" ' +
     'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
@@ -61,18 +81,36 @@
       head.appendChild(backBtn);
       back.appendChild(head);
 
-      // Then the revealed content.
-      while (body.firstChild) back.appendChild(body.firstChild);
-      body.parentNode && body.parentNode.removeChild(body);
+      // Solutions cards carry the design's animated product mock.
+      if (tile.classList.contains('card-accent')) {
+        back.insertAdjacentHTML('beforeend', MOCK);
+      }
 
-      // Design's back face closes on a call to action pinned to the bottom.
+      // Capability tags, authored per tile in data-tags.
+      var tags = (tile.getAttribute('data-tags') || '').split('|');
+      if (tags[0]) {
+        var tagRow = document.createElement('div');
+        tagRow.className = 'flip-tags';
+        tags.forEach(function (label) {
+          var tag = document.createElement('span');
+          tag.className = 'flip-tag';
+          tag.textContent = label.trim();
+          tagRow.appendChild(tag);
+        });
+        back.appendChild(tagRow);
+      }
+
+      // The face closes on a call to action pinned to the bottom.
       var cta = document.createElement('a');
       cta.className = 'flip-back-cta';
       cta.href = 'contact.html';
-      cta.innerHTML = (tile.classList.contains('card-accent')
-        ? 'Start a project'
-        : 'Tell us what you need') + ' <span>&rarr;</span>';
+      cta.innerHTML = (tile.getAttribute('data-cta') || 'Start a project') +
+        ' <span>&rarr;</span>';
       back.appendChild(cta);
+
+      // The detail list stays in the markup as the no-JS accordion fallback;
+      // the upgraded card shows the design's back face instead.
+      body.parentNode && body.parentNode.removeChild(body);
 
       inner.appendChild(front);
       inner.appendChild(back);
