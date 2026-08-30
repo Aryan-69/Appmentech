@@ -41,7 +41,7 @@ if (!isset($_GET['code'])) {
         'client_id'     => $clientId,
         'redirect_uri'  => $redirect,
         'response_type' => 'code',
-        'scope'         => 'https://www.googleapis.com/auth/drive',
+        'scope'         => 'https://www.googleapis.com/auth/drive.file',
         // offline + consent is what makes Google return a refresh token.
         'access_type'   => 'offline',
         'prompt'        => 'consent',

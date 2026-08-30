@@ -19,7 +19,11 @@
 // Every function returns [ok, detailOrLink] so the caller can degrade to the
 // "please resend the attachment" message rather than failing the submission.
 
-const GOOGLE_DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive';
+// drive.file grants access only to files this app creates, and is the one
+// Drive scope Google does not class as sensitive or restricted. That keeps a
+// personal-Gmail OAuth client publishable without review, which in turn stops
+// its refresh tokens expiring after seven days the way a Testing client's do.
+const GOOGLE_DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const GOOGLE_DRIVE_API = 'https://www.googleapis.com/drive/v3';
 const GOOGLE_DRIVE_UPLOAD = 'https://www.googleapis.com/upload/drive/v3';
@@ -43,10 +47,6 @@ function google_drive_configured(array $cfg) {
     if (empty($cfg['googledrive'])) {
         return false;
     }
-    if (google_drive_placeholder(google_drive_setting($cfg, 'folder_id'))) {
-        return false;
-    }
-
     // A. service account
     $email = google_drive_setting($cfg, 'service_account_email');
     $key = google_drive_setting($cfg, 'private_key');
@@ -228,7 +228,11 @@ function google_drive_upload(array $cfg, $requirementId, $tmpPath, $fileName, $m
         return [false, $token];
     }
 
-    $root = trim($cfg['googledrive']['folder_id']);
+    // No folder_id: put UserRequirements at the top of the account's Drive.
+    $root = google_drive_setting($cfg, 'folder_id');
+    if ($root === '' || stripos($root, 'YOUR_') === 0) {
+        $root = 'root';
+    }
     list($ok, $parent) = google_drive_folder($token, $root, 'UserRequirements');
     if (!$ok) {
         return [false, $parent];

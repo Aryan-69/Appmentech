@@ -28,8 +28,9 @@ return [
     // the folder named by folder_id. Fill ONE of the two credential sets.
     // While they stay blank the attachment is emailed instead of uploaded.
     'googledrive' => [
-        // Drive folder ID: open the folder in Drive and copy the last path
-        // segment of the URL (.../folders/THIS_PART).
+        // Optional. Leave blank and the app creates its own UserRequirements
+        // folder at the top of the account's Drive, which is what the
+        // drive.file scope allows. Set it only for a Shared Drive folder.
         'folder_id' => '',
 
         // Option A - service account (Google Cloud -> IAM -> Service accounts
