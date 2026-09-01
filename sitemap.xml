@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.appmentechtech.com/</loc><priority>1.0</priority></url>
-  <url><loc>https://www.appmentechtech.com/contact.html</loc><priority>0.9</priority></url>
-  <url><loc>https://www.appmentechtech.com/about.html</loc><priority>0.5</priority></url>
-  <url><loc>https://www.appmentechtech.com/careers.html</loc><priority>0.5</priority></url>
-  <url><loc>https://www.appmentechtech.com/case-studies.html</loc><priority>0.5</priority></url>
-  <url><loc>https://www.appmentechtech.com/privacy.html</loc><priority>0.2</priority></url>
-  <url><loc>https://www.appmentechtech.com/terms.html</loc><priority>0.2</priority></url>
-  <url><loc>https://www.appmentechtech.com/cookies.html</loc><priority>0.2</priority></url>
+  <url><loc>https://appmentech.in/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/web-development.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/mobile-app-development.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/ai-genai-solutions.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/software-testing-qa.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/cloud-devops.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/industries/ecommerce.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/case-studies.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/about.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/contact.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/privacy.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/terms.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/cookies.html</loc><lastmod>2026-09-01</lastmod></url>
 </urlset>
