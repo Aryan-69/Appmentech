@@ -8,3 +8,16 @@
         Deny from all
     </IfModule>
 </FilesMatch>
+
+# SEO: one canonical URL per page.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Canonical host: strip www.
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+    # /index.html -> / (the canonical homepage URL).
+    RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+    RewriteRule ^index\.html$ / [R=301,L]
+</IfModule>
