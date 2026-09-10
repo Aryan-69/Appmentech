@@ -190,17 +190,85 @@ compromised and rotated.
 
 ## 9. Deployment
 
-`main` is the source of truth. There is no automated deploy — files go to
-`public_html` by hand via hPanel File Manager. (The Hostinger API could automate this;
-the configured MCP token is still a placeholder.)
+**Hostinger Git deployment. The `deploy` branch is what is live.**
 
-**Partial uploads are this project's most expensive failure mode.** Twice, long hunts
-traced back to files that never reached the server: a missing `submit.php` returning a
-404 page instead of JSON, and a stale `lib/googledrive.php` reporting valid credentials
-as unconfigured. After extracting an archive in place, confirm the file's modified date
-— some File Manager builds skip existing files instead of overwriting.
+| | |
+|---|---|
+| Host | Hostinger shared, LiteSpeed, PHP 8.3 |
+| Account | `u138660006` |
+| Document root | `/home/u138660006/domains/appmentech.in/public_html` |
+| Repository | `https://github.com/Aryan-69/Appmentech.git` (public, so no deploy key) |
+| Branch | `deploy` |
 
-Never upload a local `config.php`; the server's copy is the real one.
+`main` stays the source of truth for development. `deploy` is the release
+pointer: nothing reaches the site until something is merged into it and pushed.
+
+```bash
+git checkout deploy
+git merge --ff-only main      # or the feature branch you are shipping
+git push origin deploy
+```
+
+Then either press **Deploy** in hPanel, or let the auto-deployment webhook do it.
+
+### Two files on the server that are not in Git
+
+Both must survive every deploy:
+
+- **`config.php`** — the real credentials. Gitignored, and the server's copy is
+  the only one. Never upload a local one.
+- **`error_log`** — written by PHP, not by us.
+
+Because Hostinger clones into the document root and needs it empty the first
+time, `config.php` has to be taken out and put back. That is the whole of the
+first-deploy dance; see below.
+
+`google782610134da2e330.html` (Search Console verification) **is** in the
+repository now, so a deploy no longer removes it.
+
+### First deploy, once
+
+1. **hPanel → Files → File Manager**, open `public_html`. Download `config.php`
+   and keep it somewhere safe. Confirm you can open it and see real values.
+2. Delete everything else in `public_html`, including `config.php`,
+   `appmentechseodeploy.zip` and the `newcode/` directory (see §11). Hostinger
+   refuses to clone into a directory that is not empty.
+3. **hPanel → Websites → appmentech.in → Advanced → GIT.**
+   - Repository: `https://github.com/Aryan-69/Appmentech.git`
+   - Branch: `deploy`
+   - Directory: leave blank — blank means `public_html` itself. Anything else
+     puts the site at `appmentech.in/<that directory>`.
+   - **Create**, then **Deploy**.
+4. Upload `config.php` back into `public_html`.
+5. Copy the **auto-deployment webhook URL** hPanel shows, then GitHub →
+   repository → Settings → Webhooks → Add webhook. Paste it as the Payload URL,
+   content type `application/json`, "Just the push event". Pushes to `deploy`
+   now deploy themselves.
+
+### After every deploy, check these four
+
+The first two are the ones that have actually broken here before.
+
+1. `https://appmentech.in/` loads and the nav dropdowns open.
+2. Submit the contact form with an attachment — see §12. A 404 instead of JSON
+   means `submit.php` did not arrive; `Storage: Not configured` means
+   `config.php` did not come back.
+3. `https://appmentech.in/.git/config` returns **403 or 404**, never a file.
+4. `https://appmentech.in/drive-check.php` returns **403**.
+
+Checks 3 and 4 verify the `.htaccess` hardening is actually in force. If either
+one serves content, LiteSpeed is not reading `.htaccess` and the diagnostics and
+full Git history are public — fix that before anything else.
+
+### Why the old warning no longer applies
+
+This section used to warn that partial uploads were the project's most expensive
+failure mode: twice, long hunts traced back to files that never reached the
+server — a missing `submit.php` returning a 404 page instead of JSON, and a
+stale `lib/googledrive.php` reporting valid credentials as unconfigured. A Git
+checkout is atomic in a way that extracting an archive over a live directory is
+not, which is the main reason to prefer it. Check 2 above still exists because
+the failure was expensive enough to be worth one minute of confirming.
 
 ## 10. Diagnostics
 
@@ -233,7 +301,11 @@ No `contact submit:` lines at all, with rows still missing, means `db.host` or
 - **Phone number is `+91 73030 21135`** across the pages and the auto-reply.
 - **Country flags degrade to ISO letters on Windows**; the ISO badge is the workaround.
 - **Rows predating the phone-normalisation fix** carry keys that never match.
-- **Deployment is manual** until the Hostinger API token is real.
+- **`newcode/` and `appmentechseodeploy.zip` are still on the live server** at the
+  time of writing: a complete duplicate of the site reachable at
+  `appmentech.in/newcode/`, and a downloadable archive of it. Both are leftovers
+  from manual deploys, both are indexable, and the duplicate serves an older
+  version of every page. Delete them — step 2 of the first deploy does.
 
 ## 12. Verifying the whole pipeline
 
