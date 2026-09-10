@@ -3,8 +3,8 @@
 Everything on this list is **switched off, not deleted.** Each item is still in the
 repository, wrapped in a marker you can find by searching for its `id`.
 
-The site now sells two things — **web development** and **CRM development** — to ten
-industries. Everything that contradicted that focus, or made a claim a small team
+The site now sells two things — **web development** and **CRM development** — to a named
+set of industries. Everything that contradicted that focus, or made a claim a small team
 cannot back up, was toggled off rather than removed, so any of it can come back the
 day it becomes true.
 
@@ -88,7 +88,7 @@ with web and CRM, and it does not promise a page that has to rank.
 
 | id | Where | What it was |
 |---|---|---|
-| `nav-off-niche-industries` | every page | Nav links to E-Commerce &amp; Retail, Transportation &amp; Logistics, Enterprise, Government |
+| `nav-off-niche-industries` | every page | Nav links to Transportation &amp; Logistics, Enterprise, Government |
 | `industry-tiles-original-twelve` | `index.html` | All twelve original tiles, kept verbatim |
 | `contact-form-old-option-lists` | `js/contact.js` | The old Industry and Solution dropdown options |
 
@@ -98,11 +98,13 @@ Infrastructure** — are gone from the visible site. Media &amp; Entertainment s
 its tile no longer claims OTT and streaming platforms; it now claims publishing,
 subscriptions and ticketing, which is web work.
 
-**E-Commerce &amp; Retail** no longer has its own tile, because it is not one of the ten.
-`industries/ecommerce.html` is still live, still indexed and still linked — from the
-"Retail Point of Sale &amp; Billing Solutions" tile, from the nav, and from the footer —
-because Cookrie is the one real case study behind it. If you would rather it were a
-tile of its own again, it is in `industry-tiles-original-twelve`.
+**E-Commerce &amp; Retail is kept as an eleventh tile**, alongside the ten target
+industries, because Cookrie is the one real case study behind it and
+`industries/ecommerce.html` is the only industry landing page. Its tile sits after
+Retail Point of Sale &amp; Billing and before the Local &amp; Professional catch-all, and it
+is the tile that links to that page. Its copy was rewritten for the niche — custom
+stores, marketplaces, checkout, order management and migration — rather than restored
+verbatim from `industry-tiles-original-twelve`.
 
 ## 3. Claims that could not be backed up
 
@@ -159,5 +161,5 @@ Worth recording, so nobody re-litigates it:
 - The site says "we" and "team" throughout. If Appmentech is one person right now,
   decide whether to keep that voice or switch to a first-person one. Both work; the
   wrong one is the one a client discovers on the kickoff call.
-- A second case study in any of the ten industries would do more for conversion than
+- A second case study in any of these industries would do more for conversion than
   any further change on this list.

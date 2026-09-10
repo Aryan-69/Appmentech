@@ -14,7 +14,7 @@
     'Real Estate & Property Management', 'Travel & Hospitality',
     'Education & EdTech', 'Media & Entertainment', 'Sports',
     'Payment Gateway & Shipping Integration',
-    'Retail Point of Sale & Billing Solutions',
+    'Retail Point of Sale & Billing Solutions', 'E-Commerce & Retail',
     'Local & Professional Businesses', 'Other'
   ];
 

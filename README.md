@@ -34,7 +34,7 @@ There is no package manager, bundler or framework. Edit a file, reload the page.
 
 ## Positioning
 
-The site sells **web development** and **CRM development** to ten named industries.
+The site sells **web development** and **CRM development** to a named set of industries.
 That focus is deliberate and recent: the previous version listed eight service
 categories and twelve industries, which read to a buyer as a company with no
 speciality.
