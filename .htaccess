@@ -9,6 +9,63 @@
     </IfModule>
 </FilesMatch>
 
+# ---------------------------------------------------------------------------
+# Git deployment hardening.
+#
+# Hostinger's Git deployment clones the whole repository into public_html, so
+# everything below would otherwise be reachable over HTTP. It is not enough
+# that the repository is public on GitHub: serving these from appmentech.in
+# also gets them indexed, and the diagnostics are executable here.
+# ---------------------------------------------------------------------------
+
+# 1. Dot-files and dot-directories: .git (the entire history and every file in
+#    it), .gitignore, .env, editor leftovers. .well-known stays reachable so
+#    certificate renewal and similar checks still work.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+</IfModule>
+
+# 2. One-shot diagnostics. db-check names the database, drive-check reports
+#    credential shapes, and google-auth PRINTS A GOOGLE REFRESH TOKEN — and its
+#    OAuth callback arrives without the ?i-will-delete-this guard by design.
+#    They were written to be uploaded, run once and deleted; Git deployment
+#    puts them back on every pull, so they are denied here instead.
+<FilesMatch "^(db-check|drive-check|google-auth)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 3. Repository documentation and data definitions that ship in the clone:
+#    README.md, docs/*.md, the site runbook .docx, db/schema.sql.
+<FilesMatch "\.(md|sql|docx|yml|yaml|lock|json)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 4. Build sources that are not pages. og-image.source.html is the template the
+#    social preview image was rendered from; it would render as a stray page and
+#    get indexed.
+<FilesMatch "\.source\.html$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
 # SEO: one canonical URL per page.
 <IfModule mod_rewrite.c>
     RewriteEngine On
