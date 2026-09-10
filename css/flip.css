@@ -471,6 +471,28 @@
 .section-deep .flip-back-cta:hover,
 .section-alt .flip-back-cta:hover { color: #fff; }
 
+/* A service or industry card's link to its own page, carried onto the back face
+   so it is not lost when the accordion body is rebuilt. Sits above the CTA. */
+.flip-back-link {
+  margin-top: auto;
+  padding-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.3s ease;
+}
+.flip-back-link:hover { color: var(--color-heading); }
+.section-dark .flip-back-link:hover,
+.section-deep .flip-back-link:hover,
+.section-alt .flip-back-link:hover { color: #fff; }
+.industry-tile .flip-back-link { justify-content: center; width: 100%; text-align: center; }
+/* When both are present the CTA no longer needs to claim the free space. */
+.flip-back-link ~ .flip-back-cta { margin-top: 0; padding-top: 10px; }
+
 /* Visible focus ring for keyboard operation of the tile. */
 .flip:focus-visible {
   outline: 2px solid var(--color-accent);

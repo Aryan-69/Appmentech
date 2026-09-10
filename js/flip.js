@@ -204,6 +204,18 @@
         }
       }
 
+      // A card can point at its own service or industry page from inside its
+      // accordion body. Rebuilding the body as plain <li> text used to drop that
+      // link, so carry it onto the back face above the CTA.
+      var deep = body.querySelector('a[href]');
+      if (deep) {
+        var deepLink = document.createElement('a');
+        deepLink.className = 'flip-back-link';
+        deepLink.href = deep.getAttribute('href');
+        deepLink.textContent = deep.textContent.trim();
+        back.appendChild(deepLink);
+      }
+
       // Call to action pinned to the bottom of the face.
       var cta = document.createElement('a');
       cta.className = 'flip-back-cta';

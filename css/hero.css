@@ -160,6 +160,21 @@
   color: var(--color-muted);
 }
 
+/* --- Capability strip (replaces the old vanity counters) --- */
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 72px auto 0;
+  max-width: 860px;
+}
+.hero-proof .chip { padding: 10px 18px; font-size: 14px; }
+@media (max-width: 640px) {
+  .hero-proof { margin-top: 48px; gap: 8px; }
+  .hero-proof .chip { padding: 9px 15px; font-size: 13px; }
+}
+
 /* --- Scroll cue --- */
 .hero-scroll {
   display: flex;
@@ -214,6 +229,7 @@
   .hero-dark .hero-sub    { animation: omFade 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.5s both; }
   .hero-dark .hero-cta    { animation: omFade 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.66s both; }
   .hero-dark .hero-stats  { animation: omFade 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.82s both; }
+  .hero-dark .hero-proof  { animation: omFade 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.82s both; }
   .hero-badge-dot,
   .eyebrow-dot { animation: omBlink 2.2s ease-in-out infinite; }
 }

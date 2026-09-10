@@ -457,9 +457,16 @@ function auto_reply_html($name) {
               <tr><td style="padding-top:22px;">
                 <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b95ac;">What we do</p>
                 <p style="margin:0;font-size:13.5px;line-height:1.9;color:#4a5365;">
+                  <!-- TOGGLE:OFF id="auto-reply-eight-categories" reason="The confirmation email listed the eight categories now toggled off on the site." See docs/TOGGLES.md to re-enable. -->
+                  <!--
                   Web Development &nbsp;&middot;&nbsp; Mobile Applications &nbsp;&middot;&nbsp; AI &amp; Intelligent Solutions<br>
                   Cloud &amp; Enterprise &nbsp;&middot;&nbsp; Business Automation &nbsp;&middot;&nbsp; Quality Engineering<br>
                   DevOps &amp; CI/CD &nbsp;&middot;&nbsp; API &amp; System Integration
+                  -->
+                  <!-- /TOGGLE:OFF id="auto-reply-eight-categories" -->
+                  Web Development &nbsp;&middot;&nbsp; CRM Development &nbsp;&middot;&nbsp; Customer Portals<br>
+                  E-Commerce &nbsp;&middot;&nbsp; Payment &amp; Shipping Integration &nbsp;&middot;&nbsp; Billing Systems<br>
+                  Website Care &amp; Support
                 </p>
               </td></tr>
             </table>
@@ -469,7 +476,12 @@ function auto_reply_html($name) {
         <tr>
           <td style="padding:26px 32px;background:#080b13;">
             <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#ffffff;">Appmentech Technologies<span style="color:#f2a13c;">.</span></p>
+            <!-- TOGGLE:OFF id="auto-reply-all-in-one-tagline" reason="All in one partner claim, removed everywhere else on the site." See docs/TOGGLES.md to re-enable. -->
+            <!--
             <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#8b95ac;">Your all-in-one digital and software solutions partner.</p>
+            -->
+            <!-- /TOGGLE:OFF id="auto-reply-all-in-one-tagline" -->
+            <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#8b95ac;">Custom websites and CRM systems for Indian businesses.</p>
             <p style="margin:0;font-size:12.5px;color:#8b95ac;">
               <a href="mailto:contact@appmentech.in" style="color:#f4c690;text-decoration:none;">contact@appmentech.in</a>
               &nbsp;&middot;&nbsp;

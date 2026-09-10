@@ -7,19 +7,43 @@
   var ALLOWED_EXT = ['pdf', 'png', 'jpg', 'jpeg', 'docx', 'xlsx', 'pptx', 'txt'];
   var FILE_RULES = 'PDF, PNG, JPG, JPEG, DOCX, XLSX, PPTX, TXT &nbsp;&middot;&nbsp; Maximum file size: 10 MB';
 
-  // Industries — the site's "What Services We Provide" menu.
+  // Industries — must stay in step with the "Industries We Serve" menu and the
+  // tiles in index.html #industries. Both fields also accept free text.
+  var INDUSTRIES = [
+    'Food & Hospitality', 'Healthcare & Telemedicine',
+    'Real Estate & Property Management', 'Travel & Hospitality',
+    'Education & EdTech', 'Media & Entertainment', 'Sports',
+    'Payment Gateway & Shipping Integration',
+    'Retail Point of Sale & Billing Solutions',
+    'Local & Professional Businesses', 'Other'
+  ];
+
+  // Solutions — must stay in step with the "What We Build" menu.
+  var SOLUTIONS = [
+    'Website / Web Application', 'Custom CRM', 'Customer or Client Portal',
+    'E-Commerce Store', 'Booking or Appointment System',
+    'Payment Gateway Integration', 'Shipping / Logistics Integration',
+    'Billing or Point of Sale System', 'Website Care & Support',
+    'Take Over an Existing Site or System', 'Not Sure Yet'
+  ];
+
+  /* TOGGLE:OFF id="contact-form-old-option-lists"
+     reason: the old lists mirrored the twelve industries and eight service
+     categories that are now toggled off on the site. See docs/TOGGLES.md.
+
   var INDUSTRIES = [
     'E-Commerce & Retails Websites', 'Healthcare', 'Education',
     'Media & Entertainment', 'Transportation & Logistics', 'Enterprise',
     'Travel & Hospitality', 'Real Estate', 'Food & Hospitality', 'Government'
   ];
 
-  // Solutions — the site's "Our Industry Solutions" menu.
   var SOLUTIONS = [
     'Web Development', 'Mobile Applications', 'SaaS Products', 'AI & GenAI',
     'Cloud Solutions', 'Automation', 'API & Integration',
     'Testing & Quality Engineering'
   ];
+
+     /TOGGLE:OFF id="contact-form-old-option-lists" */
 
   var TIMELINES = ['Immediate', '1-3 months', '3-6 months', '6-12 months', '12+ months'];
 

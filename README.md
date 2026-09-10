@@ -16,6 +16,7 @@ Marketing site and contact pipeline for Appmentech Technologies.
 | `assets/` | Brand mark, lockups, favicons |
 | `submit.php` | The contact-form endpoint |
 | `lib/` | `requirements.php` (storage), `googledrive.php` (attachments) — web access denied |
+| `docs/TOGGLES.md` | **Read before editing a page.** Everything switched off rather than deleted, and how to switch it back on |
 | `db/schema.sql` | `UserRequirements` + audit table — web access denied |
 | `config.sample.php` | Template for `config.php`, which is gitignored and lives only on the server |
 | `db-check.php`, `drive-check.php`, `google-auth.php` | One-shot diagnostics. Upload, run, delete. |
@@ -30,6 +31,24 @@ php -S 127.0.0.1:8000          # pages + submit.php (needs config.php)
 ```
 
 There is no package manager, bundler or framework. Edit a file, reload the page.
+
+## Positioning
+
+The site sells **web development** and **CRM development** to ten named industries.
+That focus is deliberate and recent: the previous version listed eight service
+categories and twelve industries, which read to a buyer as a company with no
+speciality.
+
+Nothing from the old version was deleted. It is commented out behind
+`TOGGLE:OFF` markers and catalogued in **[`docs/TOGGLES.md`](docs/TOGGLES.md)**,
+with the reason for each and the steps to bring it back.
+
+Two things follow from this, and they are easy to undo by accident:
+
+- **The nav and footer are copied into every page**, so a link added to one has to be
+  added to all of them. `grep -rn 'nav-off-niche-services' .` finds every copy.
+- **Before adding a service or an industry**, check `docs/TOGGLES.md` — it may already
+  be there, switched off on purpose.
 
 ---
 

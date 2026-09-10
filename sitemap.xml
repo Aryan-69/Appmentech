@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://appmentech.in/</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://appmentech.in/services/web-development.html</loc><lastmod>2026-09-01</lastmod></url>
+  <url><loc>https://appmentech.in/services/crm-development.html</loc><lastmod>2026-09-10</lastmod></url>
+  <!-- TOGGLE:OFF id="sitemap-off-niche-service-pages" reason="These pages are toggled off and carry a noindex meta. Listing them would contradict that." See docs/TOGGLES.md to re-enable. -->
+  <!--
   <url><loc>https://appmentech.in/services/mobile-app-development.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/services/ai-genai-solutions.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/services/software-testing-qa.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/services/cloud-devops.html</loc><lastmod>2026-09-01</lastmod></url>
+  -->
+  <!-- /TOGGLE:OFF id="sitemap-off-niche-service-pages" -->
   <url><loc>https://appmentech.in/industries/ecommerce.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/case-studies.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/about.html</loc><lastmod>2026-09-01</lastmod></url>
