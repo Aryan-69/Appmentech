@@ -1,4 +1,4 @@
-// js/hero.js — hero band motion: the orbital system canvas + the stat counters.
+// js/hero.js — hero band motion: the orbital diagram canvas + the stat counters.
 // Ported from the Claude Design source (Appmentech Hero.dc.html). Reduced-motion
 // visitors get a single static frame and the final stat values.
 (function () {
@@ -12,21 +12,16 @@
     if (!cv || !cv.getContext) return;
     var ctx = cv.getContext('2d');
 
+    // One family of blues so the diagram reads as a single system. 'col' is the
+    // body, 'hi' the lit edge — both light, because nothing here glows any more.
     var planets = [
-      { r: 0.085, size: 7,  speed: 1.55, col: '#b9a596', hi: '#efe4da' },
-      { r: 0.135, size: 10, speed: 1.05, col: '#e8c07a', hi: '#fff3d4' },
-      { r: 0.195, size: 13, speed: 0.74, col: '#3f7fd6', hi: '#a8d8ff' },
-      { r: 0.265, size: 10, speed: 0.52, col: '#c1502e', hi: '#ff9d72' },
-      { r: 0.35,  size: 19, speed: 0.33, col: '#d8a45f', hi: '#ffe3ae', ring: true },
-      { r: 0.44,  size: 14, speed: 0.22, col: '#5fc9c2', hi: '#c2fbf6' }
+      { r: 0.085, size: 7,  speed: 1.55, col: '#7DD3FC', hi: '#E0F2FE' },
+      { r: 0.135, size: 10, speed: 1.05, col: '#38BDF8', hi: '#BAE6FD' },
+      { r: 0.195, size: 13, speed: 0.74, col: '#0EA5E9', hi: '#7DD3FC' },
+      { r: 0.265, size: 10, speed: 0.52, col: '#22D3EE', hi: '#A5F3FC' },
+      { r: 0.35,  size: 19, speed: 0.33, col: '#0284C7', hi: '#7DD3FC', ring: true },
+      { r: 0.44,  size: 14, speed: 0.22, col: '#0369A1', hi: '#38BDF8' }
     ];
-    var stars = [];
-    for (var i = 0; i < 130; i++) {
-      stars.push({
-        x: Math.random(), y: Math.random(),
-        s: Math.random() * 1.3 + 0.25, p: Math.random() * 6.28
-      });
-    }
 
     function fit() {
       var dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -38,7 +33,14 @@
     }
     var dim = fit();
     var raf;
-    window.addEventListener('resize', function () { dim = fit(); }, { passive: true });
+    window.addEventListener('resize', function () {
+      dim = fit();
+      // Assigning canvas.width inside fit() clears the canvas. When the visitor
+      // prefers reduced motion nothing re-requests a frame, so without this one
+      // repaint the hero artwork disappears for good on the first resize —
+      // including the implicit resize a phone does when its address bar hides.
+      if (still) draw(0);
+    }, { passive: true });
 
     function draw(t) {
       var w = dim.w, h = dim.h;
@@ -47,24 +49,20 @@
       var R = Math.max(w, h) * 1.9;
       var tilt = 0.34;
 
+      // Everything below paints normally. The dark-theme version used additive
+      // ('lighter') blending for the stars, orbit rings and corona, which is
+      // invisible on an off-white ground — adding light to near-white is a
+      // no-op. So the star field is gone and the glow is now a soft blue wash.
       ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalCompositeOperation = 'source-over';
 
-      for (var s = 0; s < stars.length; s++) {
-        var st = stars[s];
-        var tw = 0.35 + 0.65 * Math.abs(Math.sin(t * 0.0007 + st.p));
-        ctx.fillStyle = 'rgba(255,246,232,' + (0.5 * tw).toFixed(3) + ')';
-        ctx.beginPath();
-        ctx.arc(st.x * w, st.y * h, st.s, 0, 6.2832);
-        ctx.fill();
-      }
-
+      // Orbit rings: faint blue hairlines, like a drawn diagram.
       for (var o = 0; o < planets.length; o++) {
         var orbit = R * planets[o].r;
         ctx.save();
         ctx.translate(cx, cy);
         ctx.scale(1, tilt);
-        ctx.strokeStyle = 'rgba(255,214,160,0.16)';
+        ctx.strokeStyle = 'rgba(12,74,110,0.16)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(0, 0, orbit, 0, 6.2832);
@@ -72,26 +70,24 @@
         ctx.restore();
       }
 
-      var corona = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.26);
-      corona.addColorStop(0, 'rgba(255,226,178,0.6)');
-      corona.addColorStop(0.05, 'rgba(255,186,92,0.26)');
-      corona.addColorStop(0.18, 'rgba(242,140,60,0.06)');
-      corona.addColorStop(1, 'rgba(242,140,60,0)');
-      ctx.fillStyle = corona;
+      // The centre: a soft wash instead of a corona, fading to fully
+      // transparent so it never banes against the band colour.
+      var halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 0.26);
+      halo.addColorStop(0, 'rgba(56,189,248,0.34)');
+      halo.addColorStop(0.08, 'rgba(56,189,248,0.20)');
+      halo.addColorStop(0.4, 'rgba(56,189,248,0.06)');
+      halo.addColorStop(1, 'rgba(56,189,248,0)');
+      ctx.fillStyle = halo;
       ctx.beginPath();
       ctx.arc(cx, cy, R * 0.26, 0, 6.2832);
       ctx.fill();
 
       var pulse = 1 + 0.03 * Math.sin(t * 0.0006);
-      ctx.shadowColor = 'rgba(255,190,110,0.6)';
-      ctx.shadowBlur = 18;
-      ctx.fillStyle = '#fff3dc';
+      ctx.fillStyle = '#0EA5E9';
       ctx.beginPath();
       ctx.arc(cx, cy, 34 * pulse, 0, 6.2832);
       ctx.fill();
-      ctx.shadowBlur = 0;
 
-      ctx.globalCompositeOperation = 'source-over';
       for (var p = 0; p < planets.length; p++) {
         var pl = planets[p];
         var a = (still ? 0.6 : t * 0.000045) * pl.speed * 6.2832 + pl.r * 17;
@@ -99,28 +95,27 @@
         var x = cx + Math.cos(a) * rr;
         var y = cy + Math.sin(a) * rr * tilt;
         var front = Math.sin(a) > 0;
+        // Lit edge towards the centre, body colour elsewhere. There is no dark
+        // terminator: a near-black rim reads as dirt on an off-white ground.
         var lit = ctx.createRadialGradient(
           x - Math.cos(a) * pl.size * 0.45, y - Math.sin(a) * pl.size * 0.45,
           pl.size * 0.08, x, y, pl.size
         );
         lit.addColorStop(0, pl.hi);
         lit.addColorStop(0.55, pl.col);
-        lit.addColorStop(0.9, pl.col);
-        lit.addColorStop(1, 'rgba(14,12,18,0.92)');
-        ctx.globalAlpha = front ? 1 : 0.55;
-        ctx.shadowColor = pl.col;
-        ctx.shadowBlur = front ? 12 : 5;
+        lit.addColorStop(1, pl.col);
+        // Bodies on the far side of the orbit sit back rather than dim to grey.
+        ctx.globalAlpha = front ? 1 : 0.4;
         ctx.fillStyle = lit;
         ctx.beginPath();
         ctx.arc(x, y, pl.size, 0, 6.2832);
         ctx.fill();
-        ctx.shadowBlur = 0;
         if (pl.ring) {
           ctx.save();
           ctx.translate(x, y);
           ctx.rotate(-0.4);
           ctx.scale(1, 0.32);
-          ctx.strokeStyle = 'rgba(255,224,178,0.5)';
+          ctx.strokeStyle = 'rgba(3,105,161,0.55)';
           ctx.lineWidth = 1.6;
           ctx.beginPath();
           ctx.arc(0, 0, pl.size * 2.1, 0, 6.2832);

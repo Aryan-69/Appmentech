@@ -1,41 +1,55 @@
 /* css/base.css — design tokens, reset, base typography */
 
 :root {
-  /* --- Brand (Claude Design: amber on deep navy) --- */
-  --color-accent: #F2A13C;               /* Amber — primary action */
-  --color-accent-hover: #FFBD6B;
-  --color-accent-soft: #FADFB8;          /* pale amber — secondary glyph fills */
-  --color-accent-text: #F4C690;          /* accent link text on dark */
-  --color-accent-ink: #A8641A;           /* accent text on light surfaces */
-  --color-on-accent: #17110A;            /* text on an amber button */
+  /* --- Brand: sky blue on off-white -------------------------------------
+     Two blues, deliberately. #38BDF8 is the sky blue people picture, but at
+     2.0:1 on off-white it can only ever be a FILL — a button, a chip, an icon,
+     with dark ink on top. Anything that is read as text uses --color-accent-ink
+     (#0369A1, 6.4:1) instead. Swapping one for the other breaks contrast, so
+     pick by role: does it carry meaning as a shape, or as words?            */
+  --color-accent: #38BDF8;               /* sky blue — fills only */
+  --color-accent-hover: #0EA5E9;
+  --color-accent-soft: #E0F2FE;          /* palest tint — glyph fills, rails */
+  --color-accent-text: #0369A1;          /* accent words */
+  --color-accent-ink: #0369A1;           /* accent words on a light surface */
+  --color-accent-deep: #0C4A6E;          /* deepest blue — emphasis headings */
+  --color-on-accent: #04293D;            /* ink ON a sky-blue fill */
 
-  /* --- Surfaces --- */
-  --color-bg: #FFFFFF;
-  --color-surface: #FFFFFF;
-  --color-dark: #0B0E17;                 /* primary dark band */
-  --color-deep: #080B13;                 /* deeper dark band */
-  --color-light: #F6F7FA;                /* light band */
+  /* --- Surfaces ---------------------------------------------------------
+     Every band is light now. --color-band and --color-band-deep were the two
+     dark bands; they keep their structural role (alternating rhythm down the
+     page) but are tinted off-white. The .section-dark / .section-deep class
+     names in the HTML are historical names for these two bands.            */
+  --color-bg: #F7F9FB;                   /* off-white page */
+  --color-surface: #FFFFFF;              /* cards sit above the page */
+  --color-band: #EDF4FA;                 /* band 1 — palest blue-grey */
+  --color-band-deep: #E3EDF6;            /* band 2 — a shade deeper */
+  --color-light: #F7F9FB;                /* light band == page */
 
   /* --- Text --- */
-  --color-heading: #0B0E17;
-  --color-body: #6B7488;
-  --color-muted: #8B95AC;
-  --color-border: #E6E8EF;
-  --color-contrast-bg: #080B13;
+  --color-heading: #0C1B26;
+  --color-body: #4C5C6B;
+  /* The three text greys sit close together on purpose. On a dark ground a
+     faint grey still reads; on off-white it does not, so each one had to be
+     darkened until it clears 4.5:1 on every band the site uses. The hierarchy
+     now comes mostly from size and weight rather than from lightness. */
+  --color-muted: #5A6A78;                /* 4.7:1 on the deepest band */
+  --color-border: #DCE7EF;
+  --color-contrast-bg: #0C4A6E;
   --color-contrast-text: #FFFFFF;
-  --color-contrast-muted: #9AA4BB;
-  --color-dim: #5F6980;                  /* faint labels on dark */
+  --color-contrast-muted: #5A6A78;
+  --color-dim: #5F6F7E;                  /* faint labels — 4.4:1 minimum */
 
   /* --- Legacy aliases (kept so existing pages keep working) --- */
-  --color-accent-light: rgba(242, 161, 60, 0.12);
+  --color-accent-light: rgba(56, 189, 248, 0.14);
   --color-accent-light-text: var(--color-accent-ink);
-  --color-secondary: #0B0E17;
-  --color-card-accent: #F2A13C;
-  --color-utility-bg: #0B0E17;
+  --color-secondary: #0C1B26;
+  --color-card-accent: #38BDF8;
+  --color-utility-bg: #EDF4FA;
 
-  /* --- Hairlines on dark --- */
-  --line-dark: rgba(255, 255, 255, 0.09);
-  --line-dark-soft: rgba(255, 255, 255, 0.06);
+  /* --- Hairlines. Formerly white-on-dark, now blue-on-light. --- */
+  --line-band: rgba(12, 74, 110, 0.13);
+  --line-band-soft: rgba(12, 74, 110, 0.08);
 
   --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -56,8 +70,8 @@
   /* design: 1180px of content inside the band's side padding */
   --max-width: calc(1180px + 2 * var(--gutter));
 
-  --shadow-card: 0 1px 3px rgba(11, 14, 23, 0.06);
-  --shadow-card-hover: 0 26px 60px -30px rgba(11, 14, 23, 0.4);
+  --shadow-card: 0 1px 2px rgba(12, 74, 110, 0.07), 0 1px 3px rgba(12, 74, 110, 0.05);
+  --shadow-card-hover: 0 22px 46px -24px rgba(12, 74, 110, 0.28);
 }
 
 *, *::before, *::after {
@@ -79,10 +93,11 @@ body {
   overflow-x: hidden;
 }
 
-/* Homepage sits on the dark band end-to-end. */
+/* The homepage runs band-to-band with no white gaps, so it takes the band
+   tint as its page colour rather than the slightly lighter --color-bg. */
 body.index-hero {
-  background: var(--color-dark);
-  color: #E9ECF5;
+  background: var(--color-band);
+  color: var(--color-body);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -116,7 +131,7 @@ button, input, select, textarea {
   font-size: inherit;
 }
 
-::selection { background: var(--color-accent); color: #fff; }
+::selection { background: var(--color-accent); color: var(--color-on-accent); }
 
 /* Skip to content link for accessibility */
 .skip-link {
@@ -167,15 +182,15 @@ button, input, select, textarea {
 @keyframes omFloat { 0%, 100% { transform: translate3d(0, 0, 0); } 50% { transform: translate3d(0, -18px, 0); } }
 @keyframes omChain {
   0%, 22%, 100% {
-    border-color: rgba(242, 161, 60, 0.35);
-    background: rgba(242, 161, 60, 0.07);
+    border-color: rgba(56, 189, 248, 0.45);
+    background: rgba(56, 189, 248, 0.10);
     box-shadow: none;
     transform: translateY(0);
   }
   8% {
-    border-color: rgba(242, 161, 60, 0.9);
-    background: rgba(242, 161, 60, 0.2);
-    box-shadow: 0 0 28px -6px rgba(242, 161, 60, 0.65);
+    border-color: rgba(14, 165, 233, 0.95);
+    background: rgba(56, 189, 248, 0.26);
+    box-shadow: 0 0 26px -6px rgba(14, 165, 233, 0.55);
     transform: translateY(-3px);
   }
 }

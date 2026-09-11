@@ -53,30 +53,32 @@
 }
 .industry-tile .flip-face { align-items: center; text-align: center; }
 .industry-tile .flip-front:hover {
-  border-color: #F3D3A5;
+  border-color: var(--color-accent);
   box-shadow: var(--shadow-tile-hover);
 }
 
-/* --- Dark band (Solutions) faces --- */
+/* --- Card faces on the two tinted bands --- */
 .section-dark .flip-face,
 .section-deep .flip-face,
 .section-alt .flip-face {
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
   padding: 32px 30px 28px;
 }
 .section-dark .flip-front:hover,
 .section-deep .flip-front:hover,
 .section-alt .flip-front:hover {
-  border-color: rgba(242, 161, 60, 0.6);
-  background: linear-gradient(180deg, rgba(242, 161, 60, 0.16), rgba(255, 255, 255, 0.02));
+  border-color: var(--color-accent);
+  background: var(--color-surface);
 }
+/* The back face keeps a faint accent wash so a flipped card is obvious at a
+   glance, the job the amber-on-black gradient used to do. */
 .section-dark .flip-back,
 .section-deep .flip-back,
 .section-alt .flip-back {
-  border-color: rgba(242, 161, 60, 0.5);
-  background: linear-gradient(180deg, rgba(242, 161, 60, 0.18), rgba(6, 9, 18, 0.9));
+  border-color: var(--color-accent);
+  background: linear-gradient(180deg, var(--color-accent-soft), var(--color-surface) 58%);
   padding: 24px 24px 22px;
 }
 
@@ -119,7 +121,7 @@
 }
 .section-dark .flip-back-head,
 .section-deep .flip-back-head,
-.section-alt .flip-back-head { border-bottom-color: rgba(255, 255, 255, 0.12); }
+.section-alt .flip-back-head { border-bottom-color: var(--color-border); }
 
 .flip-back-title {
   font-family: var(--font-display);
@@ -132,7 +134,7 @@
 }
 .section-dark .flip-back-title,
 .section-deep .flip-back-title,
-.section-alt .flip-back-title { color: #F7CF9C; }
+.section-alt .flip-back-title { color: var(--color-heading); }
 
 .flip-back-btn {
   flex: none;
@@ -162,9 +164,9 @@
   overflow: hidden;
   flex: none;
   margin: 16px 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
-  background: rgba(4, 7, 15, 0.7);
+  background: var(--color-surface);
 }
 .svc-mock:not([data-mock="web"]) { height: 118px; }
 
@@ -176,7 +178,7 @@
   right: 0;
   top: 0;
   height: 34%;
-  background: linear-gradient(180deg, rgba(242, 161, 60, 0), rgba(242, 161, 60, 0.16), rgba(242, 161, 60, 0));
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.12), rgba(56, 189, 248, 0.28), rgba(56, 189, 248, 0.12));
   opacity: 0;
   pointer-events: none;
 }
@@ -199,30 +201,30 @@
   align-items: center;
   gap: 6px;
   padding: 9px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(12, 74, 110, 0.11);
 }
-.svc-web-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); }
+.svc-web-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(12, 74, 110, 0.25); }
 .svc-web-bar i:first-child { background: var(--color-accent); }
-.svc-web-bar u { margin-left: 8px; height: 12px; width: 64%; border-radius: 6px; background: rgba(255, 255, 255, 0.09); }
+.svc-web-bar u { margin-left: 8px; height: 12px; width: 64%; border-radius: 6px; background: rgba(12, 74, 110, 0.12); }
 .svc-web-body { display: grid; grid-template-columns: 34% 1fr; gap: 10px; padding: 14px 12px 16px; }
 .svc-col { display: flex; flex-direction: column; gap: 7px; }
 .svc-col + .svc-col { gap: 8px; }
 .svc-row { display: flex; gap: 8px; }
-.svc-b1 { height: 24px; border-radius: 5px; background: rgba(242, 161, 60, 0.5); }
-.svc-b2 { height: 8px; border-radius: 5px; background: rgba(255, 255, 255, 0.13); }
+.svc-b1 { height: 24px; border-radius: 5px; background: rgba(56, 189, 248, 0.62); }
+.svc-b2 { height: 8px; border-radius: 5px; background: rgba(12, 74, 110, 0.16); }
 .svc-b3 {
   height: 38px;
   border-radius: 5px;
-  background: linear-gradient(120deg, rgba(242, 161, 60, 0.45), rgba(226, 116, 90, 0.22));
+  background: linear-gradient(120deg, rgba(56, 189, 248, 0.57), rgba(14, 165, 233, 0.35));
 }
-.svc-b4 { flex: 1; height: 20px; border-radius: 5px; background: rgba(255, 255, 255, 0.1); }
+.svc-b4 { flex: 1; height: 20px; border-radius: 5px; background: rgba(12, 74, 110, 0.13); }
 
 /* --- 02 Mobile: three bobbing handsets ---------------------------------- */
 .svc-phones { align-items: center; justify-content: center; gap: 12px; }
 .svc-phone {
   width: 44px;
   height: 80px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(12, 74, 110, 0.23);
   border-radius: 9px;
   padding: 5px 4px;
   display: flex;
@@ -232,22 +234,22 @@
 .svc-phone-main {
   width: 56px;
   height: 98px;
-  border-color: rgba(242, 161, 60, 0.75);
+  border-color: rgba(56, 189, 248, 0.87);
   border-radius: 11px;
   padding: 6px 5px;
   gap: 5px;
-  box-shadow: 0 0 26px -8px rgba(242, 161, 60, 0.7);
+  box-shadow: 0 0 26px -8px rgba(56, 189, 248, 0.82);
 }
-.svc-ph-cap { height: 5px; width: 60%; border-radius: 3px; background: rgba(255, 255, 255, 0.2); }
-.svc-phone-main .svc-ph-cap { width: 50%; background: rgba(242, 161, 60, 0.8); }
-.svc-ph-fill { flex: 1; border-radius: 5px; background: rgba(255, 255, 255, 0.08); }
+.svc-ph-cap { height: 5px; width: 60%; border-radius: 3px; background: rgba(12, 74, 110, 0.23); }
+.svc-phone-main .svc-ph-cap { width: 50%; background: rgba(56, 189, 248, 0.92); }
+.svc-ph-fill { flex: 1; border-radius: 5px; background: rgba(12, 74, 110, 0.11); }
 .svc-ph-hero {
   height: 26px;
   border-radius: 5px;
-  background: linear-gradient(130deg, rgba(242, 161, 60, 0.5), rgba(226, 116, 90, 0.25));
+  background: linear-gradient(130deg, rgba(56, 189, 248, 0.62), rgba(14, 165, 233, 0.38));
 }
 .svc-ph-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-.svc-ph-grid span { height: 14px; border-radius: 4px; background: rgba(255, 255, 255, 0.12); }
+.svc-ph-grid span { height: 14px; border-radius: 4px; background: rgba(12, 74, 110, 0.15); }
 
 /* --- 03 AI: chat transcript with a typing indicator ---------------------- */
 .svc-chat { flex-direction: column; justify-content: center; gap: 8px; padding: 14px 16px; }
@@ -256,24 +258,24 @@
   align-self: flex-end;
   max-width: 62%;
   border-radius: 12px 12px 3px 12px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(12, 74, 110, 0.13);
 }
-.svc-bub-user i { width: 90px; height: 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.3); }
+.svc-bub-user i { width: 90px; height: 6px; border-radius: 5px; background: rgba(12, 74, 110, 0.33); }
 .svc-bub-ai {
   align-self: flex-start;
   max-width: 72%;
   border-radius: 12px 12px 12px 3px;
-  background: rgba(242, 161, 60, 0.28);
+  background: rgba(56, 189, 248, 0.4);
 }
-.svc-bub-ai i { width: 120px; height: 6px; border-radius: 5px; background: rgba(255, 236, 203, 0.7); }
-.svc-bub-ai i + i { width: 80px; background: rgba(255, 236, 203, 0.5); }
+.svc-bub-ai i { width: 120px; height: 6px; border-radius: 5px; background: rgba(12, 74, 110, 0.28); }
+.svc-bub-ai i + i { width: 80px; background: rgba(12, 74, 110, 0.18); }
 .svc-typing {
   align-self: flex-start;
   display: flex;
   gap: 5px;
   padding: 8px 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(12, 74, 110, 0.1);
 }
 .svc-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent); }
 
@@ -281,14 +283,14 @@
 .svc-cloud { flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
 .svc-pill {
   padding: 6px 16px;
-  border: 1.5px solid rgba(242, 161, 60, 0.7);
+  border: 1.5px solid rgba(56, 189, 248, 0.82);
   border-radius: var(--radius-pill);
   font-size: 10.5px;
   letter-spacing: 0.14em;
-  color: #FFE9C8;
-  box-shadow: 0 0 22px -8px rgba(242, 161, 60, 0.8);
+  color: var(--color-accent-ink);
+  box-shadow: 0 0 22px -8px rgba(56, 189, 248, 0.92);
 }
-.svc-wire { width: 1px; height: 14px; background: rgba(242, 161, 60, 0.5); }
+.svc-wire { width: 1px; height: 14px; background: rgba(56, 189, 248, 0.62); }
 .svc-nodes { display: flex; gap: 10px; }
 .svc-node {
   width: 52px;
@@ -297,26 +299,26 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(12, 74, 110, 0.19);
   border-radius: 7px;
 }
-.svc-node i { height: 4px; border-radius: 5px; background: rgba(242, 161, 60, 0.55); }
-.svc-node i + i { width: 70%; background: rgba(255, 255, 255, 0.16); }
+.svc-node i { height: 4px; border-radius: 5px; background: rgba(56, 189, 248, 0.67); }
+.svc-node i + i { width: 70%; background: rgba(12, 74, 110, 0.19); }
 
 /* --- 05 Automation: nodes joined by pulsing rails ----------------------- */
 .svc-flow { align-items: center; justify-content: center; padding: 0 18px; }
-.svc-fnode { width: 26px; height: 26px; border-radius: 8px; background: rgba(242, 161, 60, 0.75); flex: none; }
-.svc-fnode-2 { background: rgba(242, 161, 60, 0.55); }
-.svc-fnode-3 { background: rgba(242, 161, 60, 0.4); }
-.svc-fnode-4 { background: none; border: 1.5px solid rgba(242, 161, 60, 0.7); }
-.svc-rail { flex: 1; height: 2px; background: rgba(255, 255, 255, 0.12); position: relative; overflow: hidden; }
+.svc-fnode { width: 26px; height: 26px; border-radius: 8px; background: rgba(56, 189, 248, 0.87); flex: none; }
+.svc-fnode-2 { background: rgba(56, 189, 248, 0.67); }
+.svc-fnode-3 { background: rgba(56, 189, 248, 0.52); }
+.svc-fnode-4 { background: none; border: 1.5px solid rgba(56, 189, 248, 0.82); }
+.svc-rail { flex: 1; height: 2px; background: rgba(12, 74, 110, 0.15); position: relative; overflow: hidden; }
 .svc-rail i {
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
   transform: translateX(-100%);
 }
-.svc-trace-cream { background: linear-gradient(90deg, transparent, #FFE9C8, transparent); }
+.svc-trace-cream { background: linear-gradient(90deg, transparent, #0EA5E9, transparent); }
 
 /* --- 06 QA: checklist with one row still running ------------------------ */
 .svc-check { flex-direction: column; justify-content: center; gap: 9px; padding: 14px 18px; }
@@ -326,17 +328,17 @@
   width: 15px;
   height: 15px;
   border-radius: 4px;
-  background: rgba(242, 161, 60, 0.85);
+  background: rgba(56, 189, 248, 0.97);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 10px;
   font-style: normal;
-  color: #17110A;
+  color: var(--color-on-accent);
 }
-.svc-box-empty { background: none; border: 1.5px solid rgba(242, 161, 60, 0.6); }
-.svc-crow u { height: 6px; border-radius: 5px; background: rgba(255, 255, 255, 0.16); }
-.svc-crow-idle u { background: rgba(255, 255, 255, 0.1); }
+.svc-box-empty { background: none; border: 1.5px solid rgba(56, 189, 248, 0.72); }
+.svc-crow u { height: 6px; border-radius: 5px; background: rgba(12, 74, 110, 0.19); }
+.svc-crow-idle u { background: rgba(12, 74, 110, 0.13); }
 
 /* --- 07 DevOps: stage chips over a running pipeline --------------------- */
 .svc-pipe { flex-direction: column; justify-content: center; gap: 12px; padding: 16px 18px; }
@@ -346,28 +348,28 @@
   border-radius: 6px;
   font-size: 10px;
   letter-spacing: 0.1em;
-  background: rgba(242, 161, 60, 0.75);
-  color: #17110A;
+  background: rgba(56, 189, 248, 0.87);
+  color: var(--color-on-accent);
 }
-.svc-chip-half { background: rgba(242, 161, 60, 0.45); }
-.svc-chip-out { background: none; border: 1px solid rgba(242, 161, 60, 0.6); color: #FFE9C8; }
+.svc-chip-half { background: rgba(56, 189, 248, 0.57); }
+.svc-chip-out { background: none; border: 1px solid rgba(56, 189, 248, 0.72); color: var(--color-accent-ink); }
 .svc-progress {
   height: 6px;
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(12, 74, 110, 0.13);
   position: relative;
   overflow: hidden;
 }
 .svc-progress i {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--color-accent), #FFE9C8);
+  background: linear-gradient(90deg, var(--color-accent), #0369A1);
   transform: scaleX(0);
   transform-origin: left;
 }
 .flip.flipped .svc-progress i { animation: omGrow 2.6s ease-in-out infinite; }
 .svc-lines { display: flex; flex-direction: column; gap: 5px; }
-.svc-lines span { height: 5px; border-radius: 5px; background: rgba(255, 255, 255, 0.14); }
+.svc-lines span { height: 5px; border-radius: 5px; background: rgba(12, 74, 110, 0.17); }
 .svc-lines span:first-child { width: 72%; }
 .svc-lines span:last-child { width: 54%; }
 
@@ -381,15 +383,15 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  border: 1.5px solid rgba(242, 161, 60, 0.6);
+  border: 1.5px solid rgba(56, 189, 248, 0.72);
   border-radius: 8px;
 }
-.svc-panel i { height: 5px; border-radius: 5px; background: rgba(242, 161, 60, 0.7); }
-.svc-panel i + i { width: 75%; background: rgba(255, 255, 255, 0.16); }
+.svc-panel i { height: 5px; border-radius: 5px; background: rgba(56, 189, 248, 0.82); }
+.svc-panel i + i { width: 75%; background: rgba(12, 74, 110, 0.19); }
 .svc-panel i + i + i { width: 85%; }
-.svc-panel-b { border-color: rgba(255, 255, 255, 0.18); }
-.svc-panel-b i { background: rgba(255, 255, 255, 0.2); }
-.svc-panel-b i + i { width: 70%; background: rgba(255, 255, 255, 0.14); }
+.svc-panel-b { border-color: rgba(12, 74, 110, 0.21); }
+.svc-panel-b i { background: rgba(12, 74, 110, 0.23); }
+.svc-panel-b i + i { width: 70%; background: rgba(12, 74, 110, 0.17); }
 .svc-panel-b i + i + i { width: 88%; }
 .svc-wires { flex: 1; display: flex; flex-direction: column; gap: 9px; }
 
@@ -408,7 +410,7 @@
   gap: 9px;
   font-size: 13.5px;
   line-height: 1.32;
-  color: #C3CBDD;
+  color: var(--color-body);
   opacity: 0;
 }
 .flip-list-dense li { font-size: 12.5px; }
@@ -444,8 +446,8 @@
 .section-dark .flip-tag,
 .section-deep .flip-tag,
 .section-alt .flip-tag {
-  border-color: rgba(255, 255, 255, 0.16);
-  color: #C3CBDD;
+  border-color: var(--color-border);
+  color: var(--color-body);
 }
 
 /* --- Back-face call to action, pinned to the bottom of the face --------- */
@@ -466,10 +468,10 @@
 .industry-tile .flip-back-cta { justify-content: center; width: 100%; }
 .section-dark .flip-back-cta,
 .section-deep .flip-back-cta,
-.section-alt .flip-back-cta { color: #fff; }
+.section-alt .flip-back-cta { color: var(--color-accent-ink); }
 .section-dark .flip-back-cta:hover,
 .section-deep .flip-back-cta:hover,
-.section-alt .flip-back-cta:hover { color: #fff; }
+.section-alt .flip-back-cta:hover { color: var(--color-heading); }
 
 /* A service or industry card's link to its own page, carried onto the back face
    so it is not lost when the accordion body is rebuilt. Sits above the CTA. */
@@ -480,7 +482,7 @@
   align-items: center;
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--color-accent);
+  color: var(--color-accent-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: color 0.3s ease;
@@ -488,7 +490,7 @@
 .flip-back-link:hover { color: var(--color-heading); }
 .section-dark .flip-back-link:hover,
 .section-deep .flip-back-link:hover,
-.section-alt .flip-back-link:hover { color: #fff; }
+.section-alt .flip-back-link:hover { color: var(--color-heading); }
 .industry-tile .flip-back-link { justify-content: center; width: 100%; text-align: center; }
 /* When both are present the CTA no longer needs to claim the free space. */
 .flip-back-link ~ .flip-back-cta { margin-top: 0; padding-top: 10px; }

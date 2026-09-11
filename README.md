@@ -32,6 +32,44 @@ php -S 127.0.0.1:8000          # pages + submit.php (needs config.php)
 
 There is no package manager, bundler or framework. Edit a file, reload the page.
 
+## Theme
+
+Off-white page, sky-blue accent. Tokens live in `css/base.css`; the other four
+files should reference them rather than adding literals.
+
+**The one rule that matters: there are two blues, and they are not
+interchangeable.**
+
+| Token | Value | Use |
+|---|---|---|
+| `--color-accent` | `#38BDF8` | **Fills only** — buttons, chips, icons, rules. 2.0:1 on off-white, so it can never carry text. |
+| `--color-accent-ink` | `#0369A1` | **Words** — links, labels, eyebrows. 6.4:1, passes AA. |
+| `--color-on-accent` | `#04293D` | Ink placed *on* a `--color-accent` fill. 7.1:1. |
+
+Ask which one a thing is: a shape, or words? Using the fill blue for text is the
+easy mistake, and it silently drops that text to about 2.8:1.
+
+The three greys (`--color-body`, `--color-muted`, `--color-dim`) sit unusually
+close together. On a dark ground a faint grey still reads; on off-white it does
+not, so each was darkened until it clears 4.5:1 on every band. Hierarchy comes
+from size and weight, not lightness — lightening any of them breaks AA.
+
+Two names are historical and now mean the opposite of what they say. The
+`.section-dark` / `.section-deep` classes and the `.hero-dark` / `.btn-outline-light`
+selectors are from the previous near-black design; they are simply the two
+tinted bands and the quiet button now. Renaming them would touch all 16 pages,
+so they were left alone and commented instead.
+
+Assets that carry the palette and have to be regenerated together:
+`assets/favicon.svg` → the four `favicon-*.png` and `apple-touch-icon.png`;
+`assets/og-image.source.html` → `og-image.png` at exactly 1200x630; and the
+confirmation email in `submit.php`, which repeats the colours as literals
+because no mail client supports CSS variables.
+
+Every page must request the same `?v=` per asset. A page left on an older
+number serves last week's `base.css` with this week's `components.css`, which
+looks far worse than no cache-busting at all.
+
 ## Positioning
 
 The site sells **web development** and **CRM development** to a named set of industries.

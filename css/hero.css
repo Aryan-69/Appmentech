@@ -1,10 +1,11 @@
-/* css/hero.css — dark cinematic hero band (index only). Scoped under body.index-hero. */
+/* css/hero.css — the hero band (index only). Scoped under body.index-hero.
+   Named .hero-dark from when the band was near-black; it is off-white now. */
 
 /* --- Hero band --- */
 .hero-dark {
   position: relative;
-  background: var(--color-dark);
-  color: #E9ECF5;
+  background: var(--color-band);
+  color: var(--color-body);
   overflow: hidden;
   padding: 118px 0 0;
   isolation: isolate;
@@ -17,10 +18,10 @@
   inset: -40% -20% auto -20%;
   height: 170%;
   background: conic-gradient(from 0deg,
-    rgba(242, 161, 60, 0),
-    rgba(242, 161, 60, 0.14),
-    rgba(226, 116, 90, 0.09),
-    rgba(242, 161, 60, 0));
+    rgba(56, 189, 248, 0),
+    rgba(56, 189, 248, 0.15),
+    rgba(14, 165, 233, 0.09),
+    rgba(56, 189, 248, 0));
   filter: blur(110px);
   animation: omSpin 34s linear infinite;
 }
@@ -30,8 +31,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(12, 74, 110, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 74, 110, 0.07) 1px, transparent 1px);
   background-size: 56px 56px;
   animation: omDrift 14s linear infinite;
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 25%, #000 30%, transparent 72%);
@@ -47,12 +48,16 @@
   opacity: 0.95;
 }
 
-/* vignette keeping the copy readable over the orbits */
+/* Wash keeping the copy readable over the artwork. It used to be a dark
+   vignette under white text; inverted, it is an off-white scrim under dark.
+   Much weaker than its predecessor on purpose: dark text on off-white is
+   already legible, so the scrim only has to calm the artwork behind the
+   headline, not erase it. At 0.9 it hid the orbit diagram completely. */
 .hero-veil {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 58% 46% at 56% 38%,
-    rgba(11, 14, 23, 0.86), rgba(11, 14, 23, 0.42) 62%, rgba(11, 14, 23, 0));
+  background: radial-gradient(ellipse 52% 42% at 52% 42%,
+    rgba(247, 249, 251, 0.78), rgba(247, 249, 251, 0.34) 58%, rgba(247, 249, 251, 0) 78%);
 }
 
 .hero-inner {
@@ -69,9 +74,9 @@
   gap: 10px;
   padding: 8px 18px 8px 14px;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(242, 161, 60, 0.42);
-  background: rgba(242, 161, 60, 0.08);
-  color: #F7CF9C;
+  border: 1px solid rgba(56, 189, 248, 0.6);
+  background: rgba(56, 189, 248, 0.14);
+  color: var(--color-accent-ink);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -87,7 +92,7 @@
 /* --- Title --- */
 .hero-title {
   font-family: var(--font-display);
-  color: #fff;
+  color: var(--color-heading);
   font-size: clamp(44px, 6.4vw, 94px);
   line-height: 1.02;
   font-weight: 700;
@@ -102,7 +107,7 @@
 }
 .hero-line > span { display: inline-block; }
 .hero-accent {
-  background: linear-gradient(100deg, #FFBD6B, #FFE9C8 45%, #F2A13C);
+  background: linear-gradient(100deg, #0EA5E9, #38BDF8 45%, #0369A1);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
@@ -112,7 +117,7 @@
 .hero-sub {
   max-width: 660px;
   margin: 26px auto 0;
-  color: #9AA4BB;
+  color: var(--color-body);
   font-size: 18px;
   line-height: 1.62;
 }
@@ -127,31 +132,31 @@
 .btn-hero svg { width: 15px; height: 15px; transition: transform 0.25s var(--ease-smooth); }
 .btn-hero:hover svg { transform: translateX(4px); }
 
-/* --- Glass stat strip --- */
+/* --- Stat strip (currently toggled off on the homepage) --- */
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin: 88px 0 0;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  background: var(--color-surface);
   -webkit-backdrop-filter: blur(8px);
           backdrop-filter: blur(8px);
   overflow: hidden;
 }
 .hero-stat {
   padding: 34px 20px;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid var(--color-border);
   transition: background 0.35s;
 }
 .hero-stat:last-child { border-right: none; }
-.hero-stat:hover { background: rgba(242, 161, 60, 0.1); }
+.hero-stat:hover { background: var(--color-accent-soft); }
 .hero-stat-num {
   font-family: var(--font-display);
   font-size: 44px;
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: #fff;
+  color: var(--color-heading);
   line-height: 1.1;
 }
 .hero-stat-label {
@@ -188,7 +193,7 @@
   position: relative;
   width: 1px;
   height: 52px;
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--line-band);
   overflow: hidden;
 }
 .hero-scroll-rail::after {
@@ -209,7 +214,7 @@
   .hero-dark { padding-top: 78px; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); }
   .hero-stat:nth-child(2) { border-right: none; }
-  .hero-stat:nth-child(-n+2) { border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .hero-stat:nth-child(-n+2) { border-bottom: 1px solid var(--color-border); }
   .hero-stat-num { font-size: 36px; }
 }
 @media (max-width: 640px) {

@@ -394,9 +394,10 @@ function auto_reply_html($name) {
     $greetName = $safeName !== '' ? ' ' . $safeName : '';
 
     // Table layout with inline styles: the only thing every mail client agrees
-    // on. Colours are the site tokens — dark #0b0e17, amber #f2a13c, body
-    // #c3cbdd — and the mark is loaded from the site so a blocked-image client
-    // still shows the wordmark beside it.
+    // on. Colours are the site tokens — ink #0c1b26, sky blue #38bdf8, deep
+    // blue #0369a1, body #4c5c6b — written as literals because no mail client
+    // supports CSS variables. The mark is loaded from the site so a
+    // blocked-image client still shows the wordmark beside it.
     return
 '<!DOCTYPE html>
 <html lang="en">
@@ -406,14 +407,14 @@ function auto_reply_html($name) {
 <meta name="x-apple-disable-message-reformatting">
 <title>We received your message</title>
 </head>
-<body style="margin:0;padding:0;background:#f6f7fa;font-family:\'Segoe UI\',-apple-system,Roboto,Helvetica,Arial,sans-serif;color:#3f4757;">
+<body style="margin:0;padding:0;background:#f7f9fb;font-family:\'Segoe UI\',-apple-system,Roboto,Helvetica,Arial,sans-serif;color:#4c5c6b;">
   <div style="display:none;max-height:0;overflow:hidden;opacity:0;">Your project requirement reached us. A member of the team replies within 1 business day.</div>
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f6f7fa;padding:28px 12px;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f7f9fb;padding:28px 12px;">
     <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -28px rgba(11,14,23,0.45);">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 18px 40px -28px rgba(12,74,110,0.32);">
 
         <tr>
-          <td style="background:#0b0e17;padding:26px 32px;">
+          <td style="background:#edf4fa;padding:26px 32px;">
             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td style="vertical-align:middle;padding-right:12px;">
@@ -421,30 +422,30 @@ function auto_reply_html($name) {
                        style="display:block;width:38px;height:38px;border:0;">
                 </td>
                 <td style="vertical-align:middle;">
-                  <span style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#ffffff;">Appmentech<span style="color:#f2a13c;">.</span></span>
+                  <span style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#0c1b26;">Appmentech<span style="color:#0369a1;">.</span></span>
                 </td>
               </tr>
             </table>
           </td>
         </tr>
-        <tr><td style="height:3px;background:#f2a13c;font-size:0;line-height:0;">&nbsp;</td></tr>
+        <tr><td style="height:3px;background:#38bdf8;font-size:0;line-height:0;">&nbsp;</td></tr>
 
         <tr>
           <td style="padding:36px 32px 8px;">
-            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#b8791f;">Requirement received</p>
-            <h1 style="margin:0 0 18px;font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-0.6px;color:#0b0e17;">Thanks for reaching out' . $greetName . '</h1>
-            <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#4a5365;">
+            <p style="margin:0 0 14px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0369a1;">Requirement received</p>
+            <h1 style="margin:0 0 18px;font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-0.6px;color:#0c1b26;">Thanks for reaching out' . $greetName . '</h1>
+            <p style="margin:0 0 16px;font-size:15px;line-height:1.65;color:#4c5c6b;">
               Your project requirement is with our team. Someone will read it properly and come back to you
-              <strong style="color:#0b0e17;">within 1 business day</strong> with next steps or a couple of questions.
+              <strong style="color:#0c1b26;">within 1 business day</strong> with next steps or a couple of questions.
             </p>
-            <p style="margin:0 0 26px;font-size:15px;line-height:1.65;color:#4a5365;">
+            <p style="margin:0 0 26px;font-size:15px;line-height:1.65;color:#4c5c6b;">
               If it is urgent, reply straight to this email or call
-              <a href="tel:+917303021135" style="color:#0b0e17;font-weight:600;text-decoration:none;">+91 73030 21135</a>.
+              <a href="tel:+917303021135" style="color:#0369a1;font-weight:600;text-decoration:none;">+91 73030 21135</a>.
             </p>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
               <tr>
-                <td style="border-radius:999px;background:#f2a13c;">
-                  <a href="https://appmentech.in" style="display:inline-block;padding:14px 30px;font-size:14.5px;font-weight:700;color:#17110a;text-decoration:none;border-radius:999px;">Visit our website &rarr;</a>
+                <td style="border-radius:999px;background:#38bdf8;">
+                  <a href="https://appmentech.in" style="display:inline-block;padding:14px 30px;font-size:14.5px;font-weight:700;color:#04293d;text-decoration:none;border-radius:999px;">Visit our website &rarr;</a>
                 </td>
               </tr>
             </table>
@@ -453,10 +454,10 @@ function auto_reply_html($name) {
 
         <tr>
           <td style="padding:30px 32px 34px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #e8eaf0;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #dce7ef;">
               <tr><td style="padding-top:22px;">
-                <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8b95ac;">What we do</p>
-                <p style="margin:0;font-size:13.5px;line-height:1.9;color:#4a5365;">
+                <p style="margin:0 0 12px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0369a1;">What we do</p>
+                <p style="margin:0;font-size:13.5px;line-height:1.9;color:#4c5c6b;">
                   <!-- TOGGLE:OFF id="auto-reply-eight-categories" reason="The confirmation email listed the eight categories now toggled off on the site." See docs/TOGGLES.md to re-enable. -->
                   <!--
                   Web Development &nbsp;&middot;&nbsp; Mobile Applications &nbsp;&middot;&nbsp; AI &amp; Intelligent Solutions<br>
@@ -474,24 +475,24 @@ function auto_reply_html($name) {
         </tr>
 
         <tr>
-          <td style="padding:26px 32px;background:#080b13;">
-            <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#ffffff;">Appmentech Technologies<span style="color:#f2a13c;">.</span></p>
+          <td style="padding:26px 32px;background:#e3edf6;">
+            <p style="margin:0 0 6px;font-size:15px;font-weight:700;color:#0c1b26;">Appmentech Technologies<span style="color:#0369a1;">.</span></p>
             <!-- TOGGLE:OFF id="auto-reply-all-in-one-tagline" reason="All in one partner claim, removed everywhere else on the site." See docs/TOGGLES.md to re-enable. -->
             <!--
             <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#8b95ac;">Your all-in-one digital and software solutions partner.</p>
             -->
             <!-- /TOGGLE:OFF id="auto-reply-all-in-one-tagline" -->
-            <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#8b95ac;">Custom websites and CRM systems for Indian businesses.</p>
-            <p style="margin:0;font-size:12.5px;color:#8b95ac;">
-              <a href="mailto:contact@appmentech.in" style="color:#f4c690;text-decoration:none;">contact@appmentech.in</a>
+            <p style="margin:0 0 14px;font-size:12.5px;line-height:1.6;color:#4c5c6b;">Custom websites and CRM systems for Indian businesses.</p>
+            <p style="margin:0;font-size:12.5px;color:#4c5c6b;">
+              <a href="mailto:contact@appmentech.in" style="color:#0369a1;text-decoration:none;">contact@appmentech.in</a>
               &nbsp;&middot;&nbsp;
-              <a href="https://appmentech.in" style="color:#f4c690;text-decoration:none;">appmentech.in</a>
+              <a href="https://appmentech.in" style="color:#0369a1;text-decoration:none;">appmentech.in</a>
             </p>
           </td>
         </tr>
 
       </table>
-      <p style="margin:16px auto 0;max-width:600px;font-size:11px;line-height:1.6;color:#8b95ac;">
+      <p style="margin:16px auto 0;max-width:600px;font-size:11px;line-height:1.6;color:#5a6a78;">
         This is an automated confirmation. Please do not share passwords or payment details by email.
       </p>
     </td></tr>

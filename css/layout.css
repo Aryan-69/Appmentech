@@ -13,28 +13,34 @@
 
 /* --- Bands ------------------------------------------------------------- */
 .section-light { background: var(--color-light); color: var(--color-heading); }
-.section-dark  { background: var(--color-dark); }
-.section-deep  { background: var(--color-deep); border-top: 1px solid var(--line-dark-soft); }
+.section-dark  { background: var(--color-band); }
+.section-deep  { background: var(--color-band-deep); border-top: 1px solid var(--line-band-soft); }
 
-/* Legacy name — the deep dark band. */
+/* Legacy name — the second band. */
 .section-alt {
-  background: var(--color-deep);
-  border-top: 1px solid var(--line-dark-soft);
-  color: var(--color-contrast-text);
+  background: var(--color-band-deep);
+  border-top: 1px solid var(--line-band-soft);
 }
 
+/* These three used to invert to light-on-dark. Now every band is light, so
+   they simply keep the page's own text colours. The rules stay rather than
+   being deleted, because they are the hook every later file overrides
+   against — .section-dark .card and friends all rely on this specificity. */
 .section-dark,
 .section-deep,
-.section-alt { color: #E9ECF5; overflow: hidden; }
+.section-alt { color: var(--color-body); overflow: hidden; }
 
 .section-dark h1, .section-dark h2, .section-dark h3,
 .section-deep h1, .section-deep h2, .section-deep h3,
-.section-alt h1, .section-alt h2, .section-alt h3 { color: var(--color-contrast-text); }
+.section-alt h1, .section-alt h2, .section-alt h3 { color: var(--color-heading); }
 
-.section-dark p, .section-deep p, .section-alt p { color: var(--color-muted); }
+.section-dark p, .section-deep p, .section-alt p { color: var(--color-body); }
 
-.section-dark a, .section-deep a, .section-alt a { color: var(--color-accent-text); }
-.section-dark a:hover, .section-deep a:hover, .section-alt a:hover { color: #fff; }
+/* :not(.btn) matters. Without it this rule (0,1,1) outranks .btn-primary
+   (0,1,0) and repaints every button label inside a band in link blue, on a
+   sky-blue fill — 2.8:1. Buttons set their own ink. */
+.section-dark a:not(.btn), .section-deep a:not(.btn), .section-alt a:not(.btn) { color: var(--color-accent-ink); }
+.section-dark a:not(.btn):hover, .section-deep a:not(.btn):hover, .section-alt a:not(.btn):hover { color: var(--color-heading); }
 
 /* Content sits above the decorative glow layers. */
 .section > .container { position: relative; z-index: 1; }
@@ -55,20 +61,20 @@
   max-width: 100%;
   height: 600px;
   transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(242, 161, 60, 0.16), rgba(242, 161, 60, 0) 65%);
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.16), rgba(56, 189, 248, 0) 65%);
   filter: blur(30px);
 }
 .section-glow-centre {
-  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(242, 161, 60, 0.1), rgba(242, 161, 60, 0) 70%);
+  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(56, 189, 248, 0.12), rgba(56, 189, 248, 0) 70%);
 }
 .section-glow-left {
-  background: radial-gradient(ellipse 60% 40% at 20% 30%, rgba(242, 161, 60, 0.09), rgba(242, 161, 60, 0) 70%);
+  background: radial-gradient(ellipse 60% 40% at 20% 30%, rgba(56, 189, 248, 0.11), rgba(56, 189, 248, 0) 70%);
 }
 .section-glow-right {
-  background: radial-gradient(ellipse 55% 45% at 78% 40%, rgba(242, 161, 60, 0.09), rgba(242, 161, 60, 0) 70%);
+  background: radial-gradient(ellipse 55% 45% at 78% 40%, rgba(56, 189, 248, 0.11), rgba(56, 189, 248, 0) 70%);
 }
 .section-glow-cta {
-  background: radial-gradient(ellipse 60% 55% at 50% 30%, rgba(242, 161, 60, 0.13), rgba(242, 161, 60, 0) 68%);
+  background: radial-gradient(ellipse 60% 55% at 50% 30%, rgba(56, 189, 248, 0.14), rgba(56, 189, 248, 0) 68%);
 }
 
 /* Per-band rhythm from the design source. */
@@ -97,11 +103,13 @@
   color: var(--color-accent-ink);
   margin: 0 0 16px;
 }
+/* Every band is light, so the eyebrow keeps one accent colour throughout.
+   Kept as a rule so a future tinted band has somewhere to override. */
 .section-dark .eyebrow,
 .section-deep .eyebrow,
-.section-alt .eyebrow { color: #F7CF9C; }
+.section-alt .eyebrow { color: var(--color-accent-ink); }
 
-/* Blinking dot used on the dark bands' eyebrows. */
+/* Blinking dot on the band eyebrows. */
 .eyebrow-dot {
   width: 7px;
   height: 7px;
