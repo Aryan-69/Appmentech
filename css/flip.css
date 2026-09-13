@@ -169,6 +169,15 @@
   background: var(--color-surface);
 }
 .svc-mock:not([data-mock="web"]) { height: 118px; }
+/* On the front face the mock fills the gap between the summary and the footer
+   row. It is pushed to the bottom of that gap and given one height, so the three
+   previews line up across the row however long each card's summary runs. */
+.flip-front .svc-mock {
+  height: 118px;
+  margin: 20px 0 0;
+  margin-top: auto;
+}
+.flip-front .svc-mock + .flip-foot { margin-top: 0; }
 
 .svc-stage { position: absolute; inset: 0; display: flex; }
 
@@ -183,16 +192,25 @@
   pointer-events: none;
 }
 
-/* Entry motion is armed by the flip, so each mock replays when the card opens. */
+/* Motion runs wherever the mock sits: on the front face it plays as soon as the
+   card is on screen, on a back face it is armed by the flip so it replays when
+   the card opens. */
+.flip-front .svc-scan,
 .flip.flipped .svc-scan { animation: omScan 3.2s ease-in-out infinite; }
+.flip-front [data-mock="web"] .svc-scan,
 .flip.flipped [data-mock="web"] .svc-scan { animation-duration: 2.8s; }
 
 .svc-grow { transform: scaleX(0); transform-origin: left; }
 .svc-pop { opacity: 0; }
+.flip-front .svc-grow,
 .flip.flipped .svc-grow { animation: omGrow 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both; }
+.flip-front .svc-pop,
 .flip.flipped .svc-pop { animation: omPop 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both; }
+.flip-front .svc-float,
 .flip.flipped .svc-float { animation: omFloat var(--dur, 6s) ease-in-out var(--d, 0s) infinite; }
+.flip-front .svc-blink,
 .flip.flipped .svc-blink { animation: omBlink var(--dur, 1.4s) ease-in-out var(--d, 0s) infinite; }
+.flip-front .svc-trace,
 .flip.flipped .svc-trace { animation: omTrace var(--dur, 2.4s) linear var(--d, 0s) infinite; }
 
 /* --- 01 Web: browser chrome over a skeleton layout ----------------------- */
@@ -367,6 +385,7 @@
   transform: scaleX(0);
   transform-origin: left;
 }
+.flip-front .svc-progress i,
 .flip.flipped .svc-progress i { animation: omGrow 2.6s ease-in-out infinite; }
 .svc-lines { display: flex; flex-direction: column; gap: 5px; }
 .svc-lines span { height: 5px; border-radius: 5px; background: rgba(12, 74, 110, 0.17); }
@@ -394,6 +413,67 @@
 .svc-panel-b i + i { width: 70%; background: rgba(12, 74, 110, 0.17); }
 .svc-panel-b i + i + i { width: 88%; }
 .svc-wires { flex: 1; display: flex; flex-direction: column; gap: 9px; }
+
+/* --- CRM: a three-stage pipeline board ---------------------------------- */
+.svc-crm { align-items: stretch; gap: 8px; padding: 12px; }
+.svc-lane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px 6px;
+  border-radius: 8px;
+  background: rgba(12, 74, 110, 0.045);
+}
+.svc-lane-head {
+  height: 5px;
+  width: 62%;
+  border-radius: 5px;
+  background: rgba(12, 74, 110, 0.26);
+}
+.svc-deal {
+  height: 17px;
+  border-radius: 5px;
+  background: rgba(12, 74, 110, 0.14);
+}
+.svc-deal-hot { background: rgba(56, 189, 248, 0.62); }
+.svc-deal-won {
+  height: 24px;
+  background: linear-gradient(120deg, rgba(56, 189, 248, 0.72), rgba(14, 165, 233, 0.42));
+}
+.svc-deal-ghost {
+  height: 17px;
+  background: none;
+  border: 1px dashed rgba(56, 189, 248, 0.62);
+}
+
+/* --- Care: an uptime chart over the monthly checklist ------------------- */
+.svc-care { flex-direction: column; justify-content: center; gap: 9px; padding: 13px 14px; }
+.svc-care-head { display: flex; align-items: center; gap: 7px; }
+.svc-live {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 10px -1px rgba(56, 189, 248, 0.95);
+}
+.svc-care-head u { height: 5px; width: 44%; border-radius: 5px; background: rgba(12, 74, 110, 0.19); }
+.svc-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 34px;
+}
+.svc-bars i {
+  flex: 1;
+  height: var(--h, 60%);
+  border-radius: 3px 3px 2px 2px;
+  background: rgba(56, 189, 248, 0.62);
+}
+.svc-bars .svc-bar-dip { background: rgba(12, 74, 110, 0.21); }
+.svc-checks { display: flex; flex-direction: column; gap: 6px; }
+.svc-care .svc-box { width: 13px; height: 13px; font-size: 9px; }
 
 /* --- Offering list ------------------------------------------------------ */
 .flip-list {
@@ -523,14 +603,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .flip-inner { transition: none; }
-  .flip.flipped .svc-scan,
-  .flip.flipped .svc-grow,
-  .flip.flipped .svc-pop,
-  .flip.flipped .svc-float,
-  .flip.flipped .svc-blink,
-  .flip.flipped .svc-trace,
-  .flip.flipped .svc-progress i,
-  .flip.flipped .flip-list li { animation: none; }
+  .svc-scan,
+  .svc-grow,
+  .svc-pop,
+  .svc-float,
+  .svc-blink,
+  .svc-trace,
+  .svc-progress i,
+  .flip-list li { animation: none !important; }
+  .svc-scan { opacity: 0; }
   .svc-grow,
   .svc-progress i { transform: scaleX(1); }
   .svc-pop,

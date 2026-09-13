@@ -336,7 +336,8 @@ No `contact submit:` lines at all, with rows still missing, means `db.host` or
 
 - **Malware scanning is inert** unless `clamscan` points at a real binary; shared
   hosting has none, so uploads pass on extension and MIME checks alone.
-- **Phone number is `+91 73030 21135`** across the pages and the auto-reply.
+- **Phone numbers are `+91 73030 21135` and `+91 92145 23180`** across the pages and
+  the auto-reply; both are in the JSON-LD `telephone` array on the home page.
 - **Country flags degrade to ISO letters on Windows**; the ISO badge is the workaround.
 - **Rows predating the phone-normalisation fix** carry keys that never match.
 - **`newcode/` and `appmentechseodeploy.zip` are still on the live server** at the

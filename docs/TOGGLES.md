@@ -91,12 +91,18 @@ with web and CRM, and it does not promise a page that has to rank.
 | `nav-off-niche-industries` | every page | Nav links to Transportation &amp; Logistics, Enterprise, Government |
 | `industry-tiles-original-twelve` | `index.html` | All twelve original tiles, kept verbatim |
 | `contact-form-old-option-lists` | `js/contact.js` | The old Industry and Solution dropdown options |
+| `industry-tiles-media-sports` | `index.html` | The Media &amp; Entertainment and Sports tiles |
+| `nav-industries-media-sports` | every page | Nav links to Media &amp; Entertainment and Sports |
 
 The four claims that were the real credibility problem — **Government &amp; Public
 Services, Social Networking, Transportation &amp; Logistics (fleet), Enterprise &amp; Cloud
-Infrastructure** — are gone from the visible site. Media &amp; Entertainment stayed, but
-its tile no longer claims OTT and streaming platforms; it now claims publishing,
-subscriptions and ticketing, which is web work.
+Infrastructure** — are gone from the visible site.
+
+**Media &amp; Entertainment and Sports came off later**, leaving nine live tiles. Neither
+had work behind it, and "industries we already know how to build for" only holds if
+every tile is one we do. Both tiles are intact under `industry-tiles-media-sports`,
+their nav links under `nav-industries-media-sports`; switch both back together the day
+either becomes true.
 
 **E-Commerce &amp; Retail is kept as an eleventh tile**, alongside the ten target
 industries, because Cookrie is the one real case study behind it and
@@ -137,6 +143,19 @@ A consultation asks the buyer for their time before offering anything. "Get a Fr
 Website Review" offers them something first. Same effort for you, better conversion —
 but only if you actually send a review. If you are not going to, change the wording
 back rather than leaving a promise unmet.
+
+## 5. Case studies
+
+| id | Where | What it was |
+|---|---|---|
+| `home-case-studies-section` | `index.html` | The "Solutions We've Delivered" band with the Cookrie card |
+
+One case study presented as a case *studies* section invites the visitor to count them.
+The section comes back once there are three or four.
+
+`case-studies.html` itself is **untouched and still linked** from the nav and the footer
+on every page — only the home page band is off. If you want the page gone as well, follow
+the "A whole page" recipe at the top of this file and drop its `sitemap.xml` entry.
 
 ---
 

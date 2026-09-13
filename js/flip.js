@@ -1,6 +1,6 @@
 // js/flip.js — turn clickable info tiles into 3D flip cards.
-// Front keeps the icon/title/summary + trigger; the back face carries the
-// design's animated service mock, the offering list and a call to action.
+// Front keeps the icon/title/summary, the design's animated service mock and the
+// trigger; the back face carries the offering list and a call to action.
 // Click the front to flip; a "↻ back" control at the TOP of the back returns.
 // Flipping is user-driven only — nothing flips on its own.
 (function () {
@@ -21,6 +21,42 @@
             '<span class="svc-b4 svc-grow" style="--d:.35s"></span>' +
             '<span class="svc-b4 svc-grow" style="--d:.45s"></span>' +
           '</div>' +
+        '</div>' +
+      '</div>',
+
+    crm:
+      '<div class="svc-stage svc-crm">' +
+        '<div class="svc-lane">' +
+          '<span class="svc-lane-head"></span>' +
+          '<span class="svc-deal svc-grow" style="--d:.15s"></span>' +
+          '<span class="svc-deal svc-grow" style="--d:.25s"></span>' +
+        '</div>' +
+        '<div class="svc-lane">' +
+          '<span class="svc-lane-head"></span>' +
+          '<span class="svc-deal svc-deal-hot svc-grow" style="--d:.3s"></span>' +
+          '<span class="svc-deal svc-grow" style="--d:.4s"></span>' +
+          '<span class="svc-deal svc-deal-ghost svc-blink" style="--dur:2.4s"></span>' +
+        '</div>' +
+        '<div class="svc-lane">' +
+          '<span class="svc-lane-head"></span>' +
+          '<span class="svc-deal svc-deal-won svc-grow" style="--d:.5s"></span>' +
+        '</div>' +
+      '</div>',
+
+    care:
+      '<div class="svc-stage svc-care">' +
+        '<span class="svc-care-head">' +
+          '<i class="svc-live svc-blink" style="--dur:2s"></i><u></u>' +
+        '</span>' +
+        '<div class="svc-bars">' +
+          '<i style="--h:52%"></i><i style="--h:74%"></i><i style="--h:61%"></i>' +
+          '<i style="--h:88%"></i><i style="--h:70%"></i><i style="--h:95%"></i>' +
+          '<i style="--h:66%"></i><i class="svc-bar-dip" style="--h:34%"></i>' +
+          '<i style="--h:80%"></i><i style="--h:92%"></i>' +
+        '</div>' +
+        '<div class="svc-checks">' +
+          '<span class="svc-crow svc-pop" style="--d:.35s"><i class="svc-box">&#10003;</i><u style="width:70%"></u></span>' +
+          '<span class="svc-crow svc-pop" style="--d:.5s"><i class="svc-box">&#10003;</i><u style="width:48%"></u></span>' +
         '</div>' +
       '</div>',
 
@@ -142,8 +178,18 @@
         if (ch !== body) front.appendChild(ch);
       });
 
-      // Solutions cards: pin the explore link to the bottom with a flip hint
-      // beside it, matching the design's front-face footer row.
+      // Solutions cards: the animated service mock sits on the FRONT, filling the
+      // space between the summary and the footer row. The back is the detail list.
+      if (isService) {
+        var mock = buildMock(iconKey);
+        if (mock) {
+          if (toggle) toggle.insertAdjacentHTML('beforebegin', mock);
+          else front.insertAdjacentHTML('beforeend', mock);
+        }
+      }
+
+      // Pin the explore link to the bottom with a flip hint beside it,
+      // matching the design's front-face footer row.
       if (isService && toggle) {
         var foot = document.createElement('div');
         foot.className = 'flip-foot';
@@ -172,9 +218,7 @@
       back.appendChild(head);
 
       if (isService) {
-        // The design's animated mock for this service, then its offering list.
-        back.insertAdjacentHTML('beforeend', buildMock(iconKey));
-
+        // The offering list — the mock already sits on the front face.
         var items = Array.prototype.slice.call(body.querySelectorAll('li'));
         if (items.length) {
           var list = document.createElement('ul');

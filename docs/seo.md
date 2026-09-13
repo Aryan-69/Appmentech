@@ -43,7 +43,7 @@ handful of items that need real business data before they can be finished.
 
 ## Still needs you
 
-1. **Street address.** The real phone number (`+91 73030 21135`) is now live across the
+1. **Street address.** The real phone numbers (`+91 73030 21135`, `+91 92145 23180`) are now live across the
    site and in the JSON-LD, but there is still no street address anywhere. Publishing a
    fake one is worse than publishing none, so the schema carries only
    `addressCountry: IN`. Once you have the address, add the full `PostalAddress` to the

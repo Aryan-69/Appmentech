@@ -32,7 +32,7 @@
   <link rel="stylesheet" href="css/layout.css?v=8">
   <link rel="stylesheet" href="css/components.css?v=16">
   <link rel="stylesheet" href="css/hero.css?v=7">
-  <link rel="stylesheet" href="css/flip.css?v=13">
+  <link rel="stylesheet" href="css/flip.css?v=14">
   <!-- TODO (owner): add the full PostalAddress (street/city/region/postcode) and
        "sameAs" (LinkedIn, GitHub, Google Business Profile) below once those details
        exist. Placeholder NAP data is worse than none for local SEO. -->
@@ -47,7 +47,7 @@
     "image": "https://appmentech.in/assets/og-image.png",
     "description": "Appmentech Technologies builds custom websites, customer portals, e-commerce platforms and CRM systems for Indian businesses, with quality engineering built into delivery.",
     "email": "contact@appmentech.in",
-    "telephone": "+917303021135",
+    "telephone": ["+917303021135", "+919214523180"],
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "IN"
@@ -184,6 +184,7 @@
     <div class="container utility-bar-inner">
       <span>contact@appmentech.in</span>
       <span>+91 73030 21135</span>
+      <span>+91 92145 23180</span>
     </div>
   </div>
 
@@ -228,8 +229,12 @@
             <a href="/#industries">Real Estate &amp; Property Management</a>
             <a href="/#industries">Travel &amp; Hospitality</a>
             <a href="/#industries">Education &amp; EdTech</a>
+            <!-- TOGGLE:OFF id="nav-industries-media-sports" reason="Media &amp; Entertainment and Sports pulled from the industries we claim to already know." See docs/TOGGLES.md to re-enable. -->
+            <!--
             <a href="/#industries">Media &amp; Entertainment</a>
             <a href="/#industries">Sports</a>
+            -->
+            <!-- /TOGGLE:OFF id="nav-industries-media-sports" -->
             <a href="/#industries">Payment Gateway &amp; Shipping Integration</a>
             <a href="/#industries">Retail POS &amp; Billing Solutions</a>
             <a href="/industries/ecommerce.html">E-Commerce &amp; Retail</a>
@@ -704,6 +709,8 @@
           </div>
         </div>
 
+        <!-- TOGGLE:OFF id="industry-tiles-media-sports" reason="Media &amp; Entertainment and Sports removed from the industries we claim to already know, pending real work in either." See docs/TOGGLES.md to re-enable. -->
+        <!--
         <div class="industry-tile" data-tags="Publishing|Subscriptions|Ticketing" data-cta="Build your media platform">
           <div class="industry-tile-icon" data-icon="media"></div>
           <h3 class="industry-tile-label">Media &amp; Entertainment</h3>
@@ -725,6 +732,8 @@
             <ul><li>Sports academy, club and gym websites</li><li>Turf, court and slot booking with online payment</li><li>Membership and subscription management</li><li>Player, member and parent CRM</li><li>Batch, coach and session scheduling</li><li>Tournament registration and fixtures</li><li>Attendance and progress tracking</li><li>Fee renewal reminders and receipts</li></ul>
           </div>
         </div>
+        -->
+        <!-- /TOGGLE:OFF id="industry-tiles-media-sports" -->
 
         <div class="industry-tile" data-tags="Payments|Shipping APIs|Reconciliation" data-cta="Integrate payments or shipping">
           <div class="industry-tile-icon" data-icon="payments"></div>
@@ -926,6 +935,8 @@
         </div>
       </div>
     </section>
+    <!-- TOGGLE:OFF id="home-case-studies-section" reason="Only one case study to show. The section returns once there are three or four." See docs/TOGGLES.md to re-enable. -->
+    <!--
     <section class="section section-deep" id="work">
       <span class="section-glow section-glow-right" aria-hidden="true"></span>
       <div class="container">
@@ -954,6 +965,8 @@
         </div>
       </div>
     </section>
+    -->
+    <!-- /TOGGLE:OFF id="home-case-studies-section" -->
 
     <section class="section section-light" id="approach">
       <div class="container">
@@ -1111,6 +1124,7 @@
           <ul class="footer-links">
             <li>contact@appmentech.in</li>
             <li>+91 73030 21135</li>
+            <li>+91 92145 23180</li>
             <li>India / Global</li>
           </ul>
         </div>
@@ -1131,7 +1145,7 @@
   <script src="js/nav.js?v=5" defer></script>
   <script src="js/reveal.js?v=5" defer></script>
   <script src="js/hero.js?v=7" defer></script>
-  <script src="js/flip.js?v=9" defer></script>
+  <script src="js/flip.js?v=10" defer></script>
   <script src="js/accordion.js?v=5" defer></script>
 </body>
 </html>
