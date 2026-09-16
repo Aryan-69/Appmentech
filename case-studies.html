@@ -15,6 +15,12 @@
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <!-- PAGE TOGGLED OFF: Only one project is written up, so the page is not presented yet. The file is untouched and still reachable
+       by direct URL, but it is no longer linked from the nav, the footer or the sitemap,
+       and the robots meta below keeps it out of search results. To bring it back: delete
+       that meta line, restore the sitemap entry and the nav and footer links.
+       See docs/TOGGLES.md -->
+  <meta name="robots" content="noindex,follow">
   <link rel="canonical" href="https://appmentech.in/case-studies.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Appmentech Technologies">
@@ -189,7 +195,11 @@
             <!-- /TOGGLE:OFF id="nav-off-niche-tech-columns" -->
           </div>
         </li>
+        <!-- TOGGLE:OFF id="nav-case-studies-link" reason="Only one case study to show. The tab returns once there are more projects to list." See docs/TOGGLES.md to re-enable. -->
+        <!--
         <li><a href="/case-studies.html">Case Studies</a></li>
+        -->
+        <!-- /TOGGLE:OFF id="nav-case-studies-link" -->
         <li><a href="/about.html">About Us</a></li>
         <li><a href="/contact.html">Contact Us</a></li>
       </ul>
@@ -330,7 +340,11 @@
             <li><a href="/careers.html">Careers</a></li>
             -->
             <!-- /TOGGLE:OFF id="footer-careers-link" -->
+            <!-- TOGGLE:OFF id="footer-case-studies-link" reason="Case studies page is toggled off while there is only one project on it." See docs/TOGGLES.md to re-enable. -->
+            <!--
             <li><a href="/case-studies.html">Case Studies</a></li>
+            -->
+            <!-- /TOGGLE:OFF id="footer-case-studies-link" -->
             <li><a href="/contact.html">Contact</a></li>
           </ul>
         </div>

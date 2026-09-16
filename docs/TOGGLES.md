@@ -149,13 +149,31 @@ back rather than leaving a promise unmet.
 | id | Where | What it was |
 |---|---|---|
 | `home-case-studies-section` | `index.html` | The "Solutions We've Delivered" band with the Cookrie card |
+| `nav-case-studies-link` | every page | The Case Studies nav tab |
+| `footer-case-studies-link` | every page | The Case Studies link in the footer Company column |
+| `cta-see-our-work` | `about.html`, all `services/*.html`, `industries/ecommerce.html` | The "See Our Work" secondary button in the hero CTA |
+| `about-case-study-link` | `about.html` | The paragraph linking to the Cookrie case study |
+| `ecommerce-cookrie-case-study-cta` | `industries/ecommerce.html` | The Cookrie band's "Read the full write-up" sentence and "Read the Cookrie case study" button |
+| `sitemap-case-studies-page` | `sitemap.xml` | The `case-studies.html` sitemap entry |
 
 One case study presented as a case *studies* section invites the visitor to count them.
 The section comes back once there are three or four.
 
-`case-studies.html` itself is **untouched and still linked** from the nav and the footer
-on every page — only the home page band is off. If you want the page gone as well, follow
-the "A whole page" recipe at the top of this file and drop its `sitemap.xml` entry.
+**The whole page is now toggled off too**, on the owner's call: one project is not enough
+to fill it, and it goes back on once there are more. `case-studies.html` is untouched and
+still loads at its URL, but it is unlinked from the nav, the footer and `sitemap.xml`, and
+carries `noindex,follow` under a `PAGE TOGGLED OFF` note in its `<head>`.
+
+Two places kept their content and changed only where they point, rather than going dark:
+
+- **`about.html`** still makes the Cookrie point, linking to `cookrie.in` instead of the
+  case study. The original paragraph is under `about-case-study-link`.
+- **`industries/ecommerce.html`** keeps its Cookrie band; "Visit cookrie.in" is now the
+  primary button, with "Start a project" beside it. The original is under
+  `ecommerce-cookrie-case-study-cta`.
+
+Switching the page back on means reversing all seven ids above plus the two live
+rewrites, and restoring the sitemap entry and the `robots` meta — not just the nav tab.
 
 ---
 

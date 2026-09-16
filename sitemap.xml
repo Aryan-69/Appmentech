@@ -12,7 +12,11 @@
   -->
   <!-- /TOGGLE:OFF id="sitemap-off-niche-service-pages" -->
   <url><loc>https://appmentech.in/industries/ecommerce.html</loc><lastmod>2026-09-01</lastmod></url>
+  <!-- TOGGLE:OFF id="sitemap-case-studies-page" reason="Case studies page is toggled off while there is only one project on it." See docs/TOGGLES.md to re-enable. -->
+  <!--
   <url><loc>https://appmentech.in/case-studies.html</loc><lastmod>2026-09-01</lastmod></url>
+  -->
+  <!-- /TOGGLE:OFF id="sitemap-case-studies-page" -->
   <url><loc>https://appmentech.in/about.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/contact.html</loc><lastmod>2026-09-01</lastmod></url>
   <url><loc>https://appmentech.in/privacy.html</loc><lastmod>2026-09-01</lastmod></url>
