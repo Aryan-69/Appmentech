@@ -211,7 +211,7 @@ No `contact submit:` lines at all, with rows still missing, means `db.host` or
 
 - **Malware scanning is inert** unless `clamscan` points at a real binary; shared
   hosting has none, so uploads pass on extension and MIME checks alone.
-- **Phone number is `+91 73030 21135`** across the pages and the auto-reply.
+- **No phone number is published** anywhere on the pages or in the auto-reply; email is the only contact channel.
 - **Country flags degrade to ISO letters on Windows**; the ISO badge is the workaround.
 - **Rows predating the phone-normalisation fix** carry keys that never match.
 - **Deployment is manual** until the Hostinger API token is real.

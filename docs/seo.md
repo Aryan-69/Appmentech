@@ -43,12 +43,12 @@ handful of items that need real business data before they can be finished.
 
 ## Still needs you
 
-1. **Street address.** The real phone number (`+91 73030 21135`) is now live across the
-   site and in the JSON-LD, but there is still no street address anywhere. Publishing a
-   fake one is worse than publishing none, so the schema carries only
-   `addressCountry: IN`. Once you have the address, add the full `PostalAddress` to the
-   JSON-LD in `index.html` and create a Google Business Profile with exactly the same
-   name, address and phone number as the site footer.
+1. **Street address and phone number.** Neither is published anywhere on the site or in
+   the JSON-LD. Publishing a fake one is worse than publishing none, so the schema
+   carries only `addressCountry: IN`. Once you have the address and a number you want
+   listed, add the full `PostalAddress` and `telephone` to the JSON-LD in `index.html`
+   and create a Google Business Profile with exactly the same name, address and phone
+   number as the site footer.
 2. **`sameAs` links.** Add your LinkedIn, GitHub and Google Business Profile URLs to the
    `ProfessionalService` block in `index.html`. This is the field that proves the entity
    exists elsewhere.

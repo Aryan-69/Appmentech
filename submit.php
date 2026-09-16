@@ -380,7 +380,7 @@ function auto_reply_body($name) {
         "Hi" . $first . ",\r\n\r\n" .
         "Thank you for reaching out to Appmentech Technologies. We have received your " .
         "project requirement and a member of our team will get back to you within 1 business day.\r\n\r\n" .
-        "If your request is urgent, you can reply directly to this email or call us at +91 73030 21135.\r\n\r\n" .
+        "If your request is urgent, you can reply directly to this email and we will prioritise it.\r\n\r\n" .
         "Warm regards,\r\n" .
         "Appmentech Technologies\r\n" .
         "Web | Mobile | AI | SaaS | Cloud | Automation | Enterprise | Quality Engineering\r\n" .
@@ -438,8 +438,7 @@ function auto_reply_html($name) {
               <strong style="color:#0b0e17;">within 1 business day</strong> with next steps or a couple of questions.
             </p>
             <p style="margin:0 0 26px;font-size:15px;line-height:1.65;color:#4a5365;">
-              If it is urgent, reply straight to this email or call
-              <a href="tel:+917303021135" style="color:#0b0e17;font-weight:600;text-decoration:none;">+91 73030 21135</a>.
+              If it is urgent, reply straight to this email and we will prioritise it.
             </p>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0">
               <tr>
