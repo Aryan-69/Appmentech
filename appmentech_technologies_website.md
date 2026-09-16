@@ -611,7 +611,7 @@ Whether you need a website, mobile application, SaaS platform, AI solution, ente
 
 **Company:** Appmentech Technologies  
 **Email:** info@appmentechtech.com  
-**Phone:** +91 73030 21135 / +91 92145 23180  
+**Phone:** +91 92145 23180  
 **Website:** www.appmentechtech.com  
 **Location:** India / Global
 
