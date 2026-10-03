@@ -1,0 +1,92 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+/* Project cover / GitHub social preview — 1280x640. Render to assets/cover.png. */
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:#080B13}
+body{width:1280px;height:640px;background:#080B13;color:#fff;overflow:hidden;position:relative;
+  font-family:"Space Grotesk","DejaVu Sans",Arial,sans-serif}
+.grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 90% at 72% 50%,#000 30%,transparent 80%)}
+.glow{position:absolute;border-radius:50%}
+.g1{width:980px;height:980px;right:-330px;top:-170px;
+  background:radial-gradient(circle,rgba(242,161,60,.26) 0%,rgba(242,161,60,0) 58%)}
+.g2{width:760px;height:760px;left:-280px;bottom:-420px;
+  background:radial-gradient(circle,rgba(90,140,255,.16) 0%,rgba(90,140,255,0) 64%)}
+
+.left{position:absolute;left:80px;top:64px;bottom:64px;width:580px;
+  display:flex;flex-direction:column;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:16px;font-size:32px;font-weight:700;letter-spacing:-.6px}
+.amber{color:#F2A13C}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;
+  border:1px solid rgba(242,161,60,.35);background:rgba(242,161,60,.08);
+  color:#F4C690;font-size:17px;letter-spacing:.2px;margin-bottom:26px}
+.badge i{width:8px;height:8px;border-radius:50%;background:#F2A13C;box-shadow:0 0 12px #F2A13C}
+h1{font-size:46px;line-height:1.12;font-weight:700;letter-spacing:-1.6px}
+p{margin-top:20px;font-size:20px;line-height:1.5;color:#9AA4BB;max-width:580px;
+  font-family:"IBM Plex Sans","DejaVu Sans",Arial,sans-serif}
+.foot{display:flex;align-items:center;gap:22px;color:#8B95AC;font-size:19px}
+.foot .url{color:#fff;font-weight:700}
+.foot .sep{width:1px;height:20px;background:rgba(255,255,255,.18)}
+
+.orbit{position:absolute;right:20px;top:20px;width:600px;height:600px}
+</style></head><body>
+<div class="grid"></div><div class="glow g1"></div><div class="glow g2"></div>
+
+<div class="left">
+  <div class="brand">
+    <svg viewBox="0 0 120 120" width="52" height="52"><circle cx="60" cy="60" r="38" fill="#F2A13C"/><g fill="none" stroke="#F2A13C" stroke-width="9" stroke-linecap="round"><path d="M60 12 A48 48 0 0 1 102 36"/><path d="M60 108 A48 48 0 0 1 18 84"/></g><g fill="none" stroke="#0B0E17" stroke-linecap="butt"><path d="M60 38 L44 82" stroke-width="9"/><path d="M60 38 L76 82" stroke-width="9"/><path d="M50 68 L70 68" stroke-width="8"/></g></svg>
+    <span>Appmentech<span class="amber">.</span></span>
+  </div>
+  <div>
+    <span class="badge"><i></i>One Platform. Endless Solutions.</span>
+    <h1>Custom Web, Mobile &amp; <span class="amber">AI</span> Development for Growing Businesses</h1>
+    <p>You bring the business idea. We bring the technology.</p>
+  </div>
+  <div class="foot"><span class="url">appmentech.in</span><span class="sep"></span><span>Web · Mobile · AI · Cloud</span></div>
+</div>
+
+<!-- Orbit: the brand mark at the centre, services circling it -->
+<svg class="orbit" viewBox="0 0 600 600">
+  <defs>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#F2A13C" stop-opacity=".45"/><stop offset="1" stop-color="#F2A13C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F2A13C" stop-opacity=".9"/><stop offset="1" stop-color="#F2A13C" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="300" cy="300" r="150" fill="url(#core)"/>
+  <!-- rings -->
+  <g fill="none">
+    <circle cx="300" cy="300" r="250" stroke="rgba(255,255,255,.09)" stroke-width="1.2"/>
+    <circle cx="300" cy="300" r="250" stroke="url(#arc)" stroke-width="2.5" stroke-dasharray="240 1400" stroke-linecap="round" transform="rotate(-70 300 300)"/>
+    <circle cx="300" cy="300" r="175" stroke="rgba(255,255,255,.12)" stroke-width="1.2" stroke-dasharray="3 9"/>
+    <circle cx="300" cy="300" r="175" stroke="url(#arc)" stroke-width="2.5" stroke-dasharray="160 1000" stroke-linecap="round" transform="rotate(130 300 300)"/>
+  </g>
+  <!-- spokes to nodes -->
+  <g stroke="rgba(242,161,60,.22)" stroke-width="1.2">
+    <line x1="300" y1="300" x2="300" y2="50"/><line x1="300" y1="300" x2="516.5" y2="175"/>
+    <line x1="300" y1="300" x2="516.5" y2="425"/><line x1="300" y1="300" x2="300" y2="550"/>
+    <line x1="300" y1="300" x2="83.5" y2="425"/><line x1="300" y1="300" x2="83.5" y2="175"/>
+  </g>
+  <!-- brand mark -->
+  <g transform="translate(220 220) scale(1.3333)">
+    <circle cx="60" cy="60" r="38" fill="#F2A13C"/>
+    <g fill="none" stroke="#F2A13C" stroke-width="9" stroke-linecap="round"><path d="M60 12 A48 48 0 0 1 102 36"/><path d="M60 108 A48 48 0 0 1 18 84"/></g>
+    <g fill="none" stroke="#0B0E17"><path d="M60 38 L44 82" stroke-width="9"/><path d="M60 38 L76 82" stroke-width="9"/><path d="M50 68 L70 68" stroke-width="8"/></g>
+  </g>
+  <!-- service nodes on the outer ring (r=250, every 60deg) -->
+  <g font-family="Space Grotesk, DejaVu Sans, Arial, sans-serif" font-size="17" font-weight="700" text-anchor="middle">
+    <g transform="translate(300 50)"><rect x="-52" y="-22" width="104" height="44" rx="22" fill="#121726" stroke="rgba(242,161,60,.55)"/><text y="6" fill="#fff">Web</text></g>
+    <g transform="translate(516.5 175)"><rect x="-56" y="-22" width="112" height="44" rx="22" fill="#121726" stroke="rgba(255,255,255,.18)"/><text y="6" fill="#fff">Mobile</text></g>
+    <g transform="translate(516.5 425)"><rect x="-64" y="-22" width="128" height="44" rx="22" fill="#F2A13C"/><text y="6" fill="#17110A">AI &amp; GenAI</text></g>
+    <g transform="translate(300 550)"><rect x="-54" y="-22" width="108" height="44" rx="22" fill="#121726" stroke="rgba(255,255,255,.18)"/><text y="6" fill="#fff">Cloud</text></g>
+    <g transform="translate(83.5 425)"><rect x="-58" y="-22" width="116" height="44" rx="22" fill="#121726" stroke="rgba(255,255,255,.18)"/><text y="6" fill="#fff">DevOps</text></g>
+    <g transform="translate(83.5 175)"><rect x="-48" y="-22" width="96" height="44" rx="22" fill="#121726" stroke="rgba(242,161,60,.55)"/><text y="6" fill="#fff">SaaS</text></g>
+  </g>
+  <!-- small satellites -->
+  <g fill="#F2A13C"><circle cx="451.5" cy="387.5" r="4"/><circle cx="148.5" cy="212.5" r="3"/><circle cx="300" cy="125" r="3.5"/></g>
+</svg>
+</body></html>

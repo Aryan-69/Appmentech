@@ -1,5 +1,7 @@
 # Appmentech Technologies — appmentech.in
 
+![Appmentech — Custom Web, Mobile & AI Development for Growing Businesses](assets/cover.png)
+
 Marketing site and contact pipeline for Appmentech Technologies.
 
 - **Live:** https://appmentech.in
