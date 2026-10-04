@@ -155,8 +155,8 @@ dropped in favour of the originals.
 There are now seven projects, so the "three or four" condition is met:
 
 - **`case-studies.html`** opens with a `.project-grid` of all seven project cards
-  (screenshot, name, sector, summary, "View Project" link to the live site), followed by the
-  Cookrie write-up.
+  (screenshot, name, sector, summary, "View Project" link to the live site) and nothing
+  else. The long Cookrie write-up was removed on 2026-10-04; it is in git history.
 - **`index.html`** "Solutions We've Delivered" shows three of those cards and a
   "See all projects" button.
 - Screenshots live in `assets/projects/*.jpg` (1280×800). Re-shoot them when a site changes.
