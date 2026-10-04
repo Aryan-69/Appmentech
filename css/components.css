@@ -664,6 +664,103 @@ body:not(.index-hero) .section .chip {
 }
 
 /* ==========================================================================
+   Project grid — screenshot, title, tag, summary, link
+   ========================================================================== */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 52px;
+}
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  background: var(--color-surface);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.project-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -24px rgba(12, 74, 110, 0.35);
+}
+.project-shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-band);
+}
+.project-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.6s ease;
+}
+.project-card:hover .project-shot img { transform: scale(1.04); }
+.project-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 12px 6px;
+}
+.project-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.project-head h3 { margin: 0; font-size: 21px; color: var(--color-heading); }
+.project-tag {
+  flex-shrink: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+.project-body p {
+  margin: 12px 0 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-body);
+}
+.project-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+  font-size: 13.5px;
+  color: var(--color-muted);
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--color-accent-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.project-link:hover { text-decoration: underline; }
+.project-link svg { width: 16px; height: 16px; }
+.project-more { margin-top: 40px; text-align: center; }
+
+@media (max-width: 1000px) {
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .project-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ==========================================================================
    CTA band decorations
    ========================================================================== */
 .cta-rings span {

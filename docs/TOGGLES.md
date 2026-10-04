@@ -123,7 +123,6 @@ verbatim from `industry-tiles-original-twelve`.
 | `hero-all-in-one-headline` | `index.html` | "Custom Web, Mobile &amp; AI Development" / "Your all-in-one digital and software solutions partner" |
 | `footer-taglines-all-in-one` | every page | "Your All-in-One Digital &amp; Software Solutions Partner", the eight-capability pipe list, and "On-Time Delivery Always" |
 | `auto-reply-all-in-one-tagline` | `submit.php` | The same tagline in the confirmation email |
-| `footer-social-dead-links` | `index.html` | Four social icons all pointing at `#` |
 
 The counters counted menu items, not delivered work. Any visitor who reads
 "12+ Industries Served" and then finds one case study has learned something you did
@@ -144,36 +143,25 @@ Website Review" offers them something first. Same effort for you, better convers
 but only if you actually send a review. If you are not going to, change the wording
 back rather than leaving a promise unmet.
 
-## 5. Case studies
+## 5. Case studies — switched back on (2026-10-04)
 
-| id | Where | What it was |
-|---|---|---|
-| `home-case-studies-section` | `index.html` | The "Solutions We've Delivered" band with the Cookrie card |
-| `nav-case-studies-link` | every page | The Case Studies nav tab |
-| `footer-case-studies-link` | every page | The Case Studies link in the footer Company column |
-| `cta-see-our-work` | `about.html`, all `services/*.html`, `industries/ecommerce.html` | The "See Our Work" secondary button in the hero CTA |
-| `about-case-study-link` | `about.html` | The paragraph linking to the Cookrie case study |
-| `ecommerce-cookrie-case-study-cta` | `industries/ecommerce.html` | The Cookrie band's "Read the full write-up" sentence and "Read the Cookrie case study" button |
-| `sitemap-case-studies-page` | `sitemap.xml` | The `case-studies.html` sitemap entry |
+All seven case-study toggles (`home-case-studies-section`, `nav-case-studies-link`,
+`footer-case-studies-link`, `cta-see-our-work`, `about-case-study-link`,
+`ecommerce-cookrie-case-study-cta`, `sitemap-case-studies-page`) were removed and their
+original markup restored, along with the page's `noindex` meta and sitemap entry. The two
+interim rewrites (About pointing at cookrie.in, the E-Commerce "Visit cookrie.in" CTA) were
+dropped in favour of the originals.
 
-One case study presented as a case *studies* section invites the visitor to count them.
-The section comes back once there are three or four.
+There are now seven projects, so the "three or four" condition is met:
 
-**The whole page is now toggled off too**, on the owner's call: one project is not enough
-to fill it, and it goes back on once there are more. `case-studies.html` is untouched and
-still loads at its URL, but it is unlinked from the nav, the footer and `sitemap.xml`, and
-carries `noindex,follow` under a `PAGE TOGGLED OFF` note in its `<head>`.
-
-Two places kept their content and changed only where they point, rather than going dark:
-
-- **`about.html`** still makes the Cookrie point, linking to `cookrie.in` instead of the
-  case study. The original paragraph is under `about-case-study-link`.
-- **`industries/ecommerce.html`** keeps its Cookrie band; "Visit cookrie.in" is now the
-  primary button, with "Start a project" beside it. The original is under
-  `ecommerce-cookrie-case-study-cta`.
-
-Switching the page back on means reversing all seven ids above plus the two live
-rewrites, and restoring the sitemap entry and the `robots` meta — not just the nav tab.
+- **`case-studies.html`** opens with a `.project-grid` of all seven project cards
+  (screenshot, name, sector, summary, "View Project" link to the live site), followed by the
+  Cookrie write-up.
+- **`index.html`** "Solutions We've Delivered" shows three of those cards and a
+  "See all projects" button.
+- Screenshots live in `assets/projects/*.jpg` (1280×800). Re-shoot them when a site changes.
+- Snack Shack and SALC describe themselves as demonstration builds, so their cards say
+  "Concept build" and "Product demo" rather than implying a live client store.
 
 ---
 
