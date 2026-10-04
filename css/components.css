@@ -758,6 +758,7 @@ body:not(.index-hero) .section .chip {
 }
 @media (max-width: 640px) {
   .project-grid { grid-template-columns: 1fr; gap: 20px; }
+  .project-head { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 /* ==========================================================================
